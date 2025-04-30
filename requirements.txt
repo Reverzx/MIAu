@@ -1,0 +1,12 @@
+flake8
+pycodestyle
+mypy
+ruff
+pylint
+pyyaml
+pytest==8.3.5
+pytest-html
+requests
+loguru
+selenium
+jsonschema
