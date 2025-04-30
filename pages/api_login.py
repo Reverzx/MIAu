@@ -15,7 +15,7 @@ class LoginAPI:
                 "user": {
                     "type": "object",
                     "properties": {
-                        "_id": { "type": "string" },
+                        "_id": {"type": "string"},
                         "firstName": {"type": "string"},
                         "lastName": {"type": "string"},
                         "email": {"type": "string"},

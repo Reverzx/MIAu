@@ -18,14 +18,11 @@ def test_login_with_valid_creds(driver):
     ('240425test @test.com', UserCredentials.it_password, "Invalid email format (space)"),
     ('240425test@test.', UserCredentials.it_password, "Invalid email format (no domain)"),
     (UserCredentials.it_email, 'Passw0rd', "Wrong password"),
-    (UserCredentials.not_registered_email, UserCredentials.it_password,
-     "Email of a not registered user"),
+    (UserCredentials.not_registered_email, UserCredentials.it_password, "Email of a not registered user"),
     ('', UserCredentials.it_password, "Missing email"),
     (UserCredentials.it_email, '', "Missing password"),
-    (UserCredentials.updated_old_email, UserCredentials.updated_old_password,
-     "Old credentials after update"),
-    (UserCredentials.deleted_email, UserCredentials.deleted_password,
-     "Credentials of a deleted user"),
+    (UserCredentials.updated_old_email, UserCredentials.updated_old_password, "Old credentials after update"),
+    (UserCredentials.deleted_email, UserCredentials.deleted_password, "Credentials of a deleted user"),
 ])
 def test_login_with_invalid_creds(driver, email, password, description):
     logger.info(f"Test: Authorization with {description}")

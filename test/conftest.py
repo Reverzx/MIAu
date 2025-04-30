@@ -10,7 +10,7 @@ def pytest_configure(config):
 
 
 @pytest.fixture
-def driver ():
+def driver():
     logger.info("Launching headless-browser")
     _options = webdriver.ChromeOptions()
     _options.add_argument("--headless")
