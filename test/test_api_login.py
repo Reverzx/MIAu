@@ -8,8 +8,7 @@ from test_data.user_creds import UserCredentials
 def test_post_login_200():
     logger.info("Test: Response status code for successful POST Log In")
     login = LoginAPI()
-    response = login.post_login(UserCredentials.it_email,
-                                UserCredentials.it_password)
+    response = login.post_login(UserCredentials.it_email, UserCredentials.it_password)
     assert response.status_code == 200
     logger.success("Response status code is 200")
 
@@ -18,7 +17,7 @@ def test_post_login_response_schema():
     logger.info("Test: Response schema for successful POST Log In")
     login = LoginAPI()
     assert login.is_response_schema_correct(UserCredentials.it_email,
-                                UserCredentials.it_password)
+                                            UserCredentials.it_password)
     logger.success("JSON-response corresponds to the schema")
 
 
