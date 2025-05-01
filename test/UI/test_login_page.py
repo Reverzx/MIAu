@@ -3,27 +3,25 @@ from loguru import logger
 from test_data.env import Env
 from pages.login_page import LoginPage
 from test_data.user_creds import UserCredentials
+from test_data.login_data import invalid_login_data_ui
 
 
 def test_login_with_valid_creds(driver):
-    logger.info("Test: Authorization with valid credentials")
+    """
+    Verifies successful login with valid (registered) user credentials.
+    """
     login_page = LoginPage(driver, Env.URL_Login)
     login_page.login_as(UserCredentials.it_email, UserCredentials.it_password)
     assert login_page.is_login_successful()
     logger.success("Login succeeded for valid user")
 
 
-@pytest.mark.parametrize('email, password, description', [
-    ('240425test @test.com', UserCredentials.it_password, "Invalid email format (space)"),
-    ('240425test@test.', UserCredentials.it_password, "Invalid email format (no domain)"),
-    (UserCredentials.it_email, 'Passw0rd', "Wrong password"),
-    (UserCredentials.not_registered_email, UserCredentials.it_password, "Not registered user"),
-    ('', UserCredentials.it_password, "Missing email"),
-    (UserCredentials.it_email, '', "Missing password"),
-    (UserCredentials.updated_old_email, UserCredentials.updated_old_password, "Old credentials"),
-    (UserCredentials.deleted_email, UserCredentials.deleted_password, "Deleted user"),
-])
+@pytest.mark.parametrize('email, password, description', invalid_login_data_ui)
 def test_login_with_invalid_creds(driver, email, password, description):
+    """
+    Verifies that login fails and an appropriate error message is displayed
+    when using invalid user credentials. Ensure that no redirect occurs.
+    """
     logger.info(f"Test: Authorization with {description}")
     login_page = LoginPage(driver, Env.URL_Login)
     login_page.login_as(email, password)
@@ -34,7 +32,9 @@ def test_login_with_invalid_creds(driver, email, password, description):
 
 
 def test_login_with_recently_updated_creds(driver):
-    logger.info("Test: Authorization with recently updated credentials")
+    """
+    Verifies that a user can successfully log in with recently updated credentials.
+    """
     login_page = LoginPage(driver, Env.URL_Login)
     login_page.login_as(UserCredentials.updated_new_email, UserCredentials.updated_new_password)
     assert login_page.is_login_successful()
