@@ -21,6 +21,8 @@ class AddUserPage(BasePage):
     err_lname_msg = 'User validation failed: lastName: Path `lastName` is required.'
     err_email_msg = 'User validation failed: email: Email is invalid'
     err_password_msg = 'User validation failed: password: Path `password` is required.'
+    # short_pswrd_msg = "User validation failed: password: Path `password`" \
+                    #  f"(`{password_input.text}`) is shorter than the minimum allowed length (7)."
 
     def __init__(self, driver, url):
         super().__init__(driver, url)
@@ -59,7 +61,7 @@ class AddUserPage(BasePage):
         self.input_text(self.email_input, email)
         self.input_text(self.password_input, password)
         self.click_button(self.cancel_bttn)
-        return LoginPage(self.driver, url=f'{self.url}"login"')
+        return LoginPage(self.driver, url=f'{self.url}login')
 
 
     def if_signup_successful(self):

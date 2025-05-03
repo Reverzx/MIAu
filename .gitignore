@@ -20,3 +20,4 @@ venv/
 # Pytest HTML report
 *.html
 /assets
+.vscode/settings.json
