@@ -13,6 +13,7 @@ class LoginPage(BasePage):
         self.password = (By.ID, 'password')
         self.submit = (By.ID, 'submit')
         self.error = (By.ID, 'error')
+        self.signup = (By.ID, 'signup')
         self.error_text = 'Incorrect username or password'
 
     def is_login_page(self):
