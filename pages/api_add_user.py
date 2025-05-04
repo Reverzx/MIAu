@@ -25,8 +25,8 @@ class AddUserApi():
                         "__v": {"type": "number"}
                     },
                     "required": ["_id", "firstName", "lastName", "email", "__v"]
-            },
-            "token": {"type": "string"}
+                },
+                "token": {"type": "string"}
             },
             "required": ["user", "token"]
         }

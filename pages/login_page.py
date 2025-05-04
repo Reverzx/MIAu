@@ -73,7 +73,6 @@ class LoginPage(BasePage):
         """
         return self.is_text_correct(self.error, self.error_text)
 
-
     def click_signup(self):
         """
         Clicks [SignUp] button to redirect to AddUser page

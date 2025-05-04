@@ -47,7 +47,7 @@ def test_cancel_registration(driver):
     add_usr_page = logpage.click_signup()
     assert add_usr_page.is_add_user_page()
     cancel = add_usr_page.cancel_add_user(UC.reg_new_fname, UC.reg_new_lname,
-                                 UC.reg_new_email, UC.reg_new_password)
+                                          UC.reg_new_email, UC.reg_new_password)
     assert cancel.is_url_correct(f'{Env.URL_Login}login')
     logger.success('Registration is successfully canceled')
 
@@ -118,7 +118,7 @@ def test_add_user_short_password(driver, f_name, l_name, email, password):
     assert add_usr_page.is_add_user_page()
     add_usr_page.add_new_user(f_name, l_name, email, password)
     assert add_usr_page.is_error_text_correct(
-        f"User validation failed: password: Path `password` (`{password}`) " \
+        f"User validation failed: password: Path `password` (`{password}`) "
         "is shorter than the minimum allowed length (7)."
     )
     logger.success("Registration failed as expected with error message")
