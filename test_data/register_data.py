@@ -5,7 +5,7 @@ invalid_email_ui = [
     (UC.reg_new_fname, UC.reg_new_lname, ' ', UC.reg_new_password, 'Empty Email field'),
     (UC.reg_new_fname, UC.reg_new_lname, 'dontforget.me', UC.reg_new_password, 'Email without "@"'),
     (UC.reg_new_fname, UC.reg_new_lname, 'dont@forget', UC.reg_new_password,
-    'Email without domain'),
+     'Email without domain'),
     (UC.reg_new_fname, UC.reg_new_lname, 'dont@ forget.me', UC.reg_new_password, 'Space in email'),
     (UC.reg_new_fname, UC.reg_new_lname, '@forget.me', UC.reg_new_password, 'Email without body')
 ]
