@@ -33,22 +33,22 @@ exist_usr = usr_to_add = {
     }
 
 invalid_reg_data_api = [
-    ({"firstName": "", "lastName": UC.reg_new_lname, \
+    ({"firstName": "", "lastName": UC.reg_new_lname,
       "email": UC.reg_new_email, "password": UC.reg_new_password}, 'Empty First name field'),
-    ({"firstName": UC.reg_new_fname, "lastName": "", \
+    ({"firstName": UC.reg_new_fname, "lastName": "",
       "email": UC.reg_new_email, "password": UC.reg_new_password}, 'Empty Last namt field'),
-    ({"firstName": UC.reg_new_fname, "lastName": UC.reg_new_lname, \
+    ({"firstName": UC.reg_new_fname, "lastName": UC.reg_new_lname,
       "email": "", "password": UC.reg_new_password}, 'Empty email field'),
-    ({"firstName": UC.reg_new_fname, "lastName": UC.reg_new_lname, \
+    ({"firstName": UC.reg_new_fname, "lastName": UC.reg_new_lname,
       "email": UC.reg_new_email, "password": ""}, 'Empty password field'),
-    ({"firstName": UC.reg_new_fname, "lastName": UC.reg_new_lname, \
+    ({"firstName": UC.reg_new_fname, "lastName": UC.reg_new_lname,
       "email": 'dontforget.me', "password": UC.reg_new_password}, 'Email without "@"'),
-    ({"firstName": UC.reg_new_fname, "lastName": UC.reg_new_lname, \
+    ({"firstName": UC.reg_new_fname, "lastName": UC.reg_new_lname,
       "email": 'dont@forget', "password": UC.reg_new_password}, 'Email without domain'),
-    ({"firstName": UC.reg_new_fname, "lastName": UC.reg_new_lname, \
-      "email":'dont@ forget.me', "password": UC.reg_new_password}, 'Space in email'),
-    ({"firstName": UC.reg_new_fname, "lastName": UC.reg_new_lname, \
+    ({"firstName": UC.reg_new_fname, "lastName": UC.reg_new_lname,
+      "email": 'dont@ forget.me', "password": UC.reg_new_password}, 'Space in email'),
+    ({"firstName": UC.reg_new_fname, "lastName": UC.reg_new_lname,
       "email": '@forget.me', "password": UC.reg_new_password}, 'Email without body'),
-    ({"firstName": UC.reg_new_fname, "lastName": UC.reg_new_lname, \
+    ({"firstName": UC.reg_new_fname, "lastName": UC.reg_new_lname,
       "email": UC.reg_new_email, "password": 'dontfo'}, 'Short password')
 ]

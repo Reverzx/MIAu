@@ -22,10 +22,8 @@ class AddUserPage(BasePage):
     err_email_msg = 'User validation failed: email: Email is invalid'
     err_password_msg = 'User validation failed: password: Path `password` is required.'
 
-
     def __init__(self, driver, url):
         super().__init__(driver, url)
-
 
     def is_add_user_page(self):
         """
@@ -33,7 +31,6 @@ class AddUserPage(BasePage):
         Returns True if URL is correct, otherwise False.
         """
         return self.is_url_correct(Env.url_add_user)
-
 
     def add_new_user(self, f_name, l_name, email, password):
         """
@@ -48,7 +45,6 @@ class AddUserPage(BasePage):
         self.click_button(self.submit_bttn)
         return ContactListPage(self.driver, self.url)
 
-
     def cancel_add_user(self, f_name, l_name, email, password):
         """
         Fills the fields with provided values, clicks the [Cancel] button,
@@ -62,7 +58,6 @@ class AddUserPage(BasePage):
         self.click_button(self.cancel_bttn)
         return LoginPage(self.driver, url=f'{self.url}login')
 
-
     def if_signup_successful(self):
         """
         Waits for 5 seconds for the current URL to match the Contact List page url,
@@ -71,7 +66,6 @@ class AddUserPage(BasePage):
         """
         WebDriverWait(self.driver, 5).until(EC.url_to_be(Env.URL_ContactList))
         return True
-
 
     def is_error_text_correct(self, err_text):
         """

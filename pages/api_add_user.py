@@ -31,7 +31,6 @@ class AddUserApi():
             "required": ["user", "token"]
         }
 
-
     def post_sign_up(self, body):
         """
         Sends a POST request with provided user credentials
@@ -48,7 +47,6 @@ class AddUserApi():
         except requests.exceptions.RequestException as r:
             logger.warning(f'Request error occured: {r}')
             return None
-
 
     def is_response_schema_correct(self, body):
         """
@@ -68,7 +66,6 @@ class AddUserApi():
             logger.warning(f"JSON schema validation error: {v}")
             return False
 
-
     def sign_up_with_invalid_data(self, body):
         """
         Sends a POST request with provided data.
@@ -76,7 +73,6 @@ class AddUserApi():
         Returns the response object
         """
         return requests.post(self.url, self.header, json=body)
-
 
     def delete_user(self, body):
         """
