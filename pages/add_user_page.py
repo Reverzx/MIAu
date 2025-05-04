@@ -1,10 +1,10 @@
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from pages.base_page import BasePage
 from pages.login_page import LoginPage
 from pages.contact_list_page import ContactListPage
 from test_data.env import Env
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 
 class AddUserPage(BasePage):
@@ -21,8 +21,7 @@ class AddUserPage(BasePage):
     err_lname_msg = 'User validation failed: lastName: Path `lastName` is required.'
     err_email_msg = 'User validation failed: email: Email is invalid'
     err_password_msg = 'User validation failed: password: Path `password` is required.'
-    # short_pswrd_msg = "User validation failed: password: Path `password`" \
-                    #  f"(`{password_input.text}`) is shorter than the minimum allowed length (7)."
+
 
     def __init__(self, driver, url):
         super().__init__(driver, url)
