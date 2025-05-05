@@ -14,7 +14,7 @@ class EditContactPage(BasePage):
             'title': (By.TAG_NAME, 'h1'),
             'firstName': (By.ID, 'firstName'),
             'lastName': (By.ID, 'lastName'),
-            'birthdate' : (By.ID, 'birthdate'),
+            'birthdate': (By.ID, 'birthdate'),
             'email': (By.ID, 'email'),
             'phone': (By.ID, 'phone'),
             'street1': (By.ID, 'street1'),
@@ -72,7 +72,7 @@ class EditContactPage(BasePage):
             if locator and text:
                 self.input_text(locator, text)
             else:
-                raise ValueError (f"Missing locator or value for field '{field_id}'")
+                raise ValueError(f"Missing locator or value for field '{field_id}'")
 
     def clear_field(self, label):
         """

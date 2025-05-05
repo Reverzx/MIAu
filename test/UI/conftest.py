@@ -4,8 +4,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 import pytest
 from loguru import logger
 import sys
-from test_data.env import Env
-from test_data.user_creds import UserCredentials
 
 
 def pytest_configure(config):

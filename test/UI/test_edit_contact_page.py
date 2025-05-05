@@ -230,7 +230,7 @@ def test_successful_edit_with_valid_email(driver, value):
 
 
 @pytest.mark.parametrize('element_id, message', EditData.mandatory_fields_errors)
-def test_error_for_not_populated_mandatory_fields(driver, element_id,message):
+def test_error_for_not_populated_mandatory_fields(driver, element_id, message):
     """
     Verifies that an appropriate error message is displayed
     when the mandatory fields (First Name, Last name) are not populated.
@@ -300,6 +300,7 @@ def test_successful_edit_with_valid_phone(driver, value):
     )
     contact_upd = ContactDetailsPage(driver, Env.URL_ContactDetails)
     delete_contact(contact_upd)
+
 
 @pytest.mark.parametrize('value, description', EditData.invalid_birthdate)
 def test_error_for_invalid_birthdate(driver, value, description):
