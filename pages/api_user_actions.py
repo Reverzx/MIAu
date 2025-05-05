@@ -5,7 +5,7 @@ from test_data.env import Env
 from jsonschema import ValidationError
 
 
-class AddUserApi():
+class UserActsApi():
 
     def __init__(self):
         self.url = Env.url_add_user_api
