@@ -58,7 +58,7 @@ class AddUserPage(BasePage):
         self.click_button(self.cancel_bttn)
         return LoginPage(self.driver, url=f'{self.url}login')
 
-    def if_signup_successful(self):
+    def is_signup_successful(self):
         """
         Waits for 5 seconds for the current URL to match the Contact List page url,
         indicating a successful registration.

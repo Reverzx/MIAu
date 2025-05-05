@@ -65,7 +65,7 @@ def test_add_exist_user():
     register = AddUserApi()
     response = register.sign_up_with_invalid_data(exist_usr)
     assert response.status_code == 400
-    logger.success("Response ctatus code is 400")
+    logger.success("Response status code is 400")
 
 
 @pytest.mark.parametrize('body, description', invalid_reg_data_api)

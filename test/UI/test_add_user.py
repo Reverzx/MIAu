@@ -17,7 +17,7 @@ def test_add_user_valid_creds(driver):
     assert add_usr_page.is_add_user_page()
     add_usr_page.add_new_user(UC.reg_new_fname, UC.reg_new_lname,
                               UC.reg_new_email, UC.reg_new_password)
-    assert add_usr_page.if_signup_successful
+    assert add_usr_page.is_signup_successful
     logger.success("New user is successfully added")
     rm = AddUserApi()
     rm.delete_user({"email": UC.reg_new_email,

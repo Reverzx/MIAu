@@ -26,11 +26,11 @@ usr_to_add = {
     "password": UC.reg_new_password
     }
 
-exist_usr = usr_to_add = {
-    "firstName": UC.reg_new_fname,
-    "lastName": UC.reg_new_lname,
-    "email": UC.reg_new_email,
-    "password": UC.reg_new_password
+exist_usr = {
+    "firstName": UC.exist_usr_fname,
+    "lastName": UC.exist_usr_lname,
+    "email": UC.exist_usr_email,
+    "password": UC.exist_usr_password
     }
 
 invalid_reg_data_api = [

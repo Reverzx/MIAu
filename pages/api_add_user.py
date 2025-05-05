@@ -90,8 +90,7 @@ class AddUserApi():
 
     def delete_user(self, body):
         """
-        Removes added user from database, provides the opportunity
-        to use credentials again
+        Removes added user from database
         """
         from pages.api_login import LoginAPI
         login = LoginAPI()
