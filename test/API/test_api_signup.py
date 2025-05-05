@@ -32,6 +32,21 @@ def test_response_signup_body():
     register.delete_user(usr_to_add)
 
 
+def test_get_profile():
+    register = AddUserApi()
+    register.post_sign_up(usr_to_add)
+    response = register.get_user_profile(usr_to_add)
+    data_to_check = response.json()
+    assert response.status_code == 200
+    assert '_id' in data_to_check
+    assert '__v' in data_to_check
+    assert data_to_check['firstName'] == usr_to_add['firstName']
+    assert data_to_check['lastName'] == usr_to_add['lastName']
+    assert data_to_check['email'] == usr_to_add['email']
+    logger.success('Response body contains all the necessary details')
+    register.delete_user(usr_to_add)
+
+
 def test_signup_response_schema():
     """
     Verifies that response JSON mathes to the expected recponse schema

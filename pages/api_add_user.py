@@ -74,6 +74,20 @@ class AddUserApi():
         """
         return requests.post(self.url, self.header, json=body)
 
+    def get_user_profile(self, body):
+        from pages.api_login import LoginAPI
+        login = LoginAPI()
+        get_url = Env.url_usr_details_api
+        email = body['email']
+        password = body['password']
+        auth = login.post_login(email, password)
+        token = auth.json()['token']
+        head = {
+            'Authorization': f'{token}'
+        }
+        response = requests.get(url=get_url, headers=head)
+        return response
+
     def delete_user(self, body):
         """
         Removes added user from database, provides the opportunity
@@ -81,7 +95,7 @@ class AddUserApi():
         """
         from pages.api_login import LoginAPI
         login = LoginAPI()
-        del_url = f'{self.url}/me'
+        del_url = Env.url_usr_details_api
         email = body['email'],
         password = body['password']
         auth = login.post_login(email, password)
