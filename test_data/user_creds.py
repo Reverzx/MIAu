@@ -1,6 +1,8 @@
 class UserCredentials:
     it_email = '240425test@test.com'  # Credentials used by Iryna T
     it_password = 'Password'  # Credentials used by Iryna T
+    it_edit_email = '050525test@test.com'  # Credentials used for Edit page testing by Iryna T
+    it_edit_password = 'Password'  # Credentials used for Edit page testing by Iryna T
     not_registered_email = 'notregistereduser@test.com'
     updated_old_email = 'updated_old@test.com'
     updated_old_password = 'UpdOldPass'

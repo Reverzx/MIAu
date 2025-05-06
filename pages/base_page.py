@@ -1,6 +1,7 @@
 from selenium.common import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 from loguru import logger
 
 
@@ -61,6 +62,8 @@ class BasePage:
         """
         field = self.driver.find_element(*locator)
         field.clear()
+        field.send_keys(Keys.CONTROL + "a")
+        field.send_keys(Keys.DELETE)
         field.send_keys(text)
 
     def click_button(self, locator, timeout=5):
