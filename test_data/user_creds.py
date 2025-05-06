@@ -18,3 +18,8 @@ class UserCredentials:
     exist_usr_lname = 'Walker'
     exist_usr_email = 'fiction@fix.post'
     exist_usr_password = 'mygreatpassword'
+
+    to_delete_fname = 'Saruman'
+    to_delete_lname = 'Wise'
+    to_delete_email = 'ring@for.me'
+    to_delete_password = 'urukhai'

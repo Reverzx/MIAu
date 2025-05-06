@@ -33,6 +33,13 @@ exist_usr = {
     "password": UC.exist_usr_password
     }
 
+usr_to_delete = {
+    "firstName": UC.to_delete_fname,
+    "lastName": UC.to_delete_lname,
+    "email": UC.to_delete_email,
+    "password": UC.to_delete_password
+}
+
 invalid_reg_data_api = [
     ({"firstName": "", "lastName": UC.reg_new_lname,
       "email": UC.reg_new_email, "password": UC.reg_new_password}, 'Empty First name field'),

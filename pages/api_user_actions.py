@@ -90,7 +90,23 @@ class UserActsApi():
 
     def delete_user(self, body):
         """
-        Removes added user from database
+        Removes user from database
+        """
+        from pages.api_login import LoginAPI
+        login = LoginAPI()
+        del_url = Env.url_usr_details_api
+        email = body['email'],
+        password = body['password']
+        auth = login.post_login(email, password)
+        token = auth.json()['token']
+        head = {
+            'Authorization': f'{token}'
+        }
+        return requests.delete(url=del_url, headers=head)
+
+    def double_delete_user(self, body):
+        """
+        Removes user from database, than repeats the deletion
         """
         from pages.api_login import LoginAPI
         login = LoginAPI()
@@ -103,3 +119,18 @@ class UserActsApi():
             'Authorization': f'{token}'
         }
         requests.delete(url=del_url, headers=head)
+        return requests.delete(url=del_url, headers=head)
+
+    def get_deleted_user(self, body):
+        from pages.api_login import LoginAPI
+        login = LoginAPI()
+        url = Env.url_usr_details_api
+        email = body['email'],
+        password = body['password']
+        auth = login.post_login(email, password)
+        token = auth.json()['token']
+        head = {
+            'Authorization': f'{token}'
+        }
+        requests.delete(url=url, headers=head)
+        return requests.get(url=url, headers=head)
