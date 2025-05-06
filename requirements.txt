@@ -10,3 +10,4 @@ requests
 loguru
 selenium
 jsonschema
+webdriver_manager
