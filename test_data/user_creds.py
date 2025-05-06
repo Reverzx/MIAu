@@ -10,3 +10,18 @@ class UserCredentials:
     updated_new_password = 'UpdNewPass'
     deleted_email = 'deleted@test.com'
     deleted_password = 'DelPass'
+
+    reg_new_fname = 'Hanna'  # Used by Hanna Elis
+    reg_new_lname = 'Frank'
+    reg_new_email = 'dont@forget.me'
+    reg_new_password = 'dontforgive'
+
+    exist_usr_fname = 'Johny'  # Used by Hanna Elis
+    exist_usr_lname = 'Walker'
+    exist_usr_email = 'fiction@fix.post'
+    exist_usr_password = 'mygreatpassword'
+
+    to_delete_fname = 'Saruman'
+    to_delete_lname = 'Wise'
+    to_delete_email = 'ring@for.me'
+    to_delete_password = 'urukhai'

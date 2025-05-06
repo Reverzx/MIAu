@@ -10,6 +10,7 @@ from loguru import logger
 class ContactDetailsPage(BasePage):
     def __init__(self, driver, url):
         super().__init__(driver, url)
+
         self.elements = {
             'title': (By.TAG_NAME, 'h1'),
             'firstName': (By.ID, 'firstName'),
