@@ -2,8 +2,6 @@ from loguru import logger
 from test_data.env import Env
 from pages.login_page import LoginPage
 from pages.contact_details_page import ContactDetailsPage
-from test_data.edit_data import EditData
-from selenium.webdriver.common.by import By
 
 
 def navigate_contact_list_page(driver, email, password):
@@ -77,7 +75,9 @@ def cancel_edit_and_delete_contact(edit_page):
     and deletes the contact from the Contact Details page.
     """
     edit_page.cancel()
-    contact_upd = ContactDetailsPage(edit_page.driver, Env.URL_ContactDetails)
+    contact_upd = ContactDetailsPage(
+        edit_page.driver,
+        Env.URL_ContactDetails)
     contact_upd.delete_contact()
     logger.info("The contact is deleted")
 
@@ -95,4 +95,6 @@ def assert_logout(page):
     assert button.is_displayed(), f"The logout button {page.logout_button} is not visible."
     assert button.is_enabled(), f"The logout button {page.logout_button} is disabled."
     page.logout()
-    assert page.is_url_correct(Env.URL_Login), f"User was not redirected to the Login page after logout."
+    assert page.is_url_correct(Env.URL_Login),\
+        "User was not redirected to the Login page after logout."
+    
