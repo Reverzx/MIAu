@@ -25,3 +25,8 @@ class UserCredentials:
     to_delete_lname = 'Wise'
     to_delete_email = 'ring@for.me'
     to_delete_password = 'urukhai'
+
+    to_be_update_fname = 'Johny'  # Used by Hanna Elis, should be registered, after update should be back
+    to_be_update_lname = 'Whiskers'
+    to_be_update_email = 'best@mail.soap'
+    to_be_update_password = 'thepassword'

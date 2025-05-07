@@ -8,7 +8,8 @@ from jsonschema import ValidationError
 class UserActsApi():
 
     def __init__(self):
-        self.url = Env.url_add_user_api
+        self.url = f'{Env.URL_Login}users'
+        self.usr_profile_url = f'{Env.URL_Login}users/me'
         self.header = {
             'Authorization': 'Bearer {{token}}'
             }
@@ -30,6 +31,33 @@ class UserActsApi():
             },
             "required": ["user", "token"]
         }
+        self.upd_schema = {
+            "type": "object",
+            "properties": {
+                "_id": {"type": "string"},
+                "firstName": {"type": "string"},
+                "lastName": {"type": "string"},
+                "email": {"type": "string"},
+                "__v": {"type": "number"}
+            },
+            "required": ["_id", "firstName", "lastName", "email", "__v"]
+        }
+
+    def authorizate_and_get_token(self, body):
+        """
+        Authorizates user, gets token
+        Returns token
+        """
+        from pages.api_login import LoginAPI
+        login = LoginAPI()
+        email = body['email'],
+        password = body['password']
+        auth = login.post_login(email, password)
+        token = auth.json()['token']
+        head = {
+            'Authorization': f'{token}'
+        }
+        return head
 
     def post_sign_up(self, body):
         """
@@ -47,6 +75,7 @@ class UserActsApi():
         except requests.exceptions.RequestException as r:
             logger.warning(f'Request error occured: {r}')
             return None
+
 
     def is_response_schema_correct(self, body):
         """
@@ -66,6 +95,51 @@ class UserActsApi():
             logger.warning(f"JSON schema validation error: {v}")
             return False
 
+    def is_response_update_schema_correct(self, body, upd_body):
+        """
+        Sends a PATCH request with provided user credentials, checks if response JSON
+        fits to expected schema.
+        Returns True if response fits, otherwise False
+        """
+        response = self.patch_upd_user(body, upd_body)
+        if not response:
+            logger.warning("No response returned")
+            return False
+        try:
+            current_schema = response.json()
+            validate(current_schema, self.upd_schema)
+            return True
+        except ValidationError as v:
+            logger.warning(f"JSON schema validation error: {v}")
+            return False
+
+    def patch_upd_user(self, body, upd_body):
+        """
+        Sends a PATCH request with provided user credentials to update user profile
+        Returns the response if the request has been made, in case od exception - None
+        """
+        response = None
+        head = self.authorizate_and_get_token(body)
+        try:
+            response = requests.patch(url=self.usr_profile_url, headers=head, json=upd_body)
+            response.raise_for_status()
+            return response
+        except requests.exceptions.HTTPError as h:
+            logger.warning(f'HTTP error occured: {h}')
+            return response
+        except requests.exceptions.RequestException as r:
+            logger.warning(f'Request error occured: {r}')
+            return None
+
+    def upd_usr_with_invalid_data(self, body, upd_body):
+        """
+        Sends a PATCH request with provided data.
+        Doesn't raise exceptions, is used to check the updating user profile with invalid data
+        Returns the response object
+        """
+        head = self.authorizate_and_get_token(body)
+        return requests.patch(url=self.usr_profile_url, headers=head, json=upd_body)
+
     def sign_up_with_invalid_data(self, body):
         """
         Sends a POST request with provided data.
@@ -75,62 +149,34 @@ class UserActsApi():
         return requests.post(self.url, self.header, json=body)
 
     def get_user_profile(self, body):
-        from pages.api_login import LoginAPI
-        login = LoginAPI()
-        get_url = Env.url_usr_details_api
-        email = body['email']
-        password = body['password']
-        auth = login.post_login(email, password)
-        token = auth.json()['token']
-        head = {
-            'Authorization': f'{token}'
-        }
-        response = requests.get(url=get_url, headers=head)
+        """
+        Sends a GET request with provided data to get user's data
+        Returns the response object
+        """
+        head = self.authorizate_and_get_token(body)
+        response = requests.get(url=self.usr_profile_url, headers=head)
         return response
 
     def delete_user(self, body):
         """
         Removes user from database
         """
-        from pages.api_login import LoginAPI
-        login = LoginAPI()
-        del_url = Env.url_usr_details_api
-        email = body['email'],
-        password = body['password']
-        auth = login.post_login(email, password)
-        token = auth.json()['token']
-        head = {
-            'Authorization': f'{token}'
-        }
-        return requests.delete(url=del_url, headers=head)
+        head = self.authorizate_and_get_token(body)
+        return requests.delete(url=self.usr_profile_url, headers=head)
 
     def double_delete_user(self, body):
         """
         Removes user from database, than repeats the deletion
         """
-        from pages.api_login import LoginAPI
-        login = LoginAPI()
-        del_url = Env.url_usr_details_api
-        email = body['email'],
-        password = body['password']
-        auth = login.post_login(email, password)
-        token = auth.json()['token']
-        head = {
-            'Authorization': f'{token}'
-        }
+        del_url = f'{self.url}/me'
+        head = self.authorizate_and_get_token(body)
         requests.delete(url=del_url, headers=head)
         return requests.delete(url=del_url, headers=head)
 
     def get_deleted_user(self, body):
-        from pages.api_login import LoginAPI
-        login = LoginAPI()
-        url = Env.url_usr_details_api
-        email = body['email'],
-        password = body['password']
-        auth = login.post_login(email, password)
-        token = auth.json()['token']
-        head = {
-            'Authorization': f'{token}'
-        }
-        requests.delete(url=url, headers=head)
-        return requests.get(url=url, headers=head)
+        """
+        Removes user from database, than tries to get user's data
+        """
+        head = self.authorizate_and_get_token(body)
+        requests.delete(url=self.usr_profile_url, headers=head)
+        return requests.get(url=self.usr_profile_url, headers=head)
