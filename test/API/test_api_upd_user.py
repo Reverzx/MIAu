@@ -104,7 +104,7 @@ def test_upd_user_with_invalid_data(body, description):
     update = UserActsApi()
     response = update.upd_usr_with_invalid_data(usr_to_be_update, body)
     assert response.status_code == 400
-    logger.success(f'Response status code is 400.')
+    logger.success('Response status code is 400.')
 
 
 @pytest.mark.parametrize('body, description, field_name', ef)

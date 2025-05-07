@@ -76,7 +76,6 @@ class UserActsApi():
             logger.warning(f'Request error occured: {r}')
             return None
 
-
     def is_response_schema_correct(self, body):
         """
         Sends a POST request with provided user credentials, checks if response JSON
