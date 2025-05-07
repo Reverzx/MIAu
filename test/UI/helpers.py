@@ -95,6 +95,5 @@ def assert_logout(page):
     assert button.is_displayed(), f"The logout button {page.logout_button} is not visible."
     assert button.is_enabled(), f"The logout button {page.logout_button} is disabled."
     page.logout()
-    assert page.is_url_correct(Env.URL_Login),\
+    assert page.is_url_correct(Env.URL_Login), \
         "User was not redirected to the Login page after logout."
-    
