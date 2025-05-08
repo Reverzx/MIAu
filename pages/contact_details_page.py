@@ -77,7 +77,7 @@ class ContactDetailsPage(BasePage):
 
     def cancel_delete_contact(self):
         """
-        Deletes the contact by clicking the Delete button and accepting the alert.
+        Deletes the contact by clicking the Delete button and cancel the alert.
         """
         self.click_button(self.elements['delete'])
         try:
