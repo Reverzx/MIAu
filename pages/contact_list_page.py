@@ -14,6 +14,7 @@ class ContactListPage(BasePage):
         super().__init__(driver, url)
         self.add_contact_button = (By.ID, 'add-contact')
         self.contact_row = (By.XPATH, '//tr[@class="contactTableBodyRow"]')
+        self.logout_button = (By.ID, 'logout')
 
     def is_contact_list_page(self):
         """
@@ -63,3 +64,9 @@ class ContactListPage(BasePage):
             EC.url_to_be(Env.URL_ContactDetails)
         )
         return True
+
+    def logout(self):
+        """
+        Clicks the Logout button and redirects to the Login page.
+        """
+        self.click_button(self.logout_button)

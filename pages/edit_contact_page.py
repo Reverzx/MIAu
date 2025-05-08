@@ -10,7 +10,6 @@ from selenium.webdriver.support import expected_conditions as EC
 class EditContactPage(BasePage):
     def __init__(self, driver, url):
         super().__init__(driver, url)
-
         self.elements = {
             'title': (By.TAG_NAME, 'h1'),
             'firstName': (By.ID, 'firstName'),
@@ -29,6 +28,7 @@ class EditContactPage(BasePage):
             'logout': (By.ID, 'logout'),
         }
         self.error = (By.ID, 'error')
+        self.logout_button = (By.ID, 'logout')
 
     def is_edit_contact_page(self):
         """
@@ -127,3 +127,9 @@ class EditContactPage(BasePage):
         if self.is_element_present(self.error):
             return False
         return self.is_url_correct(Env.URL_ContactDetails)
+
+    def logout(self):
+        """
+        Clicks the Logout button and redirects to the Login page.
+        """
+        self.click_button(self.logout_button)
