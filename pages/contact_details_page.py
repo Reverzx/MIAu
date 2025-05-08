@@ -74,3 +74,15 @@ class ContactDetailsPage(BasePage):
             logger.success("Contact deleted successfully.")
         except Exception as e:
             logger.error("Failed to delete contact:", e)
+
+    def cancel_delete_contact(self):
+        """
+        Deletes the contact by clicking the Delete button and accepting the alert.
+        """
+        self.click_button(self.elements['delete'])
+        try:
+            alert = self.driver.switch_to.alert
+            alert.dismiss()
+            logger.success("Contact not deleted.")
+        except Exception as e:
+            logger.error("Failed to delete contact:", e)

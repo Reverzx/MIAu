@@ -25,3 +25,6 @@ class UserCredentials:
     to_delete_lname = 'Wise'
     to_delete_email = 'ring@for.me'
     to_delete_password = 'urukhai'
+
+    zm_email = "R@mail.com"
+    zm_password = "Turbo95"

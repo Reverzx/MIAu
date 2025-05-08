@@ -5,6 +5,8 @@ from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from loguru import logger
+from selenium.common.exceptions import TimeoutException, NoSuchElementException, ElementClickInterceptedException
 
 
 class ContactListPage(BasePage):
@@ -44,8 +46,12 @@ class ContactListPage(BasePage):
         Clicks the first contact row to navigate to the Contact Details page.
         :return: ContactDetailsPage object
         """
-        self.click_button(self.contact_row)
-        return ContactDetailsPage(self.driver, self.url)
+        try:
+            self.click_button(self.contact_row)
+            return ContactDetailsPage(self.driver, self.url)
+        except (TimeoutException, NoSuchElementException, ElementClickInterceptedException) as e:
+            logger.error(f"Not found the contact details page: {e}")
+            return None
 
     def is_navigate_to_contact_details_page_successful(self):
         """
