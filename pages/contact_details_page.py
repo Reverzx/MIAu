@@ -86,3 +86,9 @@ class ContactDetailsPage(BasePage):
             logger.success("Contact not deleted.")
         except Exception as e:
             logger.error("Failed to delete contact:", e)
+
+    def logout(self):
+        """
+        Clicks the Logout button and redirects to the Login page.
+        """
+        self.click_button(self.elements['logout'])
