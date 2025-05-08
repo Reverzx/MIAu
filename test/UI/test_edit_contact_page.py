@@ -2,57 +2,14 @@ import pytest
 from loguru import logger
 from test_data.env import Env
 from test_data.user_creds import UserCredentials
-from pages.login_page import LoginPage
 from pages.contact_details_page import ContactDetailsPage
 from test_data.edit_data import EditData
 from selenium.webdriver.common.by import By
-
-
-def create_contact_and_navigate_edit_page(driver, email, password, contact_data):
-    """
-    Logs in using provided credentials, creates a contact using the given data,
-    and navigates to the Edit Contact page.
-
-    Steps:
-    1. Open Login page and login.
-    2. Navigate to Add Contact page and submit contact form.
-    3. Navigate to Contact Details page, then to Edit Contact.
-
-    :return: EditContactPage object
-    """
-    login_page = LoginPage(driver, Env.URL_Login)
-    login_page.open()
-    contact_list = login_page.complete_login(email, password)
-    logger.info(
-        "The user is logged in"
-    )
-    add_contact = contact_list.navigate_to_add_contact_page()
-    add_contact.fill_contact_form(contact_data)
-    add_contact.submit()
-    logger.info(
-        "A new contact is added."
-    )
-    contact_details = contact_list.navigate_to_contact_details_page()
-    return contact_details.navigate_to_edit_contact_page()
-
-
-def cancel_edit_and_delete_contact(edit_page):
-    """
-    Cancels editing on the Edit Contact page
-    and deletes the contact from the Contact Details page.
-    """
-    edit_page.cancel()
-    contact_upd = ContactDetailsPage(edit_page.driver, Env.URL_ContactDetails)
-    contact_upd.delete_contact()
-    logger.info("The contact is deleted")
-
-
-def delete_contact(contact_details_page):
-    """
-    Deletes the contact from the Contact Details page.
-    """
-    contact_details_page.delete_contact()
-    logger.info("The contact is deleted")
+from test.UI.helpers import (
+    create_contact_and_navigate_edit_page,
+    cancel_edit_and_delete_contact,
+    delete_contact
+)
 
 
 def test_expected_elements_present(driver):

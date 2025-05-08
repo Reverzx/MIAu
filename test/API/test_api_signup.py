@@ -6,7 +6,7 @@ from test_data.register_data import usr_to_add, exist_usr, invalid_reg_data_api
 
 def test_post_sign_up():
     """
-    Verifies, that the responce status code is 200,
+    Verifies, that the responce status code is 201,
     SignUp POST request is successful
     """
     register = UserActsApi()
@@ -33,6 +33,9 @@ def test_response_signup_body():
 
 
 def test_get_profile():
+    """
+    Verifies, that user profile filled correctly
+    """
     register = UserActsApi()
     register.post_sign_up(usr_to_add)
     response = register.get_user_profile(usr_to_add)

@@ -81,3 +81,6 @@ class BasePage:
         except TimeoutException:
             logger.warning(f"Button not clickable: {locator}")
             raise
+
+    def locate_element(self, locator):
+        return self.driver.find_element(*locator)
