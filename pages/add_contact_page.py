@@ -24,6 +24,7 @@ class AddContactPage(BasePage):
             'cancel': (By.ID, 'cancel'),
             'logout': (By.ID, 'logout'),
         }
+        self.logout_button = (By.ID, 'logout')
 
     def is_add_contact_page(self):
         """
@@ -50,3 +51,9 @@ class AddContactPage(BasePage):
         Clicks the Submit button to attempt to save the new contact.
         """
         self.click_button(self.elements['submit'])
+
+    def logout(self):
+        """
+        Clicks the Logout button and redirects to the Login page.
+        """
+        self.click_button(self.logout_button)

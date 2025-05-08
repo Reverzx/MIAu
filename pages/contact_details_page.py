@@ -10,7 +10,6 @@ from loguru import logger
 class ContactDetailsPage(BasePage):
     def __init__(self, driver, url):
         super().__init__(driver, url)
-
         self.elements = {
             'title': (By.TAG_NAME, 'h1'),
             'firstName': (By.ID, 'firstName'),
@@ -29,6 +28,7 @@ class ContactDetailsPage(BasePage):
             'return': (By.ID, 'return'),
             'logout': (By.ID, 'logout'),
         }
+        self.logout_button = (By.ID, 'logout')
 
     def navigate_to_edit_contact_page(self):
         """
@@ -74,3 +74,9 @@ class ContactDetailsPage(BasePage):
             logger.success("Contact deleted successfully.")
         except Exception as e:
             logger.error("Failed to delete contact:", e)
+
+    def logout(self):
+        """
+        Clicks the Logout button and redirects to the Login page.
+        """
+        self.click_button(self.elements['logout'])
