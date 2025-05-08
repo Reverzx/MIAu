@@ -15,7 +15,7 @@ def pytest_configure(config):
 def driver():
     logger.info("Launching headless-browser")
     _options = webdriver.ChromeOptions()
-    # _options.add_argument("--headless")
+    _options.add_argument("--headless")
     prefs = {
         "credentials_enable_service": False,
         "profile.password_manager_enabled": False
