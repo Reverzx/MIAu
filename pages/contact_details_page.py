@@ -4,6 +4,7 @@ from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoAlertPresentException
 from loguru import logger
 
 
@@ -83,9 +84,11 @@ class ContactDetailsPage(BasePage):
         try:
             alert = self.driver.switch_to.alert
             alert.dismiss()
-            logger.success("Contact not deleted.")
+            logger.info("Alert dismissed successfully.")
+        except NoAlertPresentException:
+            logger.error("No alert was present to cancel.")
         except Exception as e:
-            logger.error("Failed to delete contact:", e)
+            logger.error("An unexpected error occurred while attempting to dismiss the alert:", e)
 
     def logout(self):
         """
