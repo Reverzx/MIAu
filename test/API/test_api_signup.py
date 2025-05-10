@@ -68,6 +68,7 @@ def test_add_exist_user():
     register = UserActsApi()
     response = register.sign_up_with_invalid_data(exist_usr)
     assert response.status_code == 400
+    assert 'Email address is already in use' in response.json()['message']
     logger.success("Response status code is 400")
 
 
