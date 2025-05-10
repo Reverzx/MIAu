@@ -14,7 +14,7 @@ def test_upd_user_200():
     update = UserActsApi()
     response = update.patch_upd_user(usr_to_be_update, upd_data)
     assert response.status_code == 200
-    logger.success('Response status code is 201')
+    logger.success('Response status code is 200')
     update.patch_upd_user(upd_data, usr_to_be_update)
 
 
