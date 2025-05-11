@@ -101,4 +101,4 @@ def test_add_cont_invalid_adress_data(body, description):
     newcont = ContActsApi()
     response = newcont.add_cont_invalid_data(usr, body)
     assert response.status_code == 400
-    logger.success(f"Response status code is 400")
+    logger.success("Response status code is 400")
