@@ -29,7 +29,7 @@ def test_post_logout_fails_for_expired_auth_token():
                                 UserCredentials.it_password)
     auth_token = response.json()["token"]
     logout_one = post_logout(auth_token)
-    assert logout_one.status_code == 200,\
+    assert logout_one.status_code == 200, \
         f"Wrong status code: {logout_one.status_code}. Expected: 200"
     logout_two = post_logout(auth_token)
     assert_unauthorized_request(logout_two)
