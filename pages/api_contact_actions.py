@@ -42,7 +42,7 @@ class ContActsApi():
         return requests.get(url=self.url, headers=header)
 
     def req_get_contact(self, cont_id, header):
-        return  requests.get(url=f'{self.url}/{cont_id}', headers=header)
+        return requests.get(url=f'{self.url}/{cont_id}', headers=header)
 
     def req_put_upd_contact(self, cont_id, upd_data, header):
         return requests.put(url=f'{self.url}/{cont_id}', headers=header, json=upd_data)
