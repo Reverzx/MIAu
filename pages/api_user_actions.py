@@ -145,7 +145,7 @@ class UserActsApi():
         Doesn't raise exceptions, is used to check the signing up with invalid data
         Returns the response object
         """
-        return requests.post(self.url, self.header, json=body)
+        return requests.post(url=self.url, headers=self.header, json=body)
 
     def get_user_profile(self, body):
         """
