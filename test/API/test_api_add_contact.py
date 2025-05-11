@@ -1,11 +1,14 @@
 import pytest
 from loguru import logger
 from pages.api_contact_actions import ContActsApi
-from test_data.contacts_data import user_to_add_cont as usr, new_cont_valid_data as ncvd
-from test_data.contacts_data import new_cont_not_full as ncnf
-from test_data.contacts_data import new_cont_empty_mand_fields as emf
-from test_data.contacts_data import new_cont_invalid_data as ncid
-from test_data.contacts_data import inv_phone as ip, inv_adress_data as iad
+from test_data.contacts_data import (
+user_to_add_cont as usr,
+new_cont_valid_data as ncvd,
+new_cont_not_full as ncnf,
+new_cont_empty_mand_fields as emf,
+new_cont_invalid_data as ncid,
+inv_phone as ip, inv_adress_data as iad
+)
 
 
 def test_add_contact_201():
