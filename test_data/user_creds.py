@@ -26,7 +26,7 @@ class UserCredentials:
     to_delete_email = 'ring@for.me'
     to_delete_password = 'urukhai'
 
-    to_be_update_fname = 'Johny'     # Used by Hanna Elis, should be
+    to_be_update_fname = 'Johny'  # Used by Hanna Elis, should be
     to_be_update_lname = 'Whiskers'  # registered, after update should be back
     to_be_update_email = 'best@mail.soap'
     to_be_update_password = 'thepassword'
@@ -35,3 +35,6 @@ class UserCredentials:
     usr_to_add_cont_lname = 'Grey'
     usr_to_add_cont_email = 'eagles@fly.fly'
     usr_to_add_cont_password = 'youshallnotpass'
+
+    zm_email = "R@mail.com"
+    zm_password = "Turbo95"
