@@ -47,8 +47,8 @@ class EditData:
 
     max_length_exceeded = [
         ('firstName', 'ABCDEFGHIJKLMNOPQRSTU',
-         'Validation failed: firstName: Path `firstName` (`ABCDEFGHIJKLMNOPQRSTU`)'
-         ' is longer than the maximum allowed length (20).'),
+         'Validation failed: firstName: Path `firstName` (`ABCDEFGHIJKLMNOPQRSTU`) '
+         'is longer than the maximum allowed length (20).'),
         ('lastName', 'ABCDEFGHIJKLMNOPQRSTU',
          'Validation failed: lastName: Path `lastName` (`ABCDEFGHIJKLMNOPQRSTU`)'
          ' is longer than the maximum allowed length (20).'),
