@@ -26,7 +26,7 @@ def assert_unauthorized_request(response):
     Verifies that the response status code is 401 Unauthorized
     and the error message is "Please authenticate."
     """
-    assert response.status_code == 401,\
+    assert response.status_code == 401, \
         f"Wrong status code: {response.status_code}. Expected: 401"
     assert response.json().get("error") == "Please authenticate.", \
         (f"Missing or wrong error message in the response json: {response.json()}. "

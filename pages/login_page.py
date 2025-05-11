@@ -29,7 +29,8 @@ class LoginPage(BasePage):
             )
             return True
         except TimeoutException:
-            logger.warning(f"Timeout: Current URL is {self.driver.current_url}, expected was {Env.URL_Login}")
+            logger.warning(f"Timeout: Current URL is {self.driver.current_url}, "
+                           f"expected was {Env.URL_Login}")
             return False
 
     def complete_login(self, email, password):
