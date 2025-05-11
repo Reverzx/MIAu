@@ -6,14 +6,14 @@ from pages.api_contact_actions import ContActsApi
 from test.UI.helpers import navigate_add_contact_page
 from test_data.user_creds import UserCredentials as UC
 from test_data.contacts_data import (
-new_cont_cancel_data as nccd,
-new_cont_valid_data as ncvd,
-user_to_add_cont as usr,
-new_cont_not_full as ncnf,
-ui_new_cont_empty_mand_fields as emf,
-ui_new_cont_invalid_data as ncid,
-ui_inv_phone as ip,
-inv_adress_data as iad
+    new_cont_cancel_data as nccd,
+    new_cont_valid_data as ncvd,
+    user_to_add_cont as usr,
+    new_cont_not_full as ncnf,
+    ui_new_cont_empty_mand_fields as emf,
+    ui_new_cont_invalid_data as ncid,
+    ui_inv_phone as ip,
+    inv_adress_data as iad
 )
 
 
@@ -41,10 +41,10 @@ def test_cancel_add_cont(driver):
     )
     assert result.is_url_correct(Env.URL_ContactList)
     is_added = result.is_text_present(
-        locator = 'td',
-        text = f"{nccd['firstName']} {nccd['lastName']}"
+        locator='td',
+        text=f"{nccd['firstName']} {nccd['lastName']}"
     )
-    assert is_added == False
+    assert is_added is False
 
 
 def test_add_new_cont(driver):
@@ -57,8 +57,8 @@ def test_add_new_cont(driver):
     )
     assert result.is_url_correct(Env.URL_ContactList)
     is_added = result.is_text_present(
-        locator = 'td',
-        text = f"{ncvd['firstName']} {ncvd['lastName']}"
+        locator='td',
+        text=f"{ncvd['firstName']} {ncvd['lastName']}"
     )
     assert is_added
     clear = ContActsApi()
@@ -75,8 +75,8 @@ def test_add_cont_fill_only_mandatory_fields(driver):
     )
     assert result.is_url_correct(Env.URL_ContactList)
     is_added = result.is_text_present(
-        locator = 'td',
-        text = f"{ncnf['firstName']} {ncnf['lastName']}"
+        locator='td',
+        text=f"{ncnf['firstName']} {ncnf['lastName']}"
     )
     assert is_added
     clear = ContActsApi()
@@ -138,6 +138,6 @@ def test_add_contact_with_invalid_adress(driver, new_cont, description):
     )
     assert addition.is_text_present(
         locator='span',
-        text = 'Contact validation failed'
+        text='Contact validation failed'
     )
     logger.success("Registration failed as expected with error message")

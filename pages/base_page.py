@@ -87,7 +87,6 @@ class BasePage:
     def locate_element(self, locator):
         return self.driver.find_element(*locator)
 
-
     def is_text_present(self, locator, text):
         try:
             self.driver.find_element(By.XPATH, f'//{locator}[contains(text(), "{text}")]')
