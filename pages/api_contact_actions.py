@@ -53,7 +53,7 @@ class ContActsApi():
     def delete_contact(self, header, cont_id):
         return requests.delete(url=f'{self.url}/{cont_id}', headers=header)
 
-    def add_cont_valid_creds(self, user, new_cont):
+    def add_cont_valid_data(self, user, new_cont):
         header = self.auth_and_get_token(user)
         response = None
         try:
@@ -67,7 +67,7 @@ class ContActsApi():
             logger.warning(f'Request error occured: {r}')
             return None
 
-    def add_cont_invalid_creds(self, user, new_cont):
+    def add_cont_invalid_data(self, user, new_cont):
         header = self.auth_and_get_token(user)
         return self.req_add_contact(new_cont, header)
 
@@ -88,7 +88,6 @@ class ContActsApi():
     def clear_cont_list(self, user):
         header = self.auth_and_get_token(user)
         cont_list = self.req_get_contact_list(header).json()
-        print(cont_list)
         ids = []
         for item in cont_list:
             ids.append(item['_id'])

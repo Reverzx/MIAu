@@ -10,7 +10,7 @@ from test_data.contacts_data import inv_phone as ip, inv_adress_data as iad
 
 def test_add_contact_201():
     newcont = ContActsApi()
-    response = newcont.add_cont_valid_creds(usr, ncvd)
+    response = newcont.add_cont_valid_data(usr, ncvd)
     assert response.status_code == 201
     logger.success('Response status code is 201')
     newcont.clear_cont_list(usr)
@@ -18,7 +18,7 @@ def test_add_contact_201():
 
 def test_response_body():
     newcont = ContActsApi()
-    response = newcont.add_cont_valid_creds(usr, ncvd)
+    response = newcont.add_cont_valid_data(usr, ncvd)
     data_to_check = response.json()
     assert '_id' in data_to_check
     assert 'owner' in data_to_check
@@ -54,7 +54,7 @@ def test_is_new_cont_added():
 
 def test_add_cont_filling_mand_fields():
     newcont = ContActsApi()
-    response = newcont.add_cont_valid_creds(usr, ncnf)
+    response = newcont.add_cont_valid_data(usr, ncnf)
     assert response.status_code == 201
     logger.success('Response status code is 201')
     newcont.clear_cont_list(usr)
@@ -71,7 +71,7 @@ def test_not_full_data_schema():
 def test_add_cont_empty_mand_fields(body, description):
     logger.info(f'Add contact with invalid credentials: {description}')
     newcont = ContActsApi()
-    response = newcont.add_cont_invalid_creds(usr, body)
+    response = newcont.add_cont_invalid_data(usr, body)
     assert response.status_code == 400
     logger.success('Response status code is 400')
 
@@ -80,7 +80,7 @@ def test_add_cont_empty_mand_fields(body, description):
 def test_add_cont_common_inv_data(body, description):
     logger.info(f'Add contact with invalid credentials: {description}')
     newcont = ContActsApi()
-    response = newcont.add_cont_invalid_creds(usr, body)
+    response = newcont.add_cont_invalid_data(usr, body)
     assert response.status_code == 400
     logger.success('Response status code is 400')
 
@@ -89,7 +89,7 @@ def test_add_cont_common_inv_data(body, description):
 def test_add_cont_invalid_phone(body, description):
     logger.info(f'Add contact with invalid credentials: {description}')
     newcont = ContActsApi()
-    response = newcont.add_cont_invalid_creds(usr, body)
+    response = newcont.add_cont_invalid_data(usr, body)
     assert response.status_code == 400
     logger.success(f"Response status code is 400. {response.json()['message']}")
 
@@ -99,6 +99,6 @@ def test_add_cont_invalid_phone(body, description):
 def test_add_cont_invalid_adress_data(body, description):
     logger.info(f'Add contact with invalid credentials: {description}')
     newcont = ContActsApi()
-    response = newcont.add_cont_invalid_creds(usr, body)
+    response = newcont.add_cont_invalid_data(usr, body)
     assert response.status_code == 400
     logger.success(f"Response status code is 400")
