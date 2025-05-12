@@ -84,7 +84,7 @@ def test_put_upd_fails_with_missing_mandatory_data(element_id, value, message):
     assert response.json()["message"] == message
     logger.success(f"Put request failed as expected. "
                    f"Response status code is {response.status_code}. "
-                   f"Error message is {response.json()["message"]}.")
+                   f"Error message is {response.json()['message']}.")
 
     delete_contact(token, cont_id)
 
@@ -140,7 +140,7 @@ def test_put_upd_fails_for_exceeded_max_chars_length(element_id, value, message)
     logger.success(f"Put request failed as expected "
                    f"with values exceeding the maximum allowed length. "
                    f"Response status code is {response.status_code}. "
-                   f"Error message is {response.json()["message"]}.")
+                   f"Error message is {response.json()['message']}.")
 
     delete_contact(token, cont_id)
 
@@ -177,11 +177,11 @@ def test_put_upd_fails_for_invalid_email(value, description):
     assert response.status_code == 400, \
         f"Wrong status code: {response.status_code}. Expected: 400"
     assert response.json()["message"] == "Validation failed: email: Email is invalid", \
-        (f"Wrong error message: {response.json()["message"]}. "
+        (f"Wrong error message: {response.json()['message']}. "
          f"Expected: 'Validation failed: email: Email is invalid'")
     logger.success(f"Put request failed as expected with invalid email values. "
                    f"Response status code is {response.status_code}. "
-                   f"Error message is {response.json()["message"]}.")
+                   f"Error message is {response.json()['message']}.")
 
     delete_contact(token, cont_id)
 
@@ -217,11 +217,11 @@ def test_put_upd_fails_for_invalid_phone(value):
     assert response.status_code == 400, \
         f"Wrong status code: {response.status_code}. Expected: 400"
     assert response.json()["message"] == "Validation failed: phone: Phone number is invalid", \
-        (f"Wrong error message: {response.json()["message"]}. "
+        (f"Wrong error message: {response.json()['message']}. "
          f"Expected: 'Validation failed: phone: Phone number is invalid'")
     logger.success(f"Put request failed as expected with invalid phone values. "
                    f"Response status code is {response.status_code}. "
-                   f"Error message is {response.json()["message"]}.")
+                   f"Error message is {response.json()['message']}.")
 
     delete_contact(token, cont_id)
 
@@ -258,10 +258,10 @@ def test_put_upd_fails_for_invalid_birthdate(value, description):
     assert response.status_code == 400, \
         f"Wrong status code: {response.status_code}. Expected: 400"
     assert response.json()["message"] == "Validation failed: birthdate: Birthdate is invalid", \
-        (f"Wrong error message: {response.json()["message"]}. "
+        (f"Wrong error message: {response.json()['message']}. "
          f"Expected: 'Validation failed: birthdate: Birthdate is invalid'")
     logger.success(f"Put request failed as expected with invalid birthdate values. "
                    f"Response status code is {response.status_code}. "
-                   f"Error message is {response.json()["message"]}.")
+                   f"Error message is {response.json()['message']}.")
 
     delete_contact(token, cont_id)

@@ -9,7 +9,7 @@ from api_actions.login_and_get_token import login_and_get_token
 
 def test_successful_post_logout():
     auth_token = login_and_get_token(UserCredentials.it_email,
-                                UserCredentials.it_password)
+                                     UserCredentials.it_password)
     logout = post_logout(auth_token)
     assert logout.status_code == 200, (f"Wrong status code: {logout.status_code}. "
                                        f"Expected: 200")
