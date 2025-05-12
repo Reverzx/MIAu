@@ -45,6 +45,20 @@ class EditData:
         '10 chars': '12345-6789',
     }
 
+    max_length_allowed_filled = {
+        'firstName': 'ABCDEFGHIJKLMNOPQRST',
+        'lastName': 'ABCDEFGHIJKLMNOPQRST',
+        'birthdate': '1990-10-10',
+        'email': 'it_test_upd@testmail.com',
+        'phone': '+1 800-555-5555',
+        'street1': 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMN',
+        'street2': 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMN',
+        'city': 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMN',
+        'stateProvince': 'ABCDEFGHIJKLMNOPQRST',
+        'postalCode': '12345-6789',
+        'country': 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMN',
+    }
+
     max_length_exceeded = [
         ('firstName', 'ABCDEFGHIJKLMNOPQRSTU',
          'Validation failed: firstName: Path `firstName` (`ABCDEFGHIJKLMNOPQRSTU`) '
@@ -101,8 +115,12 @@ class EditData:
     ]
 
     mandatory_fields_errors = [
-        ('firstName', 'Validation failed: firstName: Path `firstName` is required.'),
-        ('lastName', 'Validation failed: lastName: Path `lastName` is required.'),
+        ('firstName', '', 'Validation failed: firstName: Path `firstName` is required.'),
+        ('firstName', ' ', 'Validation failed: firstName: Path `firstName` is required.'),
+        ('firstName', None, 'Validation failed: firstName: Path `firstName` is required.'),
+        ('lastName', '', 'Validation failed: lastName: Path `lastName` is required.'),
+        ('lastName', ' ', 'Validation failed: lastName: Path `lastName` is required.'),
+        ('lastName', None, 'Validation failed: lastName: Path `lastName` is required.'),
     ]
 
     invalid_phones = [
