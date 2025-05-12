@@ -1,6 +1,5 @@
 import requests
 from test_data.env import Env
-from test_data.edit_data import EditData
 
 
 def put_contact_upd(token, cont_id, payload):

@@ -19,7 +19,7 @@ def test_successful_put_upd(read_schema):
     Asserts the response body contains updated data.
     """
     token = login_and_get_token(UserCredentials.it_edit_email,
-                           UserCredentials.it_edit_password)
+                                UserCredentials.it_edit_password)
     cont_id = add_contact_and_get_id(token, EditData.contact_data)
 
     payload = EditData.updated_data
@@ -28,8 +28,8 @@ def test_successful_put_upd(read_schema):
     assert response.status_code == 200, \
         f"Wrong status code: {response.status_code}. Expected: 200"
     assert_json_response(EditData.updated_data, response.json())
-    logger.success(f"Put request passed with response code 200. "
-                   f"The response body contains updated data")
+    logger.success("Put request passed with response code 200. "
+                   "The response body contains updated data")
 
     delete_contact(token, cont_id)
 
@@ -44,7 +44,7 @@ def test_put_contact_upd_response_schema(read_schema):
     response = put_contact_upd(token, cont_id, payload)
 
     validate_response_schema(response, schema)
-    logger.success(f"JSON-response corresponds to the schema.")
+    logger.success("JSON-response corresponds to the schema.")
 
     delete_contact(token, cont_id)
 
@@ -64,7 +64,7 @@ def test_put_upd_fails_for_unauthorized_user():
         f"Missing or wrong error: {response.json()}. Expected: 'Please authenticate'."
     logger.success(f"Put request failed as expected."
                    f"Response status code is {response.status_code}."
-                   f"Error message is {response.json()["error"]}")
+                   f"Error message is {response.json()['error']}")
 
     delete_contact(token, cont_id)
 
@@ -91,7 +91,7 @@ def test_put_upd_fails_with_missing_mandatory_data(element_id, value, message):
 
 def test_successful_put_upd_with_only_mandatory_data():
     token = login_and_get_token(UserCredentials.it_edit_email,
-                           UserCredentials.it_edit_password)
+                                UserCredentials.it_edit_password)
     cont_id = add_contact_and_get_id(token, EditData.contact_data)
 
     payload = EditData.contact_data.copy()
@@ -125,7 +125,7 @@ def test_successful_put_upd_with_max_allowed_chars_length():
 
 
 @pytest.mark.parametrize('element_id, value, message', EditData.max_length_exceeded)
-def test_put_upd_fails_for_exceeded_max_chars_length (element_id, value, message):
+def test_put_upd_fails_for_exceeded_max_chars_length(element_id, value, message):
     token = login_and_get_token(UserCredentials.it_edit_email,
                                 UserCredentials.it_edit_password)
     cont_id = add_contact_and_get_id(token, EditData.contact_data)
@@ -137,7 +137,8 @@ def test_put_upd_fails_for_exceeded_max_chars_length (element_id, value, message
     assert response.status_code == 400, \
         f"Wrong status code: {response.status_code}. Expected: 400"
     assert response.json()["message"] == message
-    logger.success(f"Put request failed as expected with values exceeding the maximum allowed length. "
+    logger.success(f"Put request failed as expected "
+                   f"with values exceeding the maximum allowed length. "
                    f"Response status code is {response.status_code}. "
                    f"Error message is {response.json()["message"]}.")
 
