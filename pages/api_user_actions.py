@@ -47,7 +47,7 @@ class UserActsApi():
         Authorizates user, gets token
         Returns token
         """
-        from pages.api_login import LoginAPI
+        from api_actions.api_login import LoginAPI
         login = LoginAPI()
         email = body['email'],
         password = body['password']

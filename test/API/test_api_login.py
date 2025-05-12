@@ -1,12 +1,12 @@
 import pytest
 from loguru import logger
-from pages.api_login import LoginAPI
+from api_actions.api_login import LoginAPI
 from test_data.user_details import UserDetails
 from test_data.user_creds import UserCredentials
 from test_data.login_data import invalid_login_data_api
 
 
-def test_post_login_200():
+def test_successful_post_login():
     """
     Verifies that the response status code is 200 for a successful
     POST request to the /users/login endpoint.

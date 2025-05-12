@@ -1,9 +1,11 @@
+from loguru import logger
 from pages.base_page import BasePage
 from pages.contact_list_page import ContactListPage
 from test_data.env import Env
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 
 class LoginPage(BasePage):
@@ -21,7 +23,15 @@ class LoginPage(BasePage):
         Checks whether the current URL matches the login page URL.
         :return: bool: True if the current URL is correct, otherwise False.
         """
-        return self.is_url_correct(Env.URL_Login)
+        try:
+            WebDriverWait(self.driver, 5).until(
+                EC.url_matches(Env.URL_Login)
+            )
+            return True
+        except TimeoutException:
+            logger.warning(f"Timeout: Current URL is {self.driver.current_url}, "
+                           f"expected was {Env.URL_Login}")
+            return False
 
     def complete_login(self, email, password):
         """
