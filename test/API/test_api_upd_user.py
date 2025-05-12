@@ -1,6 +1,6 @@
 import pytest
 from loguru import logger
-from pages.api_user_actions import UserActsApi
+from api_actions.api_user_actions import UserActsApi
 from api_actions.api_login import LoginAPI
 from test_data.usr_update_data import usr_to_be_update, upd_data
 from test_data.usr_update_data import upd_usr_with_empty_fields as ef, invalid_data_to_upd as invd

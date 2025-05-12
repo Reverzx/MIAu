@@ -1,5 +1,5 @@
 from loguru import logger
-from pages.api_user_actions import UserActsApi
+from api_actions.api_user_actions import UserActsApi
 from test_data.register_data import usr_to_delete
 
 

@@ -1,6 +1,6 @@
 import pytest
 from loguru import logger
-from pages.api_contact_actions import ContActsApi
+from api_actions.api_contact_actions import ContActsApi
 from test_data.contacts_data import (
     user_to_add_cont as usr,
     new_cont_valid_data as ncvd,

@@ -2,7 +2,7 @@ import pytest
 from loguru import logger
 from test_data.env import Env
 from pages.add_contact_page import AddContactPage
-from pages.api_contact_actions import ContActsApi
+from api_actions.api_contact_actions import ContActsApi
 from test.UI.helpers import navigate_add_contact_page
 from test_data.user_creds import UserCredentials as UC
 from test_data.contacts_data import (
