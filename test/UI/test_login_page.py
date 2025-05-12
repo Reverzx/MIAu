@@ -6,6 +6,23 @@ from test_data.user_creds import UserCredentials
 from test_data.login_data import invalid_login_data_ui
 
 
+def test_expected_elements_present(driver):
+    """
+    Verifies that expected title, fields, buttons are present
+    on the Login page.
+    """
+    login_page = LoginPage(driver, Env.URL_Login)
+    login_page.open()
+    assert login_page.is_text_correct(login_page.elements['title'], 'Contact List App')
+    for label, locator in login_page.elements.items():
+        if label == 'title':
+            continue
+        assert login_page.is_element_present(locator), f"The element is not present on the page: {label}."
+    logger.success(
+        "The expected elements are present on the Login page"
+    )
+
+
 def test_login_with_valid_creds(driver):
     """
     Verifies successful login with valid (registered) user credentials.

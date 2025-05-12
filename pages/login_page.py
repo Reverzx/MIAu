@@ -17,6 +17,13 @@ class LoginPage(BasePage):
         self.error = (By.ID, 'error')
         self.signup = (By.ID, 'signup')
         self.error_text = 'Incorrect username or password'
+        self.elements = {
+            'title': (By.TAG_NAME, 'h1'),
+            'email': (By.ID, 'email'),
+            'password': (By.ID, 'password'),
+            'submit': (By.ID, 'submit'),
+            'signup': (By.ID, 'signup'),
+        }
 
     def is_login_page(self):
         """
