@@ -2,7 +2,7 @@ import pytest
 from loguru import logger
 from test_data.env import Env
 from pages.login_page import LoginPage
-from pages.api_user_actions import UserActsApi
+from api_actions.api_user_actions import UserActsApi
 from test_data.user_creds import UserCredentials as UC
 from test_data.register_data import invalid_email_ui, short_pasword_ui
 
