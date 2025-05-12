@@ -19,7 +19,8 @@ def test_delete_contact_already_deleted(contact_setup):
     delete_resp = contact_api.delete_contact(header, cont_id)
     assert delete_resp.status_code == 200, f"Expected 200, got {delete_resp.status_code}"
     delete_already_resp = contact_api.delete_contact(header, cont_id)
-    assert delete_already_resp.status_code == 404, f"Expected 404, got {delete_already_resp.status_code}"
+    assert delete_already_resp.status_code == 404, (f"Expected 404, got "
+                                                    f"{delete_already_resp.status_code}")
     logger.success('The expected status code 404 has been received')
 
 

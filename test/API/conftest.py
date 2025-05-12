@@ -11,10 +11,12 @@ def read_schema():
     with path.open() as f:
         return json.load(f)
 
+
 @pytest.fixture
 def auth_header():
     contact_api = ContActsApi()
     return contact_api.auth_and_get_token(usr)
+
 
 @pytest.fixture
 def contact_setup(auth_header):
