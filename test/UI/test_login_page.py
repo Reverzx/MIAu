@@ -17,7 +17,8 @@ def test_expected_elements_present(driver):
     for label, locator in login_page.elements.items():
         if label == 'title':
             continue
-        assert login_page.is_element_present(locator), f"The element is not present on the page: {label}."
+        assert login_page.is_element_present(locator), \
+            f"The element is not present on the page: {label}."
     logger.success(
         "The expected elements are present on the Login page"
     )
