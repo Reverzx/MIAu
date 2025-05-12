@@ -4,17 +4,15 @@ from test_data.env import Env
 from test_data.user_creds import UserCredentials
 from api_actions.api_logout import post_logout
 from api_actions.api_logout import assert_unauthorized_request
-from api_actions.api_login import LoginAPI
+from api_actions.login_and_get_token import login_and_get_token
 
 
 def test_successful_post_logout():
-    login = LoginAPI()
-    response = login.post_login(UserCredentials.it_email,
-                                UserCredentials.it_password)
-    auth_token = response.json()['token']
+    auth_token = login_and_get_token(UserCredentials.it_email,
+                                     UserCredentials.it_password)
     logout = post_logout(auth_token)
-    assert logout.status_code == 200, \
-        f"Wrong status code: {logout.status_code}. Expected: 200"
+    assert logout.status_code == 200, (f"Wrong status code: {logout.status_code}. "
+                                       f"Expected: 200")
 
 
 def test_post_logout_fails_without_authorization():
@@ -24,10 +22,8 @@ def test_post_logout_fails_without_authorization():
 
 
 def test_post_logout_fails_for_expired_auth_token():
-    login = LoginAPI()
-    response = login.post_login(UserCredentials.it_email,
-                                UserCredentials.it_password)
-    auth_token = response.json()["token"]
+    auth_token = login_and_get_token(UserCredentials.it_email,
+                                     UserCredentials.it_password)
     logout_one = post_logout(auth_token)
     assert logout_one.status_code == 200, \
         f"Wrong status code: {logout_one.status_code}. Expected: 200"
