@@ -41,7 +41,7 @@ class LoginAPI:
         }
         response = None
         try:
-            response = requests.post(f'{self.url}{self.endpoint}', json=body)
+            response = requests.post(f"{Env.URL_Login}users/login", json=body)
             response.raise_for_status()
             return response
         except requests.exceptions.HTTPError as e:

@@ -1,8 +1,7 @@
 import requests
-from jsonschema import validate
+from jsonschema import validate, ValidationError
 from loguru import logger
 from test_data.env import Env
-from jsonschema import ValidationError
 
 
 class UserActsApi():
@@ -48,7 +47,7 @@ class UserActsApi():
         Authorizates user, gets token
         Returns token
         """
-        from pages.api_login import LoginAPI
+        from api_actions.api_login import LoginAPI
         login = LoginAPI()
         email = body['email'],
         password = body['password']

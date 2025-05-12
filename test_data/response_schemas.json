@@ -1,0 +1,41 @@
+{
+  "post_login": {
+    "type": "object",
+    "properties": {
+      "user": {
+        "type": "object",
+        "properties": {
+          "_id": {"type": "string"},
+          "firstName": {"type": "string"},
+          "lastName": {"type": "string"},
+          "email": {"type": "string"},
+          "__v": {"type": "number"}
+        },
+        "required": ["_id", "firstName", "lastName",
+          "email", "__v"]
+      },
+      "token": {"type": "string"}
+    },
+    "required": ["user", "token"]
+  },
+  "put_contact_upd": {
+    "type": "object",
+    "properties": {
+      "firstName": {"type": "string"},
+      "lastName": {"type": "string"},
+      "birthdate": {"type": "string", "format": "date"},
+      "email": {"type": "string", "format": "email"},
+      "phone": {"type": "string"},
+      "street1": {"type": "string"},
+      "street2": {"type": "string"},
+      "city": {"type": "string"},
+      "stateProvince": {"type": "string"},
+      "postalCode": {"type": "string"},
+      "country": {"type": "string"}
+    },
+    "required": ["firstName", "lastName", "birthdate",
+      "email", "phone", "street1", "street2",
+      "city", "stateProvince", "postalCode",
+      "country"]
+  }
+}

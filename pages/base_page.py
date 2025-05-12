@@ -1,7 +1,9 @@
 from selenium.common import TimeoutException
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 from loguru import logger
 
 
@@ -84,3 +86,11 @@ class BasePage:
 
     def locate_element(self, locator):
         return self.driver.find_element(*locator)
+
+    def is_text_present(self, locator, text):
+        try:
+            self.driver.find_element(By.XPATH, f'//{locator}[contains(text(), "{text}")]')
+            return True
+        except NoSuchElementException:
+            logger.warning(f'Text {text} is not found')
+            return False
