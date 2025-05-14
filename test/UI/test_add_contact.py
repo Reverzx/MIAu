@@ -19,7 +19,6 @@ from test_data.contacts_data import (
 def test_expected_element_present(driver):
     ac_page = AddContactPage(driver, Env.URL_AddContact)
     add_cont_page = ac_page.navigate_to_add_contact_page(
-        driver,
         UC.usr_to_add_cont_email,
         UC.usr_to_add_cont_password
         )

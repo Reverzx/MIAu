@@ -30,6 +30,7 @@ class ContactDetailsPage(BasePage):
             'logout': (By.ID, 'logout'),
         }
         self.logout_button = (By.ID, 'logout')
+        self.return_button = (By.ID, 'return')
 
     def navigate_to_contact_details_page(self, email, password):
         from pages.contact_list_page import ContactListPage
@@ -101,3 +102,10 @@ class ContactDetailsPage(BasePage):
         Clicks the Logout button and redirects to the Login page.
         """
         self.click_button(self.elements['logout'])
+
+    def click_return(self):
+        """
+        Clicks the Return to Contact List button and
+        redirects to the Contact List page.
+        """
+        self.click_button(self.return_button)
