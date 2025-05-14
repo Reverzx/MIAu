@@ -3,6 +3,7 @@ from pages.contact_details_page import ContactDetailsPage
 from test_data.user_creds import UserCredentials
 from loguru import logger
 
+
 def test_expected_elements_present(driver):
     # Navigate to the Contact Details page
     contact_details = ContactDetailsPage(driver, Env.URL_ContactDetails)
