@@ -1,0 +1,52 @@
+from loguru import logger
+from test_data.env import Env
+from pages.add_contact_page import AddContactPage
+from api_actions.api_contact_actions import ContActsApi
+from test_data.user_creds import UserCredentials as UC
+from test_data.contacts_data import (
+    user_to_add_cont as usr,
+    new_cont_not_full as ncnf
+)
+
+
+def test_return_to_contact_list_after_add_contact(driver):
+    addition = AddContactPage(driver, Env.URL_AddContact)
+    addition.navigate_to_add_contact_page(
+        UC.usr_to_add_cont_email,
+        UC.usr_to_add_cont_password
+    )
+    addition.fill_contact_form(ncnf)
+    addition.submit()
+    assert addition.is_url_correct(Env.URL_ContactList)
+    logger.success('Successfully redirected to Contact List page')
+    clear = ContActsApi()
+    clear.clear_cont_list(usr)
+
+
+def test_return_without_add_contact(driver):
+    addition = AddContactPage(driver, Env.URL_AddContact)
+    addition.navigate_to_add_contact_page(
+        UC.usr_to_add_cont_email,
+        UC.usr_to_add_cont_password
+    )
+    addition.fill_contact_form(ncnf)
+    addition.cancel()
+    assert addition.is_url_correct(Env.URL_ContactList)
+    logger.success('Successfully redirected to Contact List page')
+    clear = ContActsApi()
+    clear.clear_cont_list(usr)
+
+
+def test_return_after_clicking_return_button(driver):
+    addition = AddContactPage(driver, Env.URL_AddContact)
+    cl_page = addition.login_and_add_contact(
+        driver,
+        UC.usr_to_add_cont_email,
+        UC.usr_to_add_cont_password,
+        ncnf
+    )
+    cd_page = cl_page.navigate_to_contact_details_page()
+    cd_page.click_return()
+    assert cd_page.is_url_correct(Env.URL_ContactList)
+    clear = ContActsApi()
+    clear.clear_cont_list(usr)
