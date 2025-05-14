@@ -1,3 +1,4 @@
+# This module will be deleted
 from loguru import logger
 from test_data.env import Env
 from pages.login_page import LoginPage
