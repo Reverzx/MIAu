@@ -12,6 +12,6 @@ Documentation: Kaiten
 
 UI testing: Selenium WebDriver
 
-Reports: Allure, Pytest-html
+Reports: Allure
 
 Additionally: Page Object Model, GitHub Actions
