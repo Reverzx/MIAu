@@ -56,7 +56,8 @@ def test_update_contact_with_invalid_data():
     response_upd = contact_api.req_put_upd_contact(cont_id_fake, payload, auth_header)
     assert response_upd.status_code == 400, f"Expected 400, got {response_upd.status_code}"
     assert "Invalid Contact ID" in response_upd.text
-    logger.success("The expected status code 400 has been received with message 'Invalid Contact ID'")
+    logger.success("The expected status code 400 has "
+                   "been received with message 'Invalid Contact ID'")
     # Finale clear
     try:
         contact_api.delete_contact(auth_header, cont_id)
@@ -76,7 +77,8 @@ def test_update_contact_with_empty_data():
     payload = EditData.updated_data_empty
     response_upd = contact_api.req_put_upd_contact(cont_id, payload, auth_header)
     assert response_upd.status_code == 400, f"Expected 400, got {response_upd.status_code}"
-    logger.success(f"The expected status code 400 has been received with message: {response_upd.text}")
+    logger.success(f"The expected status code 400 has been "
+                   f"received with message: {response_upd.text}")
     # Finale clear
     try:
         contact_api.delete_contact(auth_header, cont_id)
@@ -102,4 +104,5 @@ def test_update_deleted_contact():
     response_upd = contact_api.req_put_upd_contact(cont_id, payload, auth_header)
     assert response_upd.status_code == 404, f"Expected 404, got {response_upd.status_code}"
 
-    logger.success("The expected status code 404 has been received when trying to edit a deleted contact")
+    logger.success("The expected status code 404 has been received "
+                   "when trying to edit a deleted contact")
