@@ -1,3 +1,4 @@
+from loguru import logger
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -38,19 +39,23 @@ class AddContactPage(BasePage):
         self.cancel_button = (By.ID, 'cancel')
         self.submit_button = (By.ID, 'submit')
 
+    def navigate_to_add_contact_page(self, email, password):
+        # Navigate to Login page
+        from pages.login_page import LoginPage
+        login_page = LoginPage(self.driver, Env.URL_Login)
+        login_page.open()
+
+        # Navigate to Contact List page
+        contact_list = login_page.complete_login(email, password)
+        logger.info("The user is logged in and redirected to the Contact List page")
+
+        # Navigate to Add Contact page
+        return contact_list.navigate_to_add_contact_page()
+
     def is_add_contact_page(self):
-        """
-        Checks whether the current URL matches the Add Contact page URL.
-        :return: True if the current URL is correct, otherwise False.
-        """
         return self.is_url_correct(Env.URL_AddContact)
 
     def fill_contact_form(self, data):
-        """
-        Fills in the Add Contact form fields using the provided data.
-        :param data: Dictionary of field IDs and values to fill.
-        :raises ValueError: If a given field is not recognized.
-        """
         for field_id, value in data.items():
             locator = self.elements.get(field_id)
             if locator:
@@ -66,15 +71,9 @@ class AddContactPage(BasePage):
         return self.is_text_correct(self.error, err_text)
 
     def submit(self):
-        """
-        Clicks the Submit button to attempt to save the new contact.
-        """
         self.click_button(self.elements['submit'])
 
     def logout(self):
-        """
-        Clicks the Logout button and redirects to the Login page.
-        """
         self.click_button(self.logout_button)
 
     def cancel(self):

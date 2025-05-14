@@ -31,6 +31,15 @@ class ContactDetailsPage(BasePage):
         }
         self.logout_button = (By.ID, 'logout')
 
+    def navigate_to_contact_details_page(self, email, password):
+        from pages.contact_list_page import ContactListPage
+        contact_list = ContactListPage(self.driver, Env.URL_ContactList)
+        contact_list_page = contact_list.navigate_to_contact_list_page(email, password)
+        return contact_list_page.navigate_to_contact_details_page()
+
+    def is_contact_details_page(self):
+        return self.is_url_correct(Env.URL_ContactDetails)
+
     def navigate_to_edit_contact_page(self):
         """
         Clicks the Edit Contact button and navigates to the Edit Contact page.
@@ -65,9 +74,6 @@ class ContactDetailsPage(BasePage):
         logger.success("Contact details match expected values.")
 
     def delete_contact(self):
-        """
-        Deletes the contact by clicking the Delete button and accepting the alert.
-        """
         self.click_button(self.elements['delete'])
         try:
             alert = self.driver.switch_to.alert
