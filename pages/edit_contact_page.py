@@ -1,6 +1,7 @@
 from pages.base_page import BasePage
 from test_data.env import Env
 from test_data.edit_data import EditData
+from loguru import logger
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -30,19 +31,34 @@ class EditContactPage(BasePage):
         self.error = (By.ID, 'error')
         self.logout_button = (By.ID, 'logout')
 
-    def is_edit_contact_page(self):
-        """
-        Checks whether the current URL matches the Edit Contact page URL.
-        :return: True if the current URL is correct, otherwise False.
-        """
+    def create_contact_and_navigate_edit_page(self, email, password, contact_data):
+        # Navigate to Login page
+        from pages.login_page import LoginPage
+        login_page = LoginPage(self.driver, Env.URL_Login)
+        login_page.open()
+
+        # Navigate to Contact List page
+        contact_list = login_page.complete_login(email, password)
+        logger.info("The user is logged in and redirected to the Contact List page")
+
+        # Navigate to Add Contact page
+        add_contact = contact_list.navigate_to_add_contact_page()
+
+        # Add a new contact
+        add_contact.fill_contact_form(contact_data)
+        add_contact.submit()
+        logger.info("A new contact is added.")
+
+        # Navigate to Contact Details page
+        contact_details = contact_list.navigate_to_contact_details_page()
+
+        # Navigate to Edit Contact page
+        return contact_details.navigate_to_edit_contact_page()
+
+    def is_edit_page(self):
         return self.is_url_correct(Env.URL_EditContact)
 
     def edit_contact_form(self, data):
-        """
-        Fills in the Edit Contact form fields with the provided data.
-        :param data: Dictionary of form fields and values to fill.
-        :raises ValueError: If a given field is not recognized.
-        """
         for field_id, value in data.items():
             locator = self.elements.get(field_id)
             if locator:
@@ -51,11 +67,6 @@ class EditContactPage(BasePage):
                 raise ValueError(f"Unknown field: {field_id}")
 
     def fill_fields_with_max_length_allowed(self):
-        """
-        Fills in the Edit Contact form fields using
-        the maximum allowed number of characters for each field.
-        :raises ValueError: If locator or corresponding test data is missing.
-        """
         mapping = {
             'firstName': '20 chars',
             'lastName': '20 chars',
@@ -86,33 +97,35 @@ class EditContactPage(BasePage):
         field.send_keys(Keys.DELETE)
 
     def submit(self):
-        """
-        Clicks the Submit button to attempt to save the edited contact.
-        """
         self.click_button(self.elements['submit'])
 
     def submit_and_wait(self):
-        """
-        Clicks the Submit button and waits until it disappears from the page,
-        indicating that the form is being processed.
-        """
         self.click_button(self.elements['submit'])
         WebDriverWait(self.driver, 5).until(
             EC.invisibility_of_element_located(self.elements['submit'])
         )
 
     def cancel(self):
-        """
-        Clicks the Cancel button to discard changes.
-        """
         self.click_button(self.elements['cancel'])
 
+    def cancel_edit_and_delete_contact(self):
+        from pages.contact_details_page import ContactDetailsPage
+        self.cancel()
+        contact_upd = ContactDetailsPage(
+            self.driver,
+            Env.URL_ContactDetails)
+        contact_upd.delete_contact()
+        logger.info("The contact is deleted")
+
+    def delete_contact(self):
+        from pages.contact_details_page import ContactDetailsPage
+        contact_details_page = ContactDetailsPage(
+            self.driver,
+            Env.URL_ContactDetails)
+        contact_details_page.delete_contact()
+        logger.info("The contact is deleted")
+
     def is_error_displayed(self, message):
-        """
-        Checks whether an error message is present and matches the expected text.
-        :param message: Expected error message text.
-        :return:True if the error is present and text matches; False otherwise.
-        """
         if not self.is_element_present(self.error):
             return False
         return self.is_text_correct(self.error, message)
@@ -122,14 +135,10 @@ class EditContactPage(BasePage):
         Checks that the edit was successful:
         - No error message is displayed.
         - User is redirected to the Contact Details page.
-        :return:True if the edit is successful; False otherwise.
         """
         if self.is_element_present(self.error):
             return False
         return self.is_url_correct(Env.URL_ContactDetails)
 
     def logout(self):
-        """
-        Clicks the Logout button and redirects to the Login page.
-        """
         self.click_button(self.logout_button)

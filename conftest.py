@@ -1,9 +1,11 @@
+import sys
+import json
+import pytest
+from pathlib import Path
+from loguru import logger
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-import pytest
-from loguru import logger
-import sys
 
 
 def pytest_configure(config):
@@ -30,3 +32,10 @@ def driver():
     yield browser
     logger.info("Closing browser")
     browser.quit()
+
+
+@pytest.fixture
+def read_schema():
+    path = Path(__file__).parents[0] / "test_data" / "response_schemas.json"
+    with path.open() as f:
+        return json.load(f)
