@@ -143,6 +143,11 @@ class EditData:
     ]
 
     mandatory_fields_errors = [
+        ('firstName', 'Validation failed: firstName: Path `firstName` is required.'),
+        ('lastName', 'Validation failed: lastName: Path `lastName` is required.'),
+    ]
+
+    mandatory_fields_errors_api = [
         ('firstName', '', 'Validation failed: firstName: Path `firstName` is required.'),
         ('firstName', ' ', 'Validation failed: firstName: Path `firstName` is required.'),
         ('firstName', None, 'Validation failed: firstName: Path `firstName` is required.'),
