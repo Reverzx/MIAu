@@ -32,6 +32,20 @@ class EditData:
         'country': 'The Republic of Belarus',
     }
 
+    updated_data_invalid = {
+        'firstName': 'Marina',
+        'lastName': 'Kulikova',
+        'birthdate': '1935-13-07',
+        'email': 'galyafake.com”',
+        'phone': '8800535353512344',
+        'street1': 'Mir str',
+        'street2': '5',
+        'city': 'Minsk',
+        'stateProvince': 'Minsk',
+        'postalCode': '200000',
+        'country': 'The Republic of Belarus',
+    }
+
     updated_data_empty = {
         'firstName': '',
         'lastName': '',
