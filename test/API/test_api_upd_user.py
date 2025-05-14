@@ -1,6 +1,7 @@
 import pytest
 from loguru import logger
 from api_actions.api_user_actions import UserActsApi
+from api_actions.api_login import LoginAPI
 from test_data.usr_update_data import usr_to_be_update, upd_data
 from test_data.usr_update_data import upd_usr_with_empty_fields as ef, invalid_data_to_upd as invd
 
@@ -50,7 +51,8 @@ def test_login_after_update():
     """
     update = UserActsApi()
     update.patch_upd_user(usr_to_be_update, upd_data)
-    response = update.post_login(upd_data['email'], upd_data['password'])
+    login = LoginAPI()
+    response = login.post_login(upd_data['email'], upd_data['password'])
     assert response.status_code == 200
     logger.success('Response status code is 200')
     data_to_check = response.json()
