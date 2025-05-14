@@ -8,7 +8,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-def pytest_configure(config):
+def pytest_configure(config):  # pylint: disable=unused-argument
     logger.remove()
     logger.add(sys.stdout, level='INFO')
 
