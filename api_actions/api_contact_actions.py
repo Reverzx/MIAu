@@ -2,7 +2,7 @@ import requests
 from jsonschema import validate, ValidationError
 from loguru import logger
 from test_data.env import Env
-from pages.api_user_actions import UserActsApi
+from api_actions.api_user_actions import UserActsApi
 
 
 class ContActsApi():
