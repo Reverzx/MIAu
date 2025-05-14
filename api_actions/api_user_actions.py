@@ -9,6 +9,7 @@ class UserActsApi():
     def __init__(self):
         self.url = f'{Env.URL_Login}users'
         self.usr_profile_url = f'{Env.URL_Login}users/me'
+        self.login_url = f'{self.url}/login'
         self.header = {
             'Authorization': 'Bearer {{token}}'
             }
@@ -42,16 +43,36 @@ class UserActsApi():
             "required": ["_id", "firstName", "lastName", "email", "__v"]
         }
 
+    def post_login(self, email, password):
+        """
+        Sends a POST request using the provided email and password.
+        :return: The response object if the request was made,
+        or None if a request exception occurred.
+        """
+        body = {
+            "email": email,
+            "password": password
+        }
+        response = None
+        try:
+            response = requests.post(url=self.login_url, json=body)
+            response.raise_for_status()
+            return response
+        except requests.exceptions.HTTPError as e:
+            logger.warning(f"HTTP error occurred: {e}")
+            return response
+        except requests.exceptions.RequestException as e:
+            logger.warning(f"Request error occurred: {e}")
+            return None
+
     def authorizate_and_get_token(self, body):
         """
         Authorizates user, gets token
         Returns token
         """
-        from api_actions.api_login import LoginAPI
-        login = LoginAPI()
         email = body['email'],
         password = body['password']
-        auth = login.post_login(email, password)
+        auth = self.post_login(email, password)
         token = auth.json()['token']
         head = {
             'Authorization': f'{token}'
