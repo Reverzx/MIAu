@@ -47,8 +47,8 @@ def test_get_contacts_when_contacts_created():
     for field in required_fields:
         assert field in contacts[0], f"Field '{field}' is missing in contact: {contacts[0]}"
 
-    logger.success(f"The expected status code 200 has been received "
-                   f"and response contains contacts with all required fields.")
+    logger.success("The expected status code 200 has been received "
+                   "and response contains contacts with all required fields.")
 
 
 def test_get_and_add_contact():
