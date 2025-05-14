@@ -7,6 +7,13 @@ user_to_add_cont = {
     "password": UC.usr_to_add_cont_password
 }
 
+user_to_up_cont = {
+    "firstName": UC.to_be_update_fname,
+    "lastName": UC.to_be_update_lname,
+    "email": UC.to_be_update_email,
+    "password": UC.to_be_update_password
+}
+
 nc_fname = 'Richard'
 nc_lname = 'Moser'
 nc_bdate = '1975-03-12'

@@ -32,6 +32,20 @@ class EditData:
         'country': 'The Republic of Belarus',
     }
 
+    updated_data_empty = {
+        'firstName': '',
+        'lastName': '',
+        'birthdate': '',
+        'email': '',
+        'phone': '',
+        'street1': '',
+        'street2': '',
+        'city': '',
+        'stateProvince': '',
+        'postalCode': '',
+        'country': ''
+    }
+
     error_message = {
         'email': 'Validation failed: email: Email is invalid',
         'phone': 'Validation failed: phone: Phone number is invalid',
