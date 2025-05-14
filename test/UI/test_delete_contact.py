@@ -21,7 +21,8 @@ def test_deleting_a_contact_positive_scenario(driver):
 
     # Navigate to details contact
     contact_details_page = contact_list_page.navigate_to_contact_details_page()
-    assert contact_details_page is not None, "Don't open contact detail page - contact list is empty"
+    assert contact_details_page is not None, ("Don't open contact detail page - "
+                                              "contact list is empty")
 
     # Delete contact and redirect to the contact list
     contact_details_page.delete_contact()
@@ -48,7 +49,8 @@ def test_deleting_a_contact_canceling(driver):
 
     # Navigate to details contact
     contact_details_page = contact_list_page.navigate_to_contact_details_page()
-    assert contact_details_page is not None, "Don't open contact detail page - contact list is empty"
+    assert contact_details_page is not None, ("Don't open contact detail page - "
+                                              "contact list is empty")
 
     # Try deleted contact and canceling delete
     contact_details_page.cancel_delete_contact()
