@@ -3,7 +3,6 @@ from loguru import logger
 from test_data.env import Env
 from pages.add_contact_page import AddContactPage
 from api_actions.api_contact_actions import ContActsApi
-from test.UI.helpers import navigate_add_contact_page
 from test_data.user_creds import UserCredentials as UC
 from test_data.contacts_data import (
     new_cont_cancel_data as nccd,
@@ -18,7 +17,8 @@ from test_data.contacts_data import (
 
 
 def test_expected_element_present(driver):
-    add_cont_page = navigate_add_contact_page(
+    ac_page = AddContactPage(driver, Env.URL_AddContact)
+    add_cont_page = ac_page.navigate_to_add_contact_page(
         driver,
         UC.usr_to_add_cont_email,
         UC.usr_to_add_cont_password
