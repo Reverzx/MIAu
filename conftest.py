@@ -1,7 +1,7 @@
 import sys
 import json
-import pytest
 from pathlib import Path
+import pytest
 from loguru import logger
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service

@@ -37,4 +37,4 @@ class ContactListPage(BasePage):
             return None
 
     def logout(self):
-         self.click_button(self.logout_button)
+        self.click_button(self.logout_button)
