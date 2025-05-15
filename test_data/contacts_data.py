@@ -14,6 +14,13 @@ user_to_up_cont = {
     "password": UC.to_be_update_password
 }
 
+user_without_cont = {
+    "firstName": UC.user_empty_fname,
+    "lastName": UC.user_empty_lname,
+    "email": UC.user_empty_email,
+    "password": UC.user_empty_password
+}
+
 nc_fname = 'Richard'
 nc_lname = 'Moser'
 nc_bdate = '1975-03-12'

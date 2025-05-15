@@ -38,3 +38,8 @@ class UserCredentials:
 
     zm_email = "R@mail.com"
     zm_password = "Turbo95"
+
+    user_empty_fname = 'Empty'
+    user_empty_lname = 'Empty1'
+    user_empty_email = 'Empty1@mail.com'
+    user_empty_password = 'EmptyEmpty'
