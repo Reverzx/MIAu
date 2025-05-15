@@ -1,5 +1,6 @@
 import sys
 import json
+import tempfile
 from pathlib import Path
 import pytest
 from loguru import logger
@@ -18,6 +19,19 @@ def driver():
     logger.info("Launching headless-browser")
     _options = webdriver.ChromeOptions()
     _options.add_argument("--headless")
+
+    # Added to resolve CI and Jenkins issues
+    # Start
+    _options.add_argument("--no-sandbox")
+    _options.add_argument("--disable-dev-shm-usage")
+    _options.add_argument("--disable-gpu")
+    _options.add_argument("--disable-extensions")
+    _options.add_argument("--window-size=1920,1080")
+
+    user_data_dir = tempfile.mkdtemp()
+    _options.add_argument(f"--user-data-dir={user_data_dir}")
+    # End
+
     prefs = {
         "credentials_enable_service": False,
         "profile.password_manager_enabled": False
