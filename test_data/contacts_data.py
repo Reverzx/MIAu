@@ -1,6 +1,6 @@
 from test_data.user_creds import UserCredentials as UC
 
-user_to_add_cont = {
+user_to_add_contact = {
     "firstName": UC.usr_to_add_cont_fname,
     "lastName": UC.usr_to_add_cont_lname,
     "email": UC.usr_to_add_cont_email,
@@ -8,10 +8,10 @@ user_to_add_cont = {
 }
 
 user_to_up_cont = {
-    "firstName": UC.to_be_update_fname,
-    "lastName": UC.to_be_update_lname,
-    "email": UC.to_be_update_email,
-    "password": UC.to_be_update_password
+    "firstName": UC.usr_to_add_cont_fname,
+    "lastName": UC.usr_to_add_cont_lname,
+    "email": UC.usr_to_add_cont_email,
+    "password": UC.usr_to_add_cont_password
 }
 
 nc_fname = 'Richard'
@@ -26,7 +26,7 @@ nc_state = 'Man'
 nc_postcode = '212850'
 nc_country = 'USA'
 
-new_cont_valid_data = {
+new_contact_valid_data = {
     "firstName": nc_fname,
     "lastName": nc_lname,
     "birthdate": nc_bdate,
@@ -57,12 +57,12 @@ ncw_state = 'Ontario'
 ncw_postcode = '3345'
 ncw_country = 'Canada '
 
-new_cont_not_full = {
+new_contact_not_full_data = {
     "firstName": 'Akki',
     "lastName": 'Tostison'
 }
 
-new_cont_empty_mand_fields = [
+new_contact_empty_mandatory_fields = [
     ({"firstName": "", "lastName": ncw_lname, "birthdate": ncw_bdate, "email": ncw_email,
       "phone": ncw_phone, "street1": ncw_str1, "street2": ncw_str2, "city": ncw_city,
       "stateProvince": ncw_state, "postalCode": ncw_postcode, "country": ncw_country},
@@ -77,7 +77,7 @@ new_cont_empty_mand_fields = [
      'Empty First name and Last name fields')
 ]
 
-new_cont_invalid_data = [
+new_contact_invalid_data = [
     ({"firstName": ncw_fname, "lastName": ncw_lname, "birthdate": '1965-13-25', "email": ncw_email,
       "phone": ncw_phone, "street1": ncw_str1, "street2": ncw_str2, "city": ncw_city,
       "stateProvince": ncw_state, "postalCode": ncw_postcode, "country": ncw_country},
@@ -93,7 +93,7 @@ new_cont_invalid_data = [
      'Invalid postal code')
 ]
 
-inv_phone = [
+invalid_phone = [
     ({"firstName": ncw_fname, "lastName": ncw_lname, "birthdate": ncw_bdate, "email": ncw_email,
       "phone": '+379-33-685-156', "street1": ncw_str1, "street2": ncw_str2, "city": ncw_city,
       "stateProvince": ncw_state, "postalCode": ncw_postcode, "country": ncw_country},
@@ -113,7 +113,7 @@ inv_phone = [
      'Phone number is longer, than 15 symbols')
 ]
 
-inv_adress_data = [
+invalid_adress_data = [
     ({"firstName": ncw_fname, "lastName": ncw_lname, "birthdate": ncw_bdate, "email": ncw_email,
       "phone": ncw_phone, "street1": ncw_str1, "street2": ncw_str2, "city": '42',
       "stateProvince": ncw_state, "postalCode": ncw_postcode, "country": ncw_country},

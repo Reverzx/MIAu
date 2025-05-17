@@ -22,7 +22,7 @@ def test_post_sign_up_status_code():
 
 def test_signup_response_schema():
     """
-    Verifies, that response body contains all the expected fields
+    Verifies, that response schema mathes vith expected schema
     """
     register = UserActsApi()
     response = register.post_sign_up(usr_to_add)

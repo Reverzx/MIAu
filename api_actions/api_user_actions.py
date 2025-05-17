@@ -2,6 +2,7 @@ import requests
 from jsonschema import validate, ValidationError
 from loguru import logger
 from test_data.env import Env
+from api_actions.catch_request_exception import catch_request_exception
 
 
 class UserActsApi():
@@ -17,7 +18,7 @@ class UserActsApi():
     def get_header(self, body):
         """
         Authorizates user, gets token
-        Returns token
+        Returns header with actual token
         """
         json ={
             'email': body['email'],
@@ -30,22 +31,12 @@ class UserActsApi():
         }
         return header
 
+    @catch_request_exception
     def post_sign_up(self, body):
         """
-        Sends a POST request with provided user credentials
-        Returns the response if the request has been made, in case od exception - None
+        Sends a POST request with provided user credentials to register a new user
         """
-        response = None
-        try:
-            response = requests.post(url=self.signup_url, headers=self.header, json=body)
-            response.raise_for_status()
-            return response
-        except requests.exceptions.HTTPError as h:
-            logger.warning(f'HTTP error occured: {h}')
-            return response
-        except requests.exceptions.RequestException as r:
-            logger.warning(f'Request error occured: {r}')
-            return None
+        return requests.post(url=self.signup_url, headers=self.header, json=body)
 
     def is_response_schema_correct(self, response, expected_schema):
         """
@@ -60,24 +51,13 @@ class UserActsApi():
             logger.warning(f"JSON schema validation error: {v}")
             return False
 
-
+    @catch_request_exception
     def patch_upd_user(self, body, upd_body):
         """
         Sends a PATCH request with provided user credentials to update user profile
-        Returns the response if the request has been made, in case od exception - None
         """
-        response = None
         head = self.get_header(body)
-        try:
-            response = requests.patch(url=self.usr_profile_url, headers=head, json=upd_body)
-            response.raise_for_status()
-            return response
-        except requests.exceptions.HTTPError as h:
-            logger.warning(f'HTTP error occured: {h}')
-            return response
-        except requests.exceptions.RequestException as r:
-            logger.warning(f'Request error occured: {r}')
-            return None
+        return requests.patch(url=self.usr_profile_url, headers=head, json=upd_body)
 
     def upd_usr_with_invalid_data(self, body, upd_body):
         """
@@ -96,15 +76,16 @@ class UserActsApi():
         """
         return requests.post(url=self.signup_url, headers=self.header, json=body)
 
+    @catch_request_exception
     def get_user_profile(self, body):
         """
         Sends a GET request with provided data to get user's data
         Returns the response object
         """
         head = self.get_header(body)
-        response = requests.get(url=self.usr_profile_url, headers=head)
-        return response
+        return requests.get(url=self.usr_profile_url, headers=head)
 
+    @catch_request_exception
     def delete_user(self, body):
         """
         Removes user from database
