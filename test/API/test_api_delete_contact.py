@@ -1,7 +1,7 @@
 from loguru import logger
 from api_actions.api_contact_actions import ContActsApi
 from test_data.edit_data import EditData
-from test_data.contacts_data import user_to_add_cont as usr, new_cont_valid_data as ncvd
+from test_data.contacts_data import user_to_add_contact as usr, new_contact_valid_data as ncvd
 
 
 def test_successful_contact_deletion():
