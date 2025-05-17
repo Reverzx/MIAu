@@ -1,7 +1,7 @@
 import pytest
-import requests
 from loguru import logger
 from api_actions.api_user_actions import UserActsApi
+from api_actions.post_login import post_login
 from test_data.users_schemas import (
     update_and_get_user_profile_response_schema,
     signin_and_login_user_response_schema
@@ -49,10 +49,7 @@ def test_login_after_update():
     """
     update = UserActsApi()
     update.patch_upd_user(user_to_be_update, upd_data)
-    response = requests.post(
-        url=update.login_url,
-        json={"email": upd_data["email"], "password": upd_data["password"]}
-    )
+    response = post_login(upd_data["email"], upd_data["password"])
     assert response.status_code == 200, \
         f'Status code is {response.status_code}, expected 200'
     assert update.is_response_schema_correct(
@@ -73,7 +70,7 @@ def test_upd_user_with_empty_fields(body, description, field_name):
     response = update.upd_usr_with_invalid_data(user_to_be_update, body)
     assert response.status_code == 400, \
         f'Status code is {response.status_code}, expected 400'
-    logger.success(f'Response status code is 400. {field_name} field is required.')
+    logger.success(f'User updation flopped status code 400. {field_name} field is required.')
 
 
 @pytest.mark.parametrize('body, description', invalid_data_to_upd)
@@ -86,7 +83,7 @@ def test_upd_user_with_invalid_data(body, description):
     response = update.upd_usr_with_invalid_data(user_to_be_update, body)
     assert response.status_code == 400, \
         f'Status code is {response.status_code}, expected 400'
-    logger.success('Response status code is 400.')
+    logger.success('User updation flopped status code 400.')
 
 
 @pytest.mark.parametrize('body, description, field_name', upd_usr_with_some_empty_fields)

@@ -14,36 +14,16 @@ class UserActsApi():
             'Authorization': 'Bearer {{token}}'
             }
 
-    def post_login(self, email, password):
-        """
-        Sends a POST request using the provided email and password.
-        :return: The response object if the request was made,
-        or None if a request exception occurred.
-        """
-        body = {
-            "email": email,
-            "password": password
-        }
-        response = None
-        try:
-            response = requests.post(url=self.login_url, json=body)
-            response.raise_for_status()
-            return response
-        except requests.exceptions.HTTPError as e:
-            logger.warning(f"HTTP error occurred: {e}")
-            return response
-        except requests.exceptions.RequestException as e:
-            logger.warning(f"Request error occurred: {e}")
-            return None
-
     def get_header(self, body):
         """
         Authorizates user, gets token
         Returns token
         """
-        email = body['email'],
-        password = body['password']
-        auth = self.post_login(email, password)
+        json ={
+            'email': body['email'],
+            'password': body['password']
+        }
+        auth = requests.post(url=self.login_url, json=json)
         token = auth.json()['token']
         header = {
             'Authorization': f'{token}'
