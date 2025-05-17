@@ -1,4 +1,3 @@
-import pytest
 from loguru import logger
 from test_data.env import Env
 from pages.add_contact_page import AddContactPage

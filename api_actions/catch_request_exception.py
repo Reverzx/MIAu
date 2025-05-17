@@ -1,6 +1,7 @@
 import requests
 from loguru import logger
 
+
 def catch_request_exception(func):
     """
     Decorator returns the response if the request has been made, in case of exception - None

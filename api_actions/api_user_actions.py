@@ -20,7 +20,7 @@ class UserActsApi():
         Authorizates user, gets token
         Returns header with actual token
         """
-        json ={
+        json = {
             'email': body['email'],
             'password': body['password']
         }

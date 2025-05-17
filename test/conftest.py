@@ -5,6 +5,7 @@ from test_data.register_data import usr_to_add, usr_to_delete
 from test_data.usr_update_data import user_to_be_update, upd_data
 from test_data.contacts_data import user_to_add_contact
 
+
 @pytest.fixture(scope='function')
 def delete_user(request):
     """
@@ -14,6 +15,7 @@ def delete_user(request):
         delete = UserActsApi()
         delete.delete_user(usr_to_add)
     request.addfinalizer(fin)
+
 
 @pytest.fixture(scope='function')
 def sign_up_user(request):
@@ -25,6 +27,7 @@ def sign_up_user(request):
         signup.post_sign_up(usr_to_delete)
     request.addfinalizer(fin)
 
+
 @pytest.fixture(scope='function')
 def revert_updation(request):
     """
@@ -34,6 +37,7 @@ def revert_updation(request):
         revert = UserActsApi()
         revert.patch_upd_user(upd_data, user_to_be_update)
     request.addfinalizer(fin)
+
 
 @pytest.fixture(scope='function')
 def clear_contacts(request):

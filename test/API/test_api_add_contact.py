@@ -123,7 +123,7 @@ def test_add_contact_with_invalid_phone(body, description):
     assert response.status_code == 400, \
         f'Status code is {response.status_code}, expected 400'
     logger.success("Addition of new contact failed with status code 400. "
-                  f"{response.json()['message']}")
+                   f"{response.json()['message']}")
 
 
 @pytest.mark.xfail
