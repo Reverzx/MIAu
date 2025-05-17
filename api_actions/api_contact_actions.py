@@ -8,31 +8,10 @@ from api_actions.api_user_actions import UserActsApi
 class ContActsApi():
     def __init__(self):
         self.url = f'{Env.URL_Login}contacts'
-        self.schema = {
-            "$schema": "http://json-schema.org/draft-04/schema#",
-            "type": "object",
-            "properties": {
-                "_id": {"type": "string"},
-                "firstName": {"type": "string"},
-                "lastName": {"type": "string"},
-                "birthdate": {"type": "string"},
-                "email": {"type": "string"},
-                "phone": {"type": "string"},
-                "street1": {"type": "string"},
-                "street2": {"type": "string"},
-                "city": {"type": "string"},
-                "stateProvince": {"type": "string"},
-                "postalCode": {"type": "string"},
-                "country": {"type": "string"},
-                "owner": {"type": "string"},
-                "__v": {"type": "integer"}
-            },
-            "required": ["_id", "firstName", "lastName", "owner", "__v"]
-        }
 
-    def auth_and_get_token(self, usr_body):
+    def auth_and_get_header(self, usr_body):
         req = UserActsApi()
-        header = req.authorizate_and_get_token(usr_body)
+        header = req.get_header(usr_body)
         return header
 
     def req_add_contact(self, cont_data, header):
@@ -54,7 +33,7 @@ class ContActsApi():
         return requests.delete(url=f'{self.url}/{cont_id}', headers=header)
 
     def add_cont_valid_data(self, user, new_cont):
-        header = self.auth_and_get_token(user)
+        header = self.auth_and_get_header(user)
         response = None
         try:
             response = self.req_add_contact(new_cont, header)
@@ -68,11 +47,11 @@ class ContActsApi():
             return None
 
     def add_cont_invalid_data(self, user, new_cont):
-        header = self.auth_and_get_token(user)
+        header = self.auth_and_get_header(user)
         return self.req_add_contact(new_cont, header)
 
     def is_response_schema_correct(self, user, new_cont):
-        header = self.auth_and_get_token(user)
+        header = self.auth_and_get_header(user)
         response = self.req_add_contact(new_cont, header)
         if not response:
             logger.warning("No response returned")
@@ -86,7 +65,7 @@ class ContActsApi():
             return False
 
     def clear_cont_list(self, user):
-        header = self.auth_and_get_token(user)
+        header = self.auth_and_get_header(user)
         cont_list = self.req_get_contact_list(header).json()
         ids = []
         for item in cont_list:
@@ -95,7 +74,7 @@ class ContActsApi():
             self.delete_contact(header, item)
 
     def get_cont_list_after_add_new_cont(self, user, new_cont):
-        header = self.auth_and_get_token(user)
+        header = self.auth_and_get_header(user)
         addition = self.req_add_contact(new_cont, header)
         cont_id = addition.json()['_id']
         response = self.req_get_contact_list(header)

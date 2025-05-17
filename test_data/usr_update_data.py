@@ -1,17 +1,17 @@
 from test_data.user_creds import UserCredentials as UC
 
 usr_to_be_update = {
-    "firstName": UC.to_be_update_fname,
-    "lastName": UC.to_be_update_lname,
-    "email": UC.to_be_update_email,
-    "password": UC.to_be_update_password
+    "firstName": 'Johny',
+    "lastName": 'Whiskers',
+    "email": 'best@mail.soap',
+    "password": 'thepassword'
 }
 
 upd_data = {
-    "firstName": f'upd{UC.to_be_update_fname}',
-    "lastName": f'upd{UC.to_be_update_lname}',
-    "email": f'upd{UC.to_be_update_email}',
-    "password": f'upd{UC.to_be_update_password}'
+    "firstName": 'uJohny',
+    "lastName": 'uWhiskers',
+    "email": 'ubest@mail.soap',
+    "password": 'uthepassword'
 }
 
 upd_usr_with_empty_fields = [
