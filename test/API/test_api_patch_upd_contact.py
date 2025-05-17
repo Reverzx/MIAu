@@ -7,7 +7,7 @@ from test_data.contacts_data import user_to_add_cont as usr, new_cont_valid_data
 def test_update_contact_with_valid_data():
     # Create contact
     contact_api = ContActsApi()
-    auth_header = contact_api.auth_and_get_token(usr)
+    auth_header = contact_api.auth_and_get_header(usr)
     response_add = contact_api.req_add_contact(ncvd, auth_header)
     assert response_add.status_code == 201
     cont_id = response_add.json()["_id"]
@@ -45,7 +45,7 @@ def test_update_contact_with_valid_data():
 def test_update_contact_with_invalid_contact_id():
     # Create contact
     contact_api = ContActsApi()
-    auth_header = contact_api.auth_and_get_token(usr)
+    auth_header = contact_api.auth_and_get_header(usr)
     response_add = contact_api.req_add_contact(ncvd, auth_header)
     assert response_add.status_code == 201
     cont_id = response_add.json()["_id"]
@@ -68,7 +68,7 @@ def test_update_contact_with_invalid_contact_id():
 def test_update_contact_with_empty_data():
     # Create contact
     contact_api = ContActsApi()
-    auth_header = contact_api.auth_and_get_token(usr)
+    auth_header = contact_api.auth_and_get_header(usr)
     response_add = contact_api.req_add_contact(ncvd, auth_header)
     assert response_add.status_code == 201
     cont_id = response_add.json()["_id"]
@@ -94,7 +94,7 @@ def test_update_contact_with_empty_data():
 def test_update_deleted_contact():
     # Create contact
     contact_api = ContActsApi()
-    auth_header = contact_api.auth_and_get_token(usr)
+    auth_header = contact_api.auth_and_get_header(usr)
     response_add = contact_api.req_add_contact(ncvd, auth_header)
     assert response_add.status_code == 201
     cont_id = response_add.json()["_id"]
@@ -116,7 +116,7 @@ def test_update_deleted_contact():
 def test_update_contact_with_invalid_data():
     # Create contact
     contact_api = ContActsApi()
-    auth_header = contact_api.auth_and_get_token(usr)
+    auth_header = contact_api.auth_and_get_header(usr)
     response_add = contact_api.req_add_contact(ncvd, auth_header)
     assert response_add.status_code == 201
     cont_id = response_add.json()["_id"]
