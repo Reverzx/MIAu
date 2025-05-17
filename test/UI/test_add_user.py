@@ -2,12 +2,11 @@ import pytest
 from loguru import logger
 from test_data.env import Env
 from pages.login_page import LoginPage
-from api_actions.api_user_actions import UserActsApi
 from test_data.user_creds import UserCredentials as UC
 from test_data.register_data import invalid_email_ui, short_pasword_ui
 
 
-def test_add_user_valid_creds(driver):
+def test_add_user_valid_creds(driver, delete_user):
     """
     Verifies successful registration vith valid user credentials
     """
@@ -19,9 +18,6 @@ def test_add_user_valid_creds(driver):
                               UC.reg_new_email, UC.reg_new_password)
     assert add_usr_page.is_signup_successful
     logger.success("New user is successfully added")
-    rm = UserActsApi()
-    rm.delete_user({"email": UC.reg_new_email,
-                    "password": UC.reg_new_password})
 
 
 def test_sign_up_user_exist(driver):

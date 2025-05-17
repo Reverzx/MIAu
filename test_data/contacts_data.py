@@ -40,7 +40,7 @@ new_contact_valid_data = {
     "country": nc_country
 }
 
-new_cont_cancel_data = {
+new_contact_cancel_data = {
     "firstName": 'Ralf',
     "lastName": 'Stokinger'
 }
@@ -151,7 +151,7 @@ error_postcode_msg = 'Contact validation failed: postalCode: Postal code is inva
 
 long_phone_numb = '012345678987654321'
 
-ui_new_cont_empty_mand_fields = [
+ui_new_cont_empty_mandatory_fields = [
     ({"firstName": "", "lastName": ncw_lname, "birthdate": ncw_bdate, "email": ncw_email,
       "phone": ncw_phone, "street1": ncw_str1, "street2": ncw_str2, "city": ncw_city,
       "stateProvince": ncw_state, "postalCode": ncw_postcode, "country": ncw_country},
@@ -166,7 +166,7 @@ ui_new_cont_empty_mand_fields = [
      'Empty First name and Last name fields', error_mfields_msg)
 ]
 
-ui_new_cont_invalid_data = [
+ui_new_contact_invalid_data = [
     ({"firstName": ncw_fname, "lastName": ncw_lname, "birthdate": '1965-13-25', "email": ncw_email,
       "phone": ncw_phone, "street1": ncw_str1, "street2": ncw_str2, "city": ncw_city,
       "stateProvince": ncw_state, "postalCode": ncw_postcode, "country": ncw_country},
@@ -182,7 +182,7 @@ ui_new_cont_invalid_data = [
      'Invalid postal code', error_postcode_msg)
 ]
 
-ui_inv_phone = [
+ui_invalid_phone = [
     ({"firstName": ncw_fname, "lastName": ncw_lname, "birthdate": ncw_bdate, "email": ncw_email,
       "phone": '+379-33-685-156', "street1": ncw_str1, "street2": ncw_str2, "city": ncw_city,
       "stateProvince": ncw_state, "postalCode": ncw_postcode, "country": ncw_country},
