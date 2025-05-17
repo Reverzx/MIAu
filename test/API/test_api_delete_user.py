@@ -3,7 +3,7 @@ from api_actions.api_user_actions import UserActsApi
 from test_data.register_data import usr_to_delete
 
 
-def test_del_user_status_code():
+def test_del_user_status_code(sign_up_user):
     """
     Verifies the response status code of User Delete
     """
@@ -12,10 +12,9 @@ def test_del_user_status_code():
     assert response.status_code == 200, \
         f'Status code is {response.status_code}, expected 200'
     logger.success('User is successfully deleted with response status code 200')
-    delete.post_sign_up(usr_to_delete)
 
 
-def test_verify_delete_user_response_text():
+def test_verify_delete_user_response_text(sign_up_user):
     """
     Verifies, that response text of Delete User is empty
     """
@@ -24,10 +23,9 @@ def test_verify_delete_user_response_text():
     assert response.text == '', \
         f'Got response text {response.text}'
     logger.success('Response contains no text as expected. User is successfully deleted')
-    delete.post_sign_up(usr_to_delete)
 
 
-def test_del_user_two_times():
+def test_del_user_two_times(sign_up_user):
     """
     Tries to delete the same user two times. Checks the response
     """
@@ -39,10 +37,9 @@ def test_del_user_two_times():
         f'Response JSON has no attribute "error", {response.json()}'
     assert response.json()['error'] == 'Please authenticate.'
     logger.success('Response status code is 401. Response contains expected error message')
-    delete.post_sign_up(usr_to_delete)
 
 
-def test_get_deleted_user():
+def test_get_deleted_user(sign_up_user):
     """
     Tries to get deletes user's profile. Checks the response
     """
@@ -54,4 +51,3 @@ def test_get_deleted_user():
         f'Response JSON has no attribute "error", {response.json()}'
     assert response.json()['error'] == 'Please authenticate.'
     logger.success('Response status code is 401. Response contains expected error message')
-    delete.post_sign_up(usr_to_delete)

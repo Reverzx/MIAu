@@ -14,7 +14,7 @@ from test_data.contacts_data import (
 )
 
 
-def test_add_contact_status_code():
+def test_add_contact_status_code(clear_contacts):
     """
     Verifies, that the responce status code is 201,
     SignUp POST request is successful
@@ -26,10 +26,9 @@ def test_add_contact_status_code():
     assert response.status_code == 201, \
         f'Status code is {response.status_code}, expected 201'
     logger.success('Contact is successfully added with response status code 201')
-    newcont.clear_cont_list(user_to_add_contact)
 
 
-def test_add_contact_response_data():
+def test_add_contact_response_data(clear_contacts):
     """
     Verifies, that data ot in response JSON mathes with sent data
     """
@@ -40,10 +39,9 @@ def test_add_contact_response_data():
     data_to_check = response.json()
     assert_json_response(new_contact_valid_data, data_to_check)
     logger.success('Response body contains all the necessary details')
-    newcont.clear_cont_list(user_to_add_contact)
 
 
-def test_add_contact_response_schema():
+def test_add_contact_response_schema(clear_contacts):
     """
     Verifies, that response schema mathes vith expected schema
     """
@@ -56,10 +54,9 @@ def test_add_contact_response_schema():
         add_contact_response_schema), \
         f'Response schema does not match, got {response.json()}'
     logger.success('Got response json matches with expected schema')
-    newcont.clear_cont_list(user_to_add_contact)
 
 
-def test_is_new_contact_added():
+def test_is_new_contact_added(clear_contacts):
     """
     Adds new contact, looks for new contact's ID among all contact IDs
     """
@@ -68,10 +65,9 @@ def test_is_new_contact_added():
         user_to_add_contact,
         new_contact_valid_data)
     logger.success('New contact was successfully added')
-    newcont.clear_cont_list(user_to_add_contact)
 
 
-def test_add_cont_filling_only_mandatory_fields():
+def test_add_cont_filling_only_mandatory_fields(clear_contacts):
     """
     Verifies Add new contact, filling only mandatory fields.
     Checks the response status code and JSON schema
@@ -88,7 +84,6 @@ def test_add_cont_filling_only_mandatory_fields():
         add_contact_response_schema
     ), f'Response schema does not match, got {response.json()}'
     logger.success('Got response json matches with expected schema')
-    newcont.clear_cont_list(user_to_add_contact)
 
 
 @pytest.mark.parametrize('body, description', new_contact_empty_mandatory_fields)

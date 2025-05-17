@@ -14,7 +14,7 @@ from test_data.usr_update_data import (
 )
 
 
-def test_upd_user_status_code():
+def test_upd_user_status_code(revert_updation):
     """
     Verifies, that the responce status code is 200,
     Update User PATCH request is successful
@@ -24,10 +24,9 @@ def test_upd_user_status_code():
     assert response.status_code == 200, \
         f'Status code is {response.status_code}, expected 200'
     logger.success('Response status code is 200')
-    update.patch_upd_user(upd_data, user_to_be_update)
 
 
-def test_update_user_response_schema():
+def test_update_user_response_schema(revert_updation):
     """
     Verifies that response JSON mathes to the expected recponse schema
     """
@@ -39,10 +38,9 @@ def test_update_user_response_schema():
     ), \
         f'Response schema does not match, got {response.json()}'
     logger.success("Correct response JSON schema")
-    update.patch_upd_user(upd_data, user_to_be_update)
 
 
-def test_login_after_update():
+def test_login_after_update(revert_updation):
     """
     Verifies the login after updating user.
     Checks the status code and response body
@@ -57,7 +55,6 @@ def test_login_after_update():
         signin_and_login_user_response_schema
     ), f'Response schema does not match, got {response.json()}'
     logger.success('User is successfully updated')
-    update.patch_upd_user(upd_data, user_to_be_update)
 
 
 @pytest.mark.parametrize('body, description, field_name', upd_usr_with_empty_fields)

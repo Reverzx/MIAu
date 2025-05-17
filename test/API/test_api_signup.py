@@ -7,7 +7,7 @@ from test_data.users_schemas import (
     update_and_get_user_profile_response_schema)
 
 
-def test_post_sign_up_status_code():
+def test_post_sign_up_status_code(delete_user):
     """
     Verifies, that the responce status code is 201,
     SignUp POST request is successful
@@ -17,10 +17,9 @@ def test_post_sign_up_status_code():
     assert response.status_code == 201, \
         f'Status code is {response.status_code}, expected 201'
     logger.success("Response status code is 201")
-    register.delete_user(usr_to_add)
 
 
-def test_signup_response_schema():
+def test_signup_response_schema(delete_user):
     """
     Verifies, that response schema mathes vith expected schema
     """
@@ -31,10 +30,9 @@ def test_signup_response_schema():
         signin_and_login_user_response_schema), \
         f'Response schema does not match, got {response.json()}'
     logger.success('Got response json matches with expected schema')
-    register.delete_user(usr_to_add)
 
 
-def test_get_profile_after_registration():
+def test_get_profile_after_registration(delete_user):
     """
     Verifies, that user profile filled correctly
     """
@@ -50,7 +48,6 @@ def test_get_profile_after_registration():
     assert response.json()['email'] == usr_to_add['email'], \
         'Got email does not match with expected'
     logger.success('User was successfully registered')
-    register.delete_user(usr_to_add)
 
 
 def test_add_exist_user():
