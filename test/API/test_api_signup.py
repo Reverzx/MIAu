@@ -7,7 +7,7 @@ from test_data.users_schemas import (
     update_and_get_user_profile_response_schema)
 
 
-def test_post_sign_up_status_code(delete_user):
+def test_post_sign_up(delete_user):
     """
     Verifies, that the responce status code is 201,
     SignUp POST request is successful

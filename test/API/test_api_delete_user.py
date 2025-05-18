@@ -4,7 +4,7 @@ from api_actions.api_user_actions import UserActsApi
 from test_data.register_data import usr_to_delete
 
 
-def test_del_user_status_code(sign_up_user):
+def test_del_user(sign_up_user):
     """
     Verifies the response status code of User Delete
     """
