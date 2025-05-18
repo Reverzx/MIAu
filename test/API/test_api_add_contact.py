@@ -1,107 +1,118 @@
 import pytest
 from loguru import logger
 from api_actions.api_contact_actions import ContActsApi
+from api_actions.assert_json_response_body import assert_json_response
+from test_data.contact_schemas import add_contact_response_schema
 from test_data.contacts_data import (
-    user_to_add_cont as usr,
-    new_cont_valid_data as ncvd,
-    new_cont_not_full as ncnf,
-    new_cont_empty_mand_fields as emf,
-    new_cont_invalid_data as ncid,
-    inv_phone as ip, inv_adress_data as iad
+    user_to_add_contact,
+    new_contact_valid_data,
+    new_contact_not_full_data,
+    new_contact_empty_mandatory_fields,
+    new_contact_invalid_data,
+    invalid_phone,
+    invalid_adress_data
 )
 
 
-def test_add_contact_201():
+def test_successfully_add_contact(clear_contacts):
+    """
+    Verifies, that the responce status code is 201,
+    SignUp POST request is successful
+    """
     newcont = ContActsApi()
-    response = newcont.add_cont_valid_data(usr, ncvd)
-    assert response.status_code == 201
+    response = newcont.add_contact(
+        user_to_add_contact,
+        new_contact_valid_data)
+    assert response.status_code == 201, \
+        f'Status code is {response.status_code}, expected 201'
+    assert_json_response(new_contact_valid_data, response.json())
+    assert newcont.is_response_schema_correct(
+        response,
+        add_contact_response_schema), \
+        f'Response schema does not match, got {response.json()}'
+    logger.success('Contact is successfully added')
+
+
+def test_is_new_in_contact_list(clear_contacts):
+    """
+    Adds new contact, looks for new contact's ID among all contact IDs
+    """
+    newcont = ContActsApi()
+    assert newcont.add_contact_and_check_is_added(
+        user_to_add_contact,
+        new_contact_valid_data), \
+        "New contact's ID was not found"
+    logger.success('New contact is successfully added to contact list')
+
+
+def test_add_cont_filling_only_mandatory_fields(clear_contacts):
+    """
+    Verifies Add new contact, filling only mandatory fields.
+    Checks the response status code and JSON schema
+    """
+    newcont = ContActsApi()
+    response = newcont.add_contact(
+        user_to_add_contact,
+        new_contact_not_full_data)
+    assert response.status_code == 201, \
+        f'Status code is {response.status_code}, expected 201'
     logger.success('Response status code is 201')
-    newcont.clear_cont_list(usr)
+    assert newcont.is_response_schema_correct(
+        response,
+        add_contact_response_schema
+    ), f'Response schema does not match, got {response.json()}'
+    logger.success('Got response json matches with expected schema')
 
 
-def test_response_body():
+@pytest.mark.parametrize('body, description', new_contact_empty_mandatory_fields)
+def test_add_contact_with_empty_mandatory_fields(body, description):
+    """
+    Tries to add new contact, missing mandatory fields
+    """
+    logger.info(f'Add contact with invalid data: {description}')
     newcont = ContActsApi()
-    response = newcont.add_cont_valid_data(usr, ncvd)
-    data_to_check = response.json()
-    assert '_id' in data_to_check
-    assert 'owner' in data_to_check
-    assert '__v' in data_to_check
-    assert data_to_check['firstName'] == ncvd['firstName']
-    assert data_to_check['lastName'] == ncvd['lastName']
-    assert data_to_check['birthdate'] == ncvd['birthdate']
-    assert data_to_check['email'] == ncvd['email']
-    assert data_to_check['phone'] == ncvd['phone']
-    assert data_to_check['street1'] == ncvd['street1']
-    assert data_to_check['street2'] == ncvd['street2']
-    assert data_to_check['city'] == ncvd['city']
-    assert data_to_check['stateProvince'] == ncvd['stateProvince']
-    assert data_to_check['postalCode'] == ncvd['postalCode']
-    assert data_to_check['country'] == ncvd['country']
-    logger.success('Response body contains all the necessary details')
-    newcont.clear_cont_list(usr)
+    response = newcont.add_contact(user_to_add_contact, body)
+    assert response.status_code == 400, \
+        f'Status code is {response.status_code}, expected 400'
+    logger.success('Addition of new contact failed with status code 400')
 
 
-def test_add_cont_response_schema():
+@pytest.mark.parametrize('body, description', new_contact_invalid_data)
+def test_add_contact_with_invalid_common_data(body, description):
+    """
+    Tries to add new contact, using invalid birthdate, postal code, email
+    """
+    logger.info(f'Add contact with invalid data: {description}')
     newcont = ContActsApi()
-    assert newcont.is_response_schema_correct(usr, ncvd)
-    logger.success("Correct response JSON schema")
-    newcont.clear_cont_list(usr)
+    response = newcont.add_contact(user_to_add_contact, body)
+    assert response.status_code == 400, \
+        f'Status code is {response.status_code}, expected 400'
+    logger.success('Addition of new contact failed with status code 400')
 
 
-def test_is_new_cont_added():
+@pytest.mark.parametrize('body, description', invalid_phone)
+def test_add_contact_with_invalid_phone(body, description):
+    """
+    Tries to add new contact with invalid phone number
+    """
+    logger.info(f'Add contact with invalid data: {description}')
     newcont = ContActsApi()
-    assert newcont.get_cont_list_after_add_new_cont(usr, ncvd)
-    logger.success('New contact was successfully added')
-    newcont.clear_cont_list(usr)
-
-
-def test_add_cont_filling_mand_fields():
-    newcont = ContActsApi()
-    response = newcont.add_cont_valid_data(usr, ncnf)
-    assert response.status_code == 201
-    logger.success('Response status code is 201')
-    newcont.clear_cont_list(usr)
-
-
-def test_not_full_data_schema():
-    newcont = ContActsApi()
-    assert newcont.is_response_schema_correct(usr, ncnf)
-    logger.success("Correct response JSON schema")
-    newcont.clear_cont_list(usr)
-
-
-@pytest.mark.parametrize('body, description', emf)
-def test_add_cont_empty_mand_fields(body, description):
-    logger.info(f'Add contact with invalid credentials: {description}')
-    newcont = ContActsApi()
-    response = newcont.add_cont_invalid_data(usr, body)
-    assert response.status_code == 400
-    logger.success('Response status code is 400')
-
-
-@pytest.mark.parametrize('body, description', ncid)
-def test_add_cont_common_inv_data(body, description):
-    logger.info(f'Add contact with invalid credentials: {description}')
-    newcont = ContActsApi()
-    response = newcont.add_cont_invalid_data(usr, body)
-    assert response.status_code == 400
-    logger.success('Response status code is 400')
-
-
-@pytest.mark.parametrize('body, description', ip)
-def test_add_cont_invalid_phone(body, description):
-    logger.info(f'Add contact with invalid credentials: {description}')
-    newcont = ContActsApi()
-    response = newcont.add_cont_invalid_data(usr, body)
-    assert response.status_code == 400
-    logger.success(f"Response status code is 400. {response.json()['message']}")
+    response = newcont.add_contact(user_to_add_contact, body)
+    assert response.status_code == 400, \
+        f'Status code is {response.status_code}, expected 400'
+    logger.success("Addition of new contact failed with status code 400. "
+                   f"{response.json()['message']}")
 
 
 @pytest.mark.xfail
-@pytest.mark.parametrize('body, description', iad)
-def test_add_cont_invalid_adress_data(body, description):
-    logger.info(f'Add contact with invalid credentials: {description}')
+@pytest.mark.parametrize('body, description', invalid_adress_data)
+def test_add_contact_with_invalid_adress_data(body, description):
+    """
+    Tries to add new contact usind invalid names of city, or state, or country
+    """
+    logger.info(f'Add contact with invalid data: {description}')
     newcont = ContActsApi()
-    response = newcont.add_cont_invalid_data(usr, body)
-    assert response.status_code == 400
-    logger.success("Response status code is 400")
+    response = newcont.add_contact(user_to_add_contact, body)
+    assert response.status_code == 400, \
+        f'Status code is {response.status_code}, expected 400'
+    logger.success("Addition of new contact failed with status code 400")

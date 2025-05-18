@@ -28,12 +28,6 @@ class AddContactPage(BasePage):
             'logout': (By.ID, 'logout'),
         }
         self.error = (By.ID, 'error')
-        self.error_fname_msg = 'Contact validation failed: firstName: Path `firstName` is required.'
-        self.error_lname_msg = 'Contact validation failed: lastName: Path `lastName` is required.'
-        self.error_bdate_msg = 'Contact validation failed: birthdate: Birthdate is invalid'
-        self.error_email_msg = 'Contact validation failed: email: Email is invalid'
-        self.error_phone_msg = 'Contact validation failed: phone: Phone number is invalid'
-        self.error_postcode_msg = 'Contact validation failed: postalCode: Postal code is invalid'
 
         self.logout_button = (By.ID, 'logout')
         self.cancel_button = (By.ID, 'cancel')
@@ -53,6 +47,9 @@ class AddContactPage(BasePage):
         return contact_list.navigate_to_add_contact_page()
 
     def is_add_contact_page(self):
+        """
+        Checks, if current URL matches with expected
+        """
         return self.is_url_correct(Env.URL_AddContact)
 
     def fill_contact_form(self, data):
@@ -71,38 +68,22 @@ class AddContactPage(BasePage):
         return self.is_text_correct(self.error, err_text)
 
     def submit(self):
-        self.click_button(self.elements['submit'])
+        """
+        Clicks the submit button
+        """
+        self.click_button(self.submit_button)
 
     def logout(self):
+        """
+        Clicks the logout button
+        """
         self.click_button(self.logout_button)
 
     def cancel(self):
         """
-        Clicks the Logout button and redirects to the Contact List page.
+        Clicks the cancel button
         """
         self.click_button(self.cancel_button)
-
-    def login_and_add_contact(self, driver, email, password, new_cont):
-        from pages.login_page import LoginPage
-        from pages.contact_list_page import ContactListPage
-        logpage = LoginPage(driver, Env.URL_Login)
-        logpage.open()
-        contlist = logpage.complete_login(email, password)
-        add_cont = contlist.navigate_to_add_contact_page()
-        add_cont.fill_contact_form(new_cont)
-        add_cont.submit()
-        return ContactListPage(self.driver, self.url)
-
-    def login_and_cancel_add_contact(self, driver, email, password, new_cont):
-        from pages.login_page import LoginPage
-        from pages.contact_list_page import ContactListPage
-        logpage = LoginPage(driver, Env.URL_Login)
-        logpage.open()
-        contlist = logpage.complete_login(email, password)
-        add_cont = contlist.navigate_to_add_contact_page()
-        add_cont.fill_contact_form(new_cont)
-        add_cont.cancel()
-        return ContactListPage(self.driver, self.url)
 
     def is_addition_successful(self):
         """
