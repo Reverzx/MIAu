@@ -9,13 +9,13 @@ class ContActsApi():
     def __init__(self):
         self.url = f'{Env.URL_Login}contacts'
 
-    def auth_and_get_header(self, usr_body):
+    def auth_and_get_header(self, user_body):
         """
         Authorizates user, gets token
         Returns header with actual token
         """
         req = UserActsApi()
-        header = req.get_header(usr_body)
+        header = req.get_header(user_body)
         return header
 
     def req_add_contact(self, cont_data, header):
@@ -58,19 +58,11 @@ class ContActsApi():
         return requests.delete(url=f'{self.url}/{cont_id}', headers=header)
 
     @catch_request_exception
-    def add_cont_valid_data(self, user, new_cont):
+    def add_contact(self, user_body, new_cont):
         """
         Authorizes an user and adds a new contact with provided data
         """
-        header = self.auth_and_get_header(user)
-        return self.req_add_contact(new_cont, header)
-
-    def add_cont_invalid_data(self, user, new_cont):
-        """
-        Tries to add new contact with provided invalid data.
-        Doesn't raise exceptions, is used to check the updating new contact with invalid data
-        """
-        header = self.auth_and_get_header(user)
+        header = self.auth_and_get_header(user_body)
         return self.req_add_contact(new_cont, header)
 
     def is_response_schema_correct(self, response, expected_schema):
@@ -93,7 +85,7 @@ class ContActsApi():
         for item in ids:
             self.delete_contact(header, item)
 
-    def get_contact_list_after_add_new_contact(self, user, new_cont):
+    def add_contact_and_check_is_added(self, user, new_cont):
         """
         Adds new contact with provided data to contact list, gets new contact's ID
         After addition collects all IDs in contact list, checks if new contact's ID

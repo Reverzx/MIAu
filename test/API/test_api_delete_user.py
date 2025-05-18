@@ -1,4 +1,5 @@
 from loguru import logger
+import requests
 from api_actions.api_user_actions import UserActsApi
 from test_data.register_data import usr_to_delete
 
@@ -8,21 +9,13 @@ def test_del_user_status_code(sign_up_user):
     Verifies the response status code of User Delete
     """
     delete = UserActsApi()
-    response = delete.delete_user(usr_to_delete)
+    header = delete.get_header(usr_to_delete)
+    response = delete.delete_user(header)
     assert response.status_code == 200, \
         f'Status code is {response.status_code}, expected 200'
-    logger.success('User is successfully deleted with response status code 200')
-
-
-def test_verify_delete_user_response_text(sign_up_user):
-    """
-    Verifies, that response text of Delete User is empty
-    """
-    delete = UserActsApi()
-    response = delete.delete_user(usr_to_delete)
     assert response.text == '', \
         f'Got response text {response.text}'
-    logger.success('Response contains no text as expected. User is successfully deleted')
+    logger.success('User is successfully deleted')
 
 
 def test_del_user_two_times(sign_up_user):
@@ -30,7 +23,9 @@ def test_del_user_two_times(sign_up_user):
     Tries to delete the same user two times. Checks the response
     """
     delete = UserActsApi()
-    response = delete.double_delete_user(usr_to_delete)
+    header = delete.get_header(usr_to_delete)
+    delete.delete_user(header)
+    response = delete.delete_user(header)
     assert response.status_code == 401, \
         f'Status code is {response.status_code}, expected 401'
     assert 'error' in response.json(), \
@@ -44,7 +39,9 @@ def test_get_deleted_user(sign_up_user):
     Tries to get deletes user's profile. Checks the response
     """
     delete = UserActsApi()
-    response = delete.get_deleted_user(usr_to_delete)
+    header = delete.get_header(usr_to_delete)
+    delete.delete_user(header)
+    response = requests.get(url=delete.usr_profile_url, headers=header)
     assert response.status_code == 401, \
         f'Status code is {response.status_code}, expected 401'
     assert 'error' in response.json(), \

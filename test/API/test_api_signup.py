@@ -16,23 +16,14 @@ def test_post_sign_up_status_code(delete_user):
     response = register.post_sign_up(user_to_add)
     assert response.status_code == 201, \
         f'Status code is {response.status_code}, expected 201'
-    logger.success("Response status code is 201")
-
-
-def test_signup_response_schema(delete_user):
-    """
-    Verifies, that response schema mathes vith expected schema
-    """
-    register = UserActsApi()
-    response = register.post_sign_up(user_to_add)
     assert register.is_response_schema_correct(
         response,
         signin_and_login_user_response_schema), \
         f'Response schema does not match, got {response.json()}'
-    logger.success('Got response json matches with expected schema')
+    logger.success("New user is successfully registered")
 
 
-def test_get_profile_after_registration(delete_user):
+def test_get_new_profile(delete_user):
     """
     Verifies, that user profile filled correctly
     """
@@ -55,7 +46,7 @@ def test_add_exist_user():
     Verifies that trying to register user, which is already registered, flops.
     """
     register = UserActsApi()
-    response = register.sign_up_with_invalid_data(exist_user)
+    response = register.post_sign_up(exist_user)
     assert response.status_code == 400, \
         f'Status code is {response.status_code}, expected 400'
     assert 'Email address is already in use' in response.json()['message']
@@ -69,7 +60,7 @@ def test_register_user_with_invalid_data(body, description):
     """
     logger.info(f'Registration user with invalid creds {description}')
     register = UserActsApi()
-    response = register.sign_up_with_invalid_data(body)
+    response = register.post_sign_up(body)
     assert response.status_code == 400, \
         f'Status code is {response.status_code}, expected 400'
     logger.success("Registration with invalid data flopped with response status code is 400")

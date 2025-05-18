@@ -68,14 +68,6 @@ class UserActsApi():
         head = self.get_header(body)
         return requests.patch(url=self.usr_profile_url, headers=head, json=upd_body)
 
-    def sign_up_with_invalid_data(self, body):
-        """
-        Sends a POST request with provided data.
-        Doesn't raise exceptions, is used to check the signing up with invalid data
-        Returns the response object
-        """
-        return requests.post(url=self.signup_url, headers=self.header, json=body)
-
     @catch_request_exception
     def get_user_profile(self, body):
         """
@@ -86,26 +78,8 @@ class UserActsApi():
         return requests.get(url=self.usr_profile_url, headers=head)
 
     @catch_request_exception
-    def delete_user(self, body):
+    def delete_user(self, header):
         """
         Removes user from database
         """
-        head = self.get_header(body)
-        return requests.delete(url=self.usr_profile_url, headers=head)
-
-    def double_delete_user(self, body):
-        """
-        Removes user from database, than repeats the deletion
-        """
-        del_url = self.usr_profile_url
-        head = self.get_header(body)
-        requests.delete(url=del_url, headers=head)
-        return requests.delete(url=del_url, headers=head)
-
-    def get_deleted_user(self, body):
-        """
-        Removes user from database, than tries to get user's data
-        """
-        head = self.get_header(body)
-        requests.delete(url=self.usr_profile_url, headers=head)
-        return requests.get(url=self.usr_profile_url, headers=head)
+        return requests.delete(url=self.usr_profile_url, headers=header)
