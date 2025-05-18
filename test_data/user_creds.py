@@ -11,10 +11,10 @@ class UserCredentials:
     deleted_email = 'deleted@test.com'
     deleted_password = 'DelPass'
 
-    reg_new_fname = 'Hanna'  # Used by Hanna Elis, should be deleted after registration
-    reg_new_lname = 'Frank'
-    reg_new_email = 'dont@forget.me'
-    reg_new_password = 'dontforgive'
+    register_new_first_name = 'Hanna'  # Used by Hanna Elis, should be deleted after registration
+    register_new_last_name = 'Frank'
+    register_new_email = 'dont@forget.me'
+    register_new_password = 'dontforgive'
 
     exist_usr_fname = 'Johny'  # Used by Hanna Elis, should be registered
     exist_usr_lname = 'Walker'

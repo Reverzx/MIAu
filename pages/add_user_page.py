@@ -2,8 +2,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pages.base_page import BasePage
-from pages.login_page import LoginPage
-from pages.contact_list_page import ContactListPage
 from test_data.env import Env
 
 
@@ -32,31 +30,26 @@ class AddUserPage(BasePage):
         """
         return self.is_url_correct(Env.url_add_user)
 
-    def add_new_user(self, f_name, l_name, email, password):
+    def fill_the_registration_form(self, first_name, last_name, email, password):
         """
-        Fills the fields with provided values, clicks the [Submit] button,
-        then checks the redirection to Contact List page
-        Returns True if URL is correct, otherwise False.
+        Fills the fields with provided values
         """
-        self.input_text(self.first_name_input, f_name)
-        self.input_text(self.last_name_input, l_name)
+        self.input_text(self.first_name_input, first_name)
+        self.input_text(self.last_name_input, last_name)
         self.input_text(self.email_input, email)
         self.input_text(self.password_input, password)
-        self.click_button(self.submit_bttn)
-        return ContactListPage(self.driver, self.url)
 
-    def cancel_add_user(self, f_name, l_name, email, password):
+    def submit(self):
         """
-        Fills the fields with provided values, clicks the [Cancel] button,
-        then checks the redirection to Login page
-        Returns True if URL is correct, otherwise False.
+        Clicks sibmit button
         """
-        self.input_text(self.first_name_input, f_name)
-        self.input_text(self.last_name_input, l_name)
-        self.input_text(self.email_input, email)
-        self.input_text(self.password_input, password)
+        self.click_button(self.submit_bttn)
+
+    def cancel(self):
+        """
+        Clicks cancel button
+        """
         self.click_button(self.cancel_bttn)
-        return LoginPage(self.driver, url=f'{self.url}login')
 
     def is_signup_successful(self):
         """

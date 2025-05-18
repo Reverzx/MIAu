@@ -1,7 +1,7 @@
 import pytest
 from api_actions.api_contact_actions import UserActsApi
 from api_actions.api_contact_actions import ContActsApi
-from test_data.register_data import usr_to_add, usr_to_delete
+from test_data.register_data import user_to_add, usr_to_delete
 from test_data.usr_update_data import user_to_be_update, upd_data
 from test_data.contacts_data import user_to_add_contact
 
@@ -13,7 +13,7 @@ def delete_user(request):
     """
     def fin():
         delete = UserActsApi()
-        delete.delete_user(usr_to_add)
+        delete.delete_user(user_to_add)
     request.addfinalizer(fin)
 
 
