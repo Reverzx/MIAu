@@ -1,7 +1,5 @@
-from jsonschema import validate, ValidationError
-from loguru import logger
-
-
+from jsonschema import validate
+# from loguru import logger
 
 def validate_response_schema(expected_schema, actual_schema):
     try:
