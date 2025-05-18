@@ -1,17 +1,18 @@
 from test_data.user_creds import UserCredentials as UC
 
+
 user_to_add_contact = {
-    "firstName": UC.usr_to_add_cont_fname,
-    "lastName": UC.usr_to_add_cont_lname,
-    "email": UC.usr_to_add_cont_email,
-    "password": UC.usr_to_add_cont_password
+    "firstName": UC.user_to_add_contact_first_name,
+    "lastName": UC.user_to_add_contact_last_name,
+    "email": UC.user_to_add_contact_email,
+    "password": UC.user_to_add_contact_password
 }
 
 user_to_up_cont = {
-    "firstName": UC.usr_to_add_cont_fname,
-    "lastName": UC.usr_to_add_cont_lname,
-    "email": UC.usr_to_add_cont_email,
-    "password": UC.usr_to_add_cont_password
+    "firstName": UC.user_to_add_contact_first_name,
+    "lastName": UC.user_to_add_contact_last_name,
+    "email": UC.user_to_add_contact_email,
+    "password": UC.user_to_add_contact_password
 }
 
 nc_fname = 'Richard'
@@ -40,7 +41,7 @@ new_contact_valid_data = {
     "country": nc_country
 }
 
-new_contact_cancel_data = {
+new_contact_cancel_data = {  # Data for test cancel add contact
     "firstName": 'Ralf',
     "lastName": 'Stokinger'
 }
