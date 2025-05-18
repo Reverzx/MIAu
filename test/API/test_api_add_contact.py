@@ -1,7 +1,6 @@
 import pytest
 from loguru import logger
 from api_actions.api_contact_actions import ContActsApi
-from api_actions.validate_response_schema import validate_response_schema
 from api_actions.assert_json_response_body import assert_json_response
 from test_data.contact_schemas import add_contact_response_schema
 from test_data.contacts_data import (
