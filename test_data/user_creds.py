@@ -31,8 +31,8 @@ class UserCredentials:
     to_be_update_email = 'best@mail.soap'
     to_be_update_password = 'thepassword'
 
-    user_to_add_contact_first_name = 'Gandalf'             # Used by Hanna Elis, should be always registered
-    user_to_add_contact_last_name = 'Grey'
+    user_to_add_contact_first_name = 'Gandalf'        # Used by Hanna Elis, should be
+    user_to_add_contact_last_name = 'Grey'            # always registered
     user_to_add_contact_email = 'eagles@fly.fly'
     user_to_add_contact_password = 'youshallnotpass'
 

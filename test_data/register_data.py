@@ -11,7 +11,7 @@ invalid_email_ui_data = [
     (UC.register_new_first_name, UC.register_new_last_name, 'dont@ forget.me',
      UC.register_new_password, 'Space in email'),
     (UC.register_new_first_name, UC.register_new_last_name, '@forget.me', UC.register_new_password,
-      'Email without body')
+     'Email without body')
 ]
 
 short_pasword_ui_data = [
@@ -47,10 +47,10 @@ usr_to_delete = {
 invalid_reg_data_api = [
     ({"firstName": "", "lastName": UC.register_new_last_name,
       "email": UC.register_new_email, "password": UC.register_new_password},
-      'Empty First name field'),
+     'Empty First name field'),
     ({"firstName": UC.register_new_first_name, "lastName": "",
       "email": UC.register_new_email, "password": UC.register_new_password},
-      'Empty Last namt field'),
+     'Empty Last namt field'),
     ({"firstName": UC.register_new_first_name, "lastName": UC.register_new_last_name,
       "email": "", "password": UC.register_new_password}, 'Empty email field'),
     ({"firstName": UC.register_new_first_name, "lastName": UC.register_new_last_name,
