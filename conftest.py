@@ -12,10 +12,10 @@ from api_actions.api_contact_actions import ContActsApi
 from test_data.register_data import user_to_add, usr_to_delete
 from test_data.usr_update_data import user_to_be_update, upd_data
 from test_data.contacts_data import user_to_add_contact
-from pages.login_page import LoginPage
 from test_data.user_creds import UserCredentials
 from test_data.env import Env
 from test_data.edit_data import EditData
+from pages.login_page import LoginPage
 from pages.contact_details_page import ContactDetailsPage
 
 
@@ -25,7 +25,7 @@ def pytest_configure(config):  # pylint: disable=unused-argument
 
 
 @pytest.fixture
-def driver():
+def driver():  # pylint: disable=redefined-outer-name
     logger.info("Launching headless-browser")
     _options = webdriver.ChromeOptions()
     _options.add_argument("--headless")
@@ -111,9 +111,9 @@ def clear_contacts(request):
 
 @pytest.fixture()
 def login_page(driver):
-    login_page = LoginPage(driver, Env.URL_Login)
-    login_page.open()
-    return login_page
+    login = LoginPage(driver, Env.URL_Login)
+    login.open()
+    return login
 
 
 @pytest.fixture()
@@ -123,11 +123,11 @@ def create_contact_and_locate_edit_page(driver):
     Created with specified credentials: it_edit_email, it_edit_password.
     """
     # Navigate to Login page
-    login_page = LoginPage(driver, Env.URL_Login)
-    login_page.open()
+    login = LoginPage(driver, Env.URL_Login)
+    login.open()
 
     # Navigate to Contact List page
-    contact_list = login_page.complete_login(
+    contact_list = login.complete_login(
         UserCredentials.it_edit_email,
         UserCredentials.it_edit_password
     )
