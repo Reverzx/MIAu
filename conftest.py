@@ -1,3 +1,4 @@
+# pylint: disable=redefined-outer-name
 import sys
 import json
 import tempfile
@@ -25,7 +26,7 @@ def pytest_configure(config):  # pylint: disable=unused-argument
 
 
 @pytest.fixture
-def driver():  # pylint: disable=redefined-outer-name
+def driver():
     logger.info("Launching headless-browser")
     _options = webdriver.ChromeOptions()
     _options.add_argument("--headless")
@@ -109,14 +110,14 @@ def clear_contacts(request):
     request.addfinalizer(fin)
 
 
-@pytest.fixture()  # pylint: disable=redefined-outer-name
+@pytest.fixture()
 def login_page(driver):
     login = LoginPage(driver, Env.URL_Login)
     login.open()
     return login
 
 
-@pytest.fixture()  # pylint: disable=redefined-outer-name
+@pytest.fixture()
 def create_contact_and_locate_edit_page(driver):
     """
     The fixture is used for edit contact page testing.
@@ -150,7 +151,7 @@ def create_contact_and_locate_edit_page(driver):
     return edit_page
 
 
-@pytest.fixture  # pylint: disable=redefined-outer-name
+@pytest.fixture
 def delete_contact(driver):
     yield
     contact_details_page = ContactDetailsPage(driver, Env.URL_ContactDetails)
