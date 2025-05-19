@@ -31,30 +31,6 @@ class EditContactPage(BasePage):
         self.error = (By.ID, 'error')
         self.logout_button = (By.ID, 'logout')
 
-    def create_contact_and_navigate_edit_page(self, email, password, contact_data):
-        # Navigate to Login page
-        from pages.login_page import LoginPage
-        login_page = LoginPage(self.driver, Env.URL_Login)
-        login_page.open()
-
-        # Navigate to Contact List page
-        contact_list = login_page.complete_login(email, password)
-        logger.info("The user is logged in and redirected to the Contact List page")
-
-        # Navigate to Add Contact page
-        add_contact = contact_list.navigate_to_add_contact_page()
-
-        # Add a new contact
-        add_contact.fill_contact_form(contact_data)
-        add_contact.submit()
-        logger.info("A new contact is added.")
-
-        # Navigate to Contact Details page
-        contact_details = contact_list.navigate_to_contact_details_page()
-
-        # Navigate to Edit Contact page
-        return contact_details.navigate_to_edit_contact_page()
-
     def is_edit_page(self):
         return self.is_url_correct(Env.URL_EditContact)
 
@@ -87,9 +63,7 @@ class EditContactPage(BasePage):
                 raise ValueError(f"Missing locator or value for field '{field_id}'")
 
     def clear_field(self, label):
-        """
-        Clears the field using standard clearing plus keyboard actions.
-        """
+        # Clears the field using standard clearing plus keyboard actions.
         locator = self.elements[label]
         field = self.driver.find_element(*locator)
         field.clear()
@@ -107,23 +81,6 @@ class EditContactPage(BasePage):
 
     def cancel(self):
         self.click_button(self.elements['cancel'])
-
-    def cancel_edit_and_delete_contact(self):
-        from pages.contact_details_page import ContactDetailsPage
-        self.cancel()
-        contact_upd = ContactDetailsPage(
-            self.driver,
-            Env.URL_ContactDetails)
-        contact_upd.delete_contact()
-        logger.info("The contact is deleted")
-
-    def delete_contact(self):
-        from pages.contact_details_page import ContactDetailsPage
-        contact_details_page = ContactDetailsPage(
-            self.driver,
-            Env.URL_ContactDetails)
-        contact_details_page.delete_contact()
-        logger.info("The contact is deleted")
 
     def is_error_displayed(self, message):
         if not self.is_element_present(self.error):

@@ -1,3 +1,4 @@
+import pytest
 import requests
 from loguru import logger
 from test_data.env import Env
@@ -7,6 +8,9 @@ from api_actions.api_logout import assert_unauthorized_request
 from api_actions.login_and_get_token import login_and_get_token
 
 
+@pytest.mark.regression
+@pytest.mark.smoke
+@pytest.mark.api
 def test_successful_post_logout():
     auth_token = login_and_get_token(UserCredentials.it_email,
                                      UserCredentials.it_password)
@@ -15,12 +19,15 @@ def test_successful_post_logout():
                                        f"Expected: 200")
 
 
+@pytest.mark.regression
+@pytest.mark.api
 def test_post_logout_fails_without_authorization():
     url = f"{Env.URL_Login}/users/logout"
     logout = requests.post(url)
     assert_unauthorized_request(logout)
 
 
+@pytest.mark.api
 def test_post_logout_fails_for_expired_auth_token():
     auth_token = login_and_get_token(UserCredentials.it_email,
                                      UserCredentials.it_password)
@@ -31,6 +38,8 @@ def test_post_logout_fails_for_expired_auth_token():
     assert_unauthorized_request(logout_two)
 
 
+@pytest.mark.regression
+@pytest.mark.api
 def test_post_logout_fails_for_invalid_auth_token():
     auth_token = ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODBhNWJiNWRjZWQ4"
                   "NjAwMTU3MTUwMGQiLCJpYXQiOjE3NDU1ODg0OTd9.pFSSiLVs59eIScuf514wvX6"
@@ -39,6 +48,7 @@ def test_post_logout_fails_for_invalid_auth_token():
     assert_unauthorized_request(logout)
 
 
+@pytest.mark.api
 def test_post_logout_fails_for_auth_token_of_a_deleted_user():
     # Add a new user and retrieve the auth token.
     add_user = requests.post(

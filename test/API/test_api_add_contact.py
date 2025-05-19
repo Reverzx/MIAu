@@ -14,6 +14,9 @@ from test_data.contacts_data import (
 )
 
 
+@pytest.mark.regression
+@pytest.mark.smoke
+@pytest.mark.api
 def test_successfully_add_contact(clear_contacts):
     """
     Verifies, that the responce status code is 201,
@@ -33,6 +36,8 @@ def test_successfully_add_contact(clear_contacts):
     logger.success('Contact is successfully added')
 
 
+@pytest.mark.regression
+@pytest.mark.api
 def test_is_new_in_contact_list(clear_contacts):
     """
     Adds new contact, looks for new contact's ID among all contact IDs
@@ -45,6 +50,8 @@ def test_is_new_in_contact_list(clear_contacts):
     logger.success('New contact is successfully added to contact list')
 
 
+@pytest.mark.regression
+@pytest.mark.api
 def test_add_cont_filling_only_mandatory_fields(clear_contacts):
     """
     Verifies Add new contact, filling only mandatory fields.
@@ -64,6 +71,8 @@ def test_add_cont_filling_only_mandatory_fields(clear_contacts):
     logger.success('Got response json matches with expected schema')
 
 
+@pytest.mark.regression
+@pytest.mark.api
 @pytest.mark.parametrize('body, description', new_contact_empty_mandatory_fields)
 def test_add_contact_with_empty_mandatory_fields(body, description):
     """
@@ -77,6 +86,7 @@ def test_add_contact_with_empty_mandatory_fields(body, description):
     logger.success('Addition of new contact failed with status code 400')
 
 
+@pytest.mark.api
 @pytest.mark.parametrize('body, description', new_contact_invalid_data)
 def test_add_contact_with_invalid_common_data(body, description):
     """
@@ -90,6 +100,7 @@ def test_add_contact_with_invalid_common_data(body, description):
     logger.success('Addition of new contact failed with status code 400')
 
 
+@pytest.mark.api
 @pytest.mark.parametrize('body, description', invalid_phone)
 def test_add_contact_with_invalid_phone(body, description):
     """
@@ -104,6 +115,7 @@ def test_add_contact_with_invalid_phone(body, description):
                    f"{response.json()['message']}")
 
 
+@pytest.mark.api
 @pytest.mark.xfail
 @pytest.mark.parametrize('body, description', invalid_adress_data)
 def test_add_contact_with_invalid_adress_data(body, description):

@@ -1,9 +1,13 @@
+import pytest
 from loguru import logger
 from api_actions.api_contact_actions import ContActsApi
 from test_data.edit_data import EditData
 from test_data.contacts_data import user_to_add_contact as usr, new_contact_valid_data as ncvd
 
 
+@pytest.mark.regression
+@pytest.mark.smoke
+@pytest.mark.api
 def test_update_contact_with_valid_data():
     # Create contact
     contact_api = ContActsApi()
@@ -42,6 +46,8 @@ def test_update_contact_with_valid_data():
         logger.warning(f"Error message: {e}")
 
 
+@pytest.mark.regression
+@pytest.mark.api
 def test_update_contact_with_invalid_contact_id():
     # Create contact
     contact_api = ContActsApi()
@@ -65,6 +71,8 @@ def test_update_contact_with_invalid_contact_id():
         logger.warning(f"Error message: {e}")
 
 
+@pytest.mark.regression
+@pytest.mark.api
 def test_update_contact_with_empty_data():
     # Create contact
     contact_api = ContActsApi()
@@ -91,6 +99,7 @@ def test_update_contact_with_empty_data():
         logger.warning(f"Error message: {e}")
 
 
+@pytest.mark.api
 def test_update_deleted_contact():
     # Create contact
     contact_api = ContActsApi()
@@ -113,6 +122,8 @@ def test_update_deleted_contact():
                    "when trying to edit a deleted contact")
 
 
+@pytest.mark.regression
+@pytest.mark.api
 def test_update_contact_with_invalid_data():
     # Create contact
     contact_api = ContActsApi()

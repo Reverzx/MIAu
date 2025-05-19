@@ -6,6 +6,9 @@ from test_data.user_creds import UserCredentials as UC
 from test_data.register_data import invalid_email_ui_data, short_pasword_ui_data
 
 
+@pytest.mark.regression
+@pytest.mark.smoke
+@pytest.mark.ui
 def test_add_user_with_valid_credentials(driver, delete_user):
     """
     Verifies successful registration vith valid user credentials
@@ -23,6 +26,8 @@ def test_add_user_with_valid_credentials(driver, delete_user):
     logger.success("New user is successfully added")
 
 
+@pytest.mark.regression
+@pytest.mark.ui
 def test_sign_up_user_which_already_exists(driver):
     """
     Verifies, that registration flops if user is already registered
@@ -40,6 +45,8 @@ def test_sign_up_user_which_already_exists(driver):
     logger.success("Registration failed as expected with error message")
 
 
+@pytest.mark.regression
+@pytest.mark.ui
 def test_cancel_registration(driver):
     """
     Verifies returning to Login page after cancelling of Sign Up
@@ -57,6 +64,7 @@ def test_cancel_registration(driver):
     logger.success('Registration is successfully canceled')
 
 
+@pytest.mark.ui
 def test_add_user_without_first_name(driver):
     """
     Verifies, that registration flops if [First Name] field is not filled
@@ -74,6 +82,7 @@ def test_add_user_without_first_name(driver):
     logger.success("Registration failed as expected with error message")
 
 
+@pytest.mark.ui
 def test_add_user_without_last_name(driver):
     """
     Verifies, that registration flops if [Last Name] field is not filled
@@ -91,6 +100,7 @@ def test_add_user_without_last_name(driver):
     logger.success("Registration failed as expected with error message")
 
 
+@pytest.mark.ui
 @pytest.mark.parametrize('first_name, last_name, email, password, description',
                          invalid_email_ui_data)
 def test_add_user_with_invalid_email(driver, first_name, last_name, email, password, description):
@@ -108,6 +118,7 @@ def test_add_user_with_invalid_email(driver, first_name, last_name, email, passw
     logger.success("Registration failed as expected with error message")
 
 
+@pytest.mark.ui
 def test_add_user_without_password(driver):
     """
     Verifies, that registration flops if [Password] field is not filled
@@ -125,6 +136,7 @@ def test_add_user_without_password(driver):
     logger.success("Registration failed as expected with error message")
 
 
+@pytest.mark.ui
 @pytest.mark.parametrize('first_name, last_name, email, password',
                          short_pasword_ui_data)
 def test_add_user_with_short_password(driver, first_name, last_name, email, password):

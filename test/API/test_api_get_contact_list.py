@@ -1,3 +1,4 @@
+import pytest
 from loguru import logger
 from api_actions.api_contact_actions import ContActsApi
 from test_data.contacts_data import (user_without_cont as usr_empty,
@@ -5,6 +6,7 @@ from test_data.contacts_data import (user_without_cont as usr_empty,
 from test_data.edit_data import EditData
 
 
+@pytest.mark.api
 def test_get_contacts_when_no_contacts_created():
 
     # User authorization without contacts
@@ -23,6 +25,9 @@ def test_get_contacts_when_no_contacts_created():
                    "response is an empty list []")
 
 
+@pytest.mark.regression
+@pytest.mark.smoke
+@pytest.mark.api
 def test_get_contacts_when_contacts_created():
 
     # User authorization with contacts
@@ -51,6 +56,7 @@ def test_get_contacts_when_contacts_created():
                    "and response contains contacts with all required fields.")
 
 
+@pytest.mark.api
 def test_get_and_add_contact():
 
     # User authorization
@@ -74,6 +80,7 @@ def test_get_and_add_contact():
         logger.warning(f"Error message: {e}")
 
 
+@pytest.mark.api
 def test_get_and_delete_contact():
 
     # User authorization
@@ -96,6 +103,8 @@ def test_get_and_delete_contact():
                    "trying to get a deleted contact")
 
 
+@pytest.mark.regression
+@pytest.mark.api
 def test_get_updated_contact():
 
     # User authorization

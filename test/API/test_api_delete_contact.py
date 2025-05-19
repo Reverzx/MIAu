@@ -1,9 +1,13 @@
+import pytest
 from loguru import logger
 from api_actions.api_contact_actions import ContActsApi
 from test_data.edit_data import EditData
 from test_data.contacts_data import user_to_add_contact as usr, new_contact_valid_data as ncvd
 
 
+@pytest.mark.regression
+@pytest.mark.smoke
+@pytest.mark.api
 def test_successful_contact_deletion():
     contact_api = ContActsApi()
     auth_header = contact_api.auth_and_get_header(usr)
@@ -14,6 +18,7 @@ def test_successful_contact_deletion():
     logger.success('Contact deleted successfully')
 
 
+@pytest.mark.api
 def test_delete_contact_already_deleted():
     contact_api = ContActsApi()
     auth_header = contact_api.auth_and_get_header(usr)
@@ -26,6 +31,8 @@ def test_delete_contact_already_deleted():
     logger.success('The expected status code 404 has been received')
 
 
+@pytest.mark.regression
+@pytest.mark.api
 def test_delete_contact_with_invalid_id():
     contact_api = ContActsApi()
     auth_header = contact_api.auth_and_get_header(usr)
@@ -34,6 +41,7 @@ def test_delete_contact_with_invalid_id():
     logger.success('The expected status code 400 has been received')
 
 
+@pytest.mark.api
 def test_try_update_deleted_contact():
     contact_api = ContActsApi()
     auth_header = contact_api.auth_and_get_header(usr)

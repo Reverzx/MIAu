@@ -1,3 +1,4 @@
+import pytest
 from loguru import logger
 from test_data.env import Env
 from pages.add_contact_page import AddContactPage
@@ -5,6 +6,9 @@ from test_data.user_creds import UserCredentials as UC
 from test_data.contacts_data import new_contact_valid_data
 
 
+@pytest.mark.regression
+@pytest.mark.smoke
+@pytest.mark.ui
 def test_deleting_a_contact_positive_scenario(driver):
     """
     Verifies successful contact deletion with valid user credentials
@@ -32,6 +36,8 @@ def test_deleting_a_contact_positive_scenario(driver):
                    "has been redirected to the contact list")
 
 
+@pytest.mark.regression
+@pytest.mark.ui
 def test_deleting_a_contact_canceling(driver):
     """
     Verifies that clicking "Нет" in the delete confirmation popup cancels deletion

@@ -7,6 +7,9 @@ from test_data.users_schemas import (
     update_and_get_user_profile_response_schema)
 
 
+@pytest.mark.regression
+@pytest.mark.smoke
+@pytest.mark.api
 def test_post_sign_up(delete_user):
     """
     Verifies, that the responce status code is 201,
@@ -23,6 +26,9 @@ def test_post_sign_up(delete_user):
     logger.success("New user is successfully registered")
 
 
+@pytest.mark.regression
+@pytest.mark.smoke
+@pytest.mark.api
 def test_get_new_profile(delete_user):
     """
     Verifies, that user profile filled correctly
@@ -41,6 +47,8 @@ def test_get_new_profile(delete_user):
     logger.success('User was successfully registered')
 
 
+@pytest.mark.regression
+@pytest.mark.api
 def test_add_exist_user():
     """
     Verifies that trying to register user, which is already registered, flops.
@@ -53,6 +61,8 @@ def test_add_exist_user():
     logger.success("Registrtion is failed, user has already been registered")
 
 
+@pytest.mark.regression
+@pytest.mark.api
 @pytest.mark.parametrize('body, description', invalid_reg_data_api)
 def test_register_user_with_invalid_data(body, description):
     """

@@ -12,11 +12,23 @@ from api_actions.assert_json_response_body import assert_json_response
 from api_actions.validate_response_schema import validate_response_schema
 
 
-def test_successful_put_update(read_schema):
-    # Run PUT request to the /contacts endpoint
+@pytest.fixture
+def create_and_delete_contact():
+    # Creates a test contact and deletes it when testing is completed
     token = login_and_get_token(UserCredentials.it_edit_email,
                                 UserCredentials.it_edit_password)
     cont_id = add_contact_and_get_id(token, EditData.contact_data)
+    yield token, cont_id
+    delete_contact(token, cont_id)
+
+
+@pytest.mark.regression
+@pytest.mark.smoke
+@pytest.mark.api
+def test_successful_put_update(create_and_delete_contact, read_schema):
+    # Run PUT request to the /contacts endpoint
+    token, cont_id = create_and_delete_contact
+
     payload = EditData.updated_data
     response = put_contact_upd(token, cont_id, payload)
 
@@ -29,32 +41,30 @@ def test_successful_put_update(read_schema):
     logger.success("Put request passed with response code 200. "
                    "The response body contains updated data")
 
-    # Delete test data
-    delete_contact(token, cont_id)
 
-
-def test_put_contact_upd_response_schema(read_schema):
+@pytest.mark.regression
+@pytest.mark.smoke
+@pytest.mark.api
+def test_put_contact_upd_response_schema(create_and_delete_contact, read_schema):
     # Run PUT request to the /contacts endpoint
-    token = login_and_get_token(UserCredentials.it_edit_email,
-                                UserCredentials.it_edit_password)
-    cont_id = add_contact_and_get_id(token, EditData.contact_data)
+    token, cont_id = create_and_delete_contact
+
     payload = EditData.updated_data
     response = put_contact_upd(token, cont_id, payload)
 
     # Check the response schema
-    schema = read_schema["put_contact_upd"]
-    validate_response_schema(response, schema)
+    expected_schema = read_schema["put_contact_upd"]
+    actual_schema = response.json()
+    validate_response_schema(expected_schema, actual_schema)
     logger.success("JSON-response corresponds to the schema.")
 
-    # Delete test data
-    delete_contact(token, cont_id)
 
-
-def test_put_upd_fails_for_unauthorized_user():
+@pytest.mark.regression
+@pytest.mark.api
+def test_put_upd_fails_for_unauthorized_user(create_and_delete_contact):
     # Run PUT request to the /contacts endpoint
-    token = login_and_get_token(UserCredentials.it_edit_email,
-                                UserCredentials.it_edit_password)
-    cont_id = add_contact_and_get_id(token, EditData.contact_data)
+    token, cont_id = create_and_delete_contact
+
     response = requests.put(
         f"{Env.URL_Login}contacts/{cont_id}",
         json=EditData.updated_data
@@ -71,19 +81,17 @@ def test_put_upd_fails_for_unauthorized_user():
                    f"Response status code is {response.status_code}."
                    f"Error message is {response.json()['error']}")
 
-    # Delete test data
-    delete_contact(token, cont_id)
 
-
+@pytest.mark.regression
+@pytest.mark.api
 @pytest.mark.parametrize('element_id, value, message', EditData.mandatory_fields_errors_api)
-def test_put_upd_fails_with_missing_mandatory_data(element_id, value, message):
+def test_put_upd_fails_with_missing_mandatory_data(create_and_delete_contact, element_id, value, message):
     # Run PUT request to the /contacts endpoint
-    token = login_and_get_token(UserCredentials.it_edit_email,
-                                UserCredentials.it_edit_password)
-    cont_id = add_contact_and_get_id(token, EditData.contact_data)
+    token, cont_id = create_and_delete_contact
 
     payload = EditData.contact_data.copy()
     payload[element_id] = value
+
     response = put_contact_upd(token, cont_id, payload)
 
     # Check the response status code
@@ -96,17 +104,14 @@ def test_put_upd_fails_with_missing_mandatory_data(element_id, value, message):
                    f"Response status code is {response.status_code}. "
                    f"Error message is {response.json()['message']}.")
 
-    # Delete test data
-    delete_contact(token, cont_id)
 
-
-def test_successful_put_upd_with_only_mandatory_data():
+@pytest.mark.regression
+@pytest.mark.api
+def test_successful_put_upd_with_only_mandatory_data(create_and_delete_contact):
     # Run PUT request to the /contacts endpoint
-    token = login_and_get_token(UserCredentials.it_edit_email,
-                                UserCredentials.it_edit_password)
-    cont_id = add_contact_and_get_id(token, EditData.contact_data)
+    # with only First Name and Last Name in the payload
+    token, cont_id = create_and_delete_contact
 
-    # Only First Name and Last Name are provided
     payload = EditData.contact_data.copy()
     for key, value in payload.items():
         if key == "firstName" or key == "lastName":
@@ -121,15 +126,11 @@ def test_successful_put_upd_with_only_mandatory_data():
     logger.success(f"Put request passed with only mandatory fields in the payload. "
                    f"Response status code is {response.status_code}.")
 
-    # Delete test data
-    delete_contact(token, cont_id)
 
-
-def test_successful_put_upd_with_max_allowed_chars_length():
+@pytest.mark.api
+def test_successful_put_upd_with_max_allowed_chars_length(create_and_delete_contact):
     # Run PUT request to the /contacts endpoint
-    token = login_and_get_token(UserCredentials.it_edit_email,
-                                UserCredentials.it_edit_password)
-    cont_id = add_contact_and_get_id(token, EditData.contact_data)
+    token, cont_id = create_and_delete_contact
 
     response = put_contact_upd(token, cont_id, EditData.max_length_allowed_filled)
 
@@ -139,18 +140,16 @@ def test_successful_put_upd_with_max_allowed_chars_length():
     logger.success(f"Put request passed with values at the maximum allowed character length. "
                    f"Response status code is {response.status_code}.")
 
-    # Delete test data
-    delete_contact(token, cont_id)
 
-
+@pytest.mark.api
 @pytest.mark.parametrize('element_id, value, message', EditData.max_length_exceeded)
-def test_put_upd_fails_for_exceeded_max_chars_length(element_id, value, message):
+def test_put_upd_fails_for_exceeded_max_chars_length(create_and_delete_contact, element_id, value, message):
     # Run PUT request to the /contacts endpoint
-    token = login_and_get_token(UserCredentials.it_edit_email,
-                                UserCredentials.it_edit_password)
-    cont_id = add_contact_and_get_id(token, EditData.contact_data)
+    token, cont_id = create_and_delete_contact
+
     payload = EditData.contact_data.copy()
     payload[element_id] = value
+
     response = put_contact_upd(token, cont_id, payload)
 
     # Check the response status code
@@ -164,16 +163,13 @@ def test_put_upd_fails_for_exceeded_max_chars_length(element_id, value, message)
                    f"Response status code is {response.status_code}. "
                    f"Error message is {response.json()['message']}.")
 
-    # Delete test data
-    delete_contact(token, cont_id)
 
-
+@pytest.mark.regression
+@pytest.mark.api
 @pytest.mark.parametrize('value', EditData.valid_emails)
-def test_successful_put_upd_for_valid_email(value):
+def test_successful_put_upd_for_valid_email(create_and_delete_contact, value):
     # Run PUT request to the /contacts endpoint
-    token = login_and_get_token(UserCredentials.it_edit_email,
-                                UserCredentials.it_edit_password)
-    cont_id = add_contact_and_get_id(token, EditData.contact_data)
+    token, cont_id = create_and_delete_contact
 
     payload = EditData.contact_data.copy()
     payload["email"] = value
@@ -186,17 +182,13 @@ def test_successful_put_upd_for_valid_email(value):
     logger.success(f"Put request passed with valid email values. "
                    f"Response status code is {response.status_code}.")
 
-    # Delete test data
-    delete_contact(token, cont_id)
 
-
+@pytest.mark.api
 @pytest.mark.parametrize('value, description', EditData.invalid_emails)
-def test_put_upd_fails_for_invalid_email(value, description):
+def test_put_upd_fails_for_invalid_email(create_and_delete_contact, value, description):
     # Run PUT request to the /contacts endpoint
     logger.info(f"Test: Email address is edited with invalid value: {description}")
-    token = login_and_get_token(UserCredentials.it_edit_email,
-                                UserCredentials.it_edit_password)
-    cont_id = add_contact_and_get_id(token, EditData.contact_data)
+    token, cont_id = create_and_delete_contact
 
     payload = EditData.contact_data.copy()
     payload["email"] = value
@@ -215,16 +207,13 @@ def test_put_upd_fails_for_invalid_email(value, description):
                    f"Response status code is {response.status_code}. "
                    f"Error message is {response.json()['message']}.")
 
-    # Delete test data
-    delete_contact(token, cont_id)
 
-
+@pytest.mark.regression
+@pytest.mark.api
 @pytest.mark.parametrize('value', EditData.valid_phones)
-def test_successful_put_upd_for_valid_phone(value):
+def test_successful_put_upd_for_valid_phone(create_and_delete_contact, value):
     # Run PUT request to the /contacts endpoint
-    token = login_and_get_token(UserCredentials.it_edit_email,
-                                UserCredentials.it_edit_password)
-    cont_id = add_contact_and_get_id(token, EditData.contact_data)
+    token, cont_id = create_and_delete_contact
 
     payload = EditData.contact_data.copy()
     payload["phone"] = value
@@ -237,16 +226,12 @@ def test_successful_put_upd_for_valid_phone(value):
     logger.success(f"Put request passed with valid phone values. "
                    f"Response status code is {response.status_code}.")
 
-    # Delete test data
-    delete_contact(token, cont_id)
 
-
+@pytest.mark.api
 @pytest.mark.parametrize('value', EditData.invalid_phones)
-def test_put_upd_fails_for_invalid_phone(value):
+def test_put_upd_fails_for_invalid_phone(create_and_delete_contact, value):
     # Run PUT request to the /contacts endpoint
-    token = login_and_get_token(UserCredentials.it_edit_email,
-                                UserCredentials.it_edit_password)
-    cont_id = add_contact_and_get_id(token, EditData.contact_data)
+    token, cont_id = create_and_delete_contact
 
     payload = EditData.contact_data.copy()
     payload["phone"] = value
@@ -265,16 +250,13 @@ def test_put_upd_fails_for_invalid_phone(value):
                    f"Response status code is {response.status_code}. "
                    f"Error message is {response.json()['message']}.")
 
-    # Delete test data
-    delete_contact(token, cont_id)
 
-
+@pytest.mark.regression
+@pytest.mark.api
 @pytest.mark.parametrize('value', EditData.valid_birthdate)
-def test_successful_put_upd_for_valid_birthdate(value):
+def test_successful_put_upd_for_valid_birthdate(create_and_delete_contact, value):
     # Run PUT request to the /contacts endpoint
-    token = login_and_get_token(UserCredentials.it_edit_email,
-                                UserCredentials.it_edit_password)
-    cont_id = add_contact_and_get_id(token, EditData.contact_data)
+    token, cont_id = create_and_delete_contact
 
     payload = EditData.contact_data.copy()
     payload["birthdate"] = value
@@ -287,18 +269,14 @@ def test_successful_put_upd_for_valid_birthdate(value):
     logger.success(f"Put request passed with valid birthdate values. "
                    f"Response status code is {response.status_code}.")
 
-    # Delete test data
-    delete_contact(token, cont_id)
 
-
+@pytest.mark.api
 @pytest.mark.parametrize('value, description', EditData.invalid_birthdate)
-def test_put_upd_fails_for_invalid_birthdate(value, description):
+def test_put_upd_fails_for_invalid_birthdate(create_and_delete_contact, value, description):
     logger.info(f"Test: Birthdate is edited with invalid value: {description}")
 
     # Run PUT request to the /contacts endpoint
-    token = login_and_get_token(UserCredentials.it_edit_email,
-                                UserCredentials.it_edit_password)
-    cont_id = add_contact_and_get_id(token, EditData.contact_data)
+    token, cont_id = create_and_delete_contact
 
     payload = EditData.contact_data.copy()
     payload["birthdate"] = value
@@ -316,6 +294,3 @@ def test_put_upd_fails_for_invalid_birthdate(value, description):
     logger.success(f"Put request failed as expected with invalid birthdate values. "
                    f"Response status code is {response.status_code}. "
                    f"Error message is {response.json()['message']}.")
-
-    # Delete test data
-    delete_contact(token, cont_id)
