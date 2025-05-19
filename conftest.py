@@ -109,14 +109,14 @@ def clear_contacts(request):
     request.addfinalizer(fin)
 
 
-@pytest.fixture()
+@pytest.fixture()  # pylint: disable=redefined-outer-name
 def login_page(driver):
     login = LoginPage(driver, Env.URL_Login)
     login.open()
     return login
 
 
-@pytest.fixture()
+@pytest.fixture()  # pylint: disable=redefined-outer-name
 def create_contact_and_locate_edit_page(driver):
     """
     The fixture is used for edit contact page testing.
@@ -150,7 +150,7 @@ def create_contact_and_locate_edit_page(driver):
     return edit_page
 
 
-@pytest.fixture
+@pytest.fixture  # pylint: disable=redefined-outer-name
 def delete_contact(driver):
     yield
     contact_details_page = ContactDetailsPage(driver, Env.URL_ContactDetails)
