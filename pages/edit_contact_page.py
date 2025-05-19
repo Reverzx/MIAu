@@ -1,7 +1,6 @@
 from pages.base_page import BasePage
 from test_data.env import Env
 from test_data.edit_data import EditData
-from loguru import logger
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait

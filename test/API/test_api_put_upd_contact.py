@@ -85,7 +85,8 @@ def test_put_upd_fails_for_unauthorized_user(create_and_delete_contact):
 @pytest.mark.regression
 @pytest.mark.api
 @pytest.mark.parametrize('element_id, value, message', EditData.mandatory_fields_errors_api)
-def test_put_upd_fails_with_missing_mandatory_data(create_and_delete_contact, element_id, value, message):
+def test_put_upd_fails_with_missing_mandatory_data(
+        create_and_delete_contact, element_id, value, message):
     # Run PUT request to the /contacts endpoint
     token, cont_id = create_and_delete_contact
 
@@ -143,7 +144,8 @@ def test_successful_put_upd_with_max_allowed_chars_length(create_and_delete_cont
 
 @pytest.mark.api
 @pytest.mark.parametrize('element_id, value, message', EditData.max_length_exceeded)
-def test_put_upd_fails_for_exceeded_max_chars_length(create_and_delete_contact, element_id, value, message):
+def test_put_upd_fails_for_exceeded_max_chars_length(
+        create_and_delete_contact, element_id, value, message):
     # Run PUT request to the /contacts endpoint
     token, cont_id = create_and_delete_contact
 

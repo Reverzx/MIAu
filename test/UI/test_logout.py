@@ -18,7 +18,7 @@ def assert_logout(page):
 @pytest.mark.ui
 def test_logout_button_on_contact_list_page(driver, login_page):
     # Navigate to the Contact List page
-    contact_list_page =  login_page.complete_login(
+    contact_list_page = login_page.complete_login(
         UserCredentials.it_email,
         UserCredentials.it_password
     )
