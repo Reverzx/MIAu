@@ -15,12 +15,6 @@ class ContactListPage(BasePage):
         self.contact_row = (By.XPATH, '//tr[@class="contactTableBodyRow"]')
         self.logout_button = (By.ID, 'logout')
 
-    def navigate_to_contact_list_page(self, email, password):
-        from pages.login_page import LoginPage
-        login_page = LoginPage(self.driver, Env.URL_Login)
-        login_page.open()
-        return login_page.complete_login(email, password)
-
     def is_contact_list_page(self):
         return self.is_url_correct(Env.URL_ContactList)
 

@@ -1,8 +1,10 @@
 import requests
 from test_data.env import Env
 from loguru import logger
+from api_actions.catch_request_exception import catch_request_exception
 
 
+@catch_request_exception
 def post_logout(auth_token):
     url = f"{Env.URL_Login}/users/logout"
     headers = {

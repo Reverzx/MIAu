@@ -1,12 +1,9 @@
+import pytest
 from loguru import logger
 from test_data.env import Env
 from pages.login_page import LoginPage
-from test_data.edit_data import EditData
 from test_data.user_creds import UserCredentials
 from pages.add_contact_page import AddContactPage
-from pages.edit_contact_page import EditContactPage
-from pages.contact_list_page import ContactListPage
-from pages.contact_details_page import ContactDetailsPage
 
 
 def assert_logout(page):
@@ -18,12 +15,13 @@ def assert_logout(page):
         "User was not redirected to the Login page after logout."
 
 
-def test_logout_button_on_contact_list_page(driver):
+@pytest.mark.ui
+def test_logout_button_on_contact_list_page(driver, login_page):
     # Navigate to the Contact List page
-    contact_list = ContactListPage(driver, Env.URL_ContactList)
-    contact_list_page = contact_list.navigate_to_contact_list_page(
+    contact_list_page = login_page.complete_login(
         UserCredentials.it_email,
-        UserCredentials.it_password)
+        UserCredentials.it_password
+    )
     contact_list_page.is_contact_list_page()
 
     # Check the presence of the Logout button and the redirection to the Login page.
@@ -34,6 +32,8 @@ def test_logout_button_on_contact_list_page(driver):
     )
 
 
+@pytest.mark.regression
+@pytest.mark.ui
 def test_logout_button_on_add_contact_page(driver):
     # Navigate to the Add Contact page
     add_contact = AddContactPage(driver, Env.URL_AddContact)
@@ -51,12 +51,15 @@ def test_logout_button_on_add_contact_page(driver):
     )
 
 
-def test_logout_button_on_contact_details_page(driver):
+@pytest.mark.regression
+@pytest.mark.ui
+def test_logout_button_on_contact_details_page(driver, login_page):
     # Navigate to the Contact Details page
-    contact_details = ContactDetailsPage(driver, Env.URL_ContactDetails)
-    contact_details_page = contact_details.navigate_to_contact_details_page(
+    contact_list_page = login_page.complete_login(
         UserCredentials.it_email,
-        UserCredentials.it_password)
+        UserCredentials.it_password
+    )
+    contact_details_page = contact_list_page.navigate_to_contact_details_page()
     contact_details_page.is_contact_details_page()
 
     # Check the presence of the Logout button and the redirection to the Login page.
@@ -67,14 +70,11 @@ def test_logout_button_on_contact_details_page(driver):
     )
 
 
-def test_logout_button_on_edit_contact_page(driver):
+@pytest.mark.regression
+@pytest.mark.ui
+def test_logout_button_on_edit_contact_page(driver, create_contact_and_locate_edit_page):
     # Create a contact and open the edit page
-    edit_page = EditContactPage(driver, Env.URL_EditContact)
-    edit_page.create_contact_and_navigate_edit_page(
-        UserCredentials.it_email,
-        UserCredentials.it_password,
-        EditData.contact_data_only_mandatory
-    )
+    edit_page = create_contact_and_locate_edit_page
     edit_page.is_edit_page()
 
     # Check the presence of the Logout button and the redirection to the Login page.
@@ -85,6 +85,9 @@ def test_logout_button_on_edit_contact_page(driver):
     )
 
 
+@pytest.mark.regression
+@pytest.mark.smoke
+@pytest.mark.ui
 def test_login_after_logout(driver):
     # Login and navigate to the Contact List page
     login_page = LoginPage(driver, Env.URL_Login)

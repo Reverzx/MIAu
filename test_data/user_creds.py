@@ -1,7 +1,7 @@
 class UserCredentials:
     it_email = '240425test@test.com'  # Credentials used by Iryna T.
     it_password = 'Password'  # Credentials used by Iryna T
-    it_edit_email = '050525test@test.com'  # Credentials used for Edit page testing by Iryna T
+    it_edit_email = '051925test1@test.com'  # Credentials used for Edit page testing by Iryna T
     it_edit_password = 'Password'  # Credentials used for Edit page testing by Iryna T
     not_registered_email = 'notregistereduser@test.com'
     updated_old_email = 'updated_old@test.com'
@@ -11,10 +11,10 @@ class UserCredentials:
     deleted_email = 'deleted@test.com'
     deleted_password = 'DelPass'
 
-    reg_new_fname = 'Hanna'  # Used by Hanna Elis, should be deleted after registration
-    reg_new_lname = 'Frank'
-    reg_new_email = 'dont@forget.me'
-    reg_new_password = 'dontforgive'
+    register_new_first_name = 'Hanna'  # Used by Hanna Elis, should be deleted after registration
+    register_new_last_name = 'Frank'
+    register_new_email = 'dont@forget.me'
+    register_new_password = 'dontforgive'
 
     exist_usr_fname = 'Johny'  # Used by Hanna Elis, should be registered
     exist_usr_lname = 'Walker'
@@ -31,10 +31,10 @@ class UserCredentials:
     to_be_update_email = 'best@mail.soap'
     to_be_update_password = 'thepassword'
 
-    usr_to_add_cont_fname = 'Gandalf'             # Used by Hanna Elis, should be always registered
-    usr_to_add_cont_lname = 'Grey'
-    usr_to_add_cont_email = 'eagles@fly.fly'
-    usr_to_add_cont_password = 'youshallnotpass'
+    user_to_add_contact_first_name = 'Gandalf'        # Used by Hanna Elis, should be
+    user_to_add_contact_last_name = 'Grey'            # always registered
+    user_to_add_contact_email = 'eagles@fly.fly'
+    user_to_add_contact_password = 'youshallnotpass'
 
     zm_email = "R@mail.com"
     zm_password = "Turbo95"

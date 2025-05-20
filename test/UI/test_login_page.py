@@ -6,6 +6,8 @@ from test_data.user_creds import UserCredentials
 from test_data.login_data import invalid_login_data_ui
 
 
+@pytest.mark.regression
+@pytest.mark.ui
 def test_expected_elements_present(driver):
     """
     Verifies that expected title, fields, buttons are present
@@ -24,6 +26,9 @@ def test_expected_elements_present(driver):
     )
 
 
+@pytest.mark.regression
+@pytest.mark.smoke
+@pytest.mark.ui
 def test_login_with_valid_creds(driver):
     """
     Verifies successful login with valid (registered) user credentials.
@@ -34,6 +39,8 @@ def test_login_with_valid_creds(driver):
     logger.success("Login succeeded for valid user")
 
 
+@pytest.mark.regression
+@pytest.mark.ui
 @pytest.mark.parametrize('email, password, description', invalid_login_data_ui)
 def test_login_with_invalid_creds(driver, email, password, description):
     """
@@ -49,6 +56,8 @@ def test_login_with_invalid_creds(driver, email, password, description):
     logger.success("Login failed as expected with error message.")
 
 
+@pytest.mark.regression
+@pytest.mark.ui
 def test_login_with_recently_updated_creds(driver):
     """
     Verifies that a user can successfully log in with recently updated credentials.

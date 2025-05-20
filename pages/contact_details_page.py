@@ -32,40 +32,23 @@ class ContactDetailsPage(BasePage):
         self.logout_button = (By.ID, 'logout')
         self.return_button = (By.ID, 'return')
 
-    def navigate_to_contact_details_page(self, email, password):
-        from pages.contact_list_page import ContactListPage
-        contact_list = ContactListPage(self.driver, Env.URL_ContactList)
-        contact_list_page = contact_list.navigate_to_contact_list_page(email, password)
-        return contact_list_page.navigate_to_contact_details_page()
-
     def is_contact_details_page(self):
         return self.is_url_correct(Env.URL_ContactDetails)
 
     def navigate_to_edit_contact_page(self):
-        """
-        Clicks the Edit Contact button and navigates to the Edit Contact page.
-        :return: EditContactPage object
-        """
+        # Clicks the Edit Contact button and navigates to the Edit Contact page.
         self.click_button(self.elements['edit-contact'])
         return EditContactPage(self.driver, self.url)
 
     def is_navigate_to_edit_contact_page_successful(self):
-        """
-        Waits up to 5 seconds for a successful redirect to the Edit Contact page.
-        :return: bool: True if the current URL matches the Edit Contact page url,
-        otherwise False.
-        """
+        # Waits up to 5 seconds for a successful redirect to the Edit Contact page.
         WebDriverWait(self.driver, 5).until(
             EC.url_to_be(Env.URL_EditContact)
         )
         return True
 
     def assert_contact_details_are_correct(self, data):
-        """
-        Asserts that the contact details match the expected values.
-        :param data: Dictionary of field IDs and expected values.
-        :return: AssertionError: If any value does not match the expected.
-        """
+        # Asserts that the contact details match the expected values.
         for field_id, expected_value in data.items():
             locator = self.elements.get(field_id)
             if locator:

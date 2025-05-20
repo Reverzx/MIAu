@@ -1,15 +1,17 @@
+import pytest
 from loguru import logger
 from api_actions.api_contact_actions import ContActsApi
 from test_data.contacts_data import (user_without_cont as usr_empty,
-                                     user_to_add_cont as user, new_cont_valid_data as ncvd)
+                                     user_to_add_contact as user, new_contact_valid_data as ncvd)
 from test_data.edit_data import EditData
 
 
+@pytest.mark.api
 def test_get_contacts_when_no_contacts_created():
 
     # User authorization without contacts
     contact_api = ContActsApi()
-    header = contact_api.auth_and_get_token(usr_empty)
+    header = contact_api.auth_and_get_header(usr_empty)
 
     # Getting the contact list (GET)
     response = contact_api.req_get_contact_list(header)
@@ -23,11 +25,14 @@ def test_get_contacts_when_no_contacts_created():
                    "response is an empty list []")
 
 
+@pytest.mark.regression
+@pytest.mark.smoke
+@pytest.mark.api
 def test_get_contacts_when_contacts_created():
 
     # User authorization with contacts
     contact_api = ContActsApi()
-    header = contact_api.auth_and_get_token(user)
+    header = contact_api.auth_and_get_header(user)
 
     # Checking contact list. If contact list is empty, create new contact
     response_list = contact_api.req_get_contact_list(header)
@@ -51,11 +56,12 @@ def test_get_contacts_when_contacts_created():
                    "and response contains contacts with all required fields.")
 
 
+@pytest.mark.api
 def test_get_and_add_contact():
 
     # User authorization
     contact_api = ContActsApi()
-    header = contact_api.auth_and_get_token(user)
+    header = contact_api.auth_and_get_header(user)
 
     # Create contact
     response_add = contact_api.req_add_contact(ncvd, header)
@@ -74,11 +80,12 @@ def test_get_and_add_contact():
         logger.warning(f"Error message: {e}")
 
 
+@pytest.mark.api
 def test_get_and_delete_contact():
 
     # User authorization
     contact_api = ContActsApi()
-    header = contact_api.auth_and_get_token(user)
+    header = contact_api.auth_and_get_header(user)
 
     # Create contact
     response_add = contact_api.req_add_contact(ncvd, header)
@@ -96,11 +103,13 @@ def test_get_and_delete_contact():
                    "trying to get a deleted contact")
 
 
+@pytest.mark.regression
+@pytest.mark.api
 def test_get_updated_contact():
 
     # User authorization
     contact_api = ContActsApi()
-    header = contact_api.auth_and_get_token(user)
+    header = contact_api.auth_and_get_header(user)
 
     # Create contact
     response_add = contact_api.req_add_contact(ncvd, header)

@@ -1,12 +1,16 @@
+import pytest
 from loguru import logger
 from api_actions.api_contact_actions import ContActsApi
 from test_data.edit_data import EditData
-from test_data.contacts_data import user_to_add_cont as usr, new_cont_valid_data as ncvd
+from test_data.contacts_data import user_to_add_contact as usr, new_contact_valid_data as ncvd
 
 
+@pytest.mark.regression
+@pytest.mark.smoke
+@pytest.mark.api
 def test_successful_contact_deletion():
     contact_api = ContActsApi()
-    auth_header = contact_api.auth_and_get_token(usr)
+    auth_header = contact_api.auth_and_get_header(usr)
     cont_id = contact_api.req_add_contact(ncvd, auth_header).json()["_id"]
     delete_resp = contact_api.delete_contact(auth_header, cont_id)
     assert delete_resp.status_code == 200, f"Expected 200, got {delete_resp.status_code}"
@@ -14,9 +18,10 @@ def test_successful_contact_deletion():
     logger.success('Contact deleted successfully')
 
 
+@pytest.mark.api
 def test_delete_contact_already_deleted():
     contact_api = ContActsApi()
-    auth_header = contact_api.auth_and_get_token(usr)
+    auth_header = contact_api.auth_and_get_header(usr)
     cont_id = contact_api.req_add_contact(ncvd, auth_header).json()["_id"]
     delete_resp = contact_api.delete_contact(auth_header, cont_id)
     assert delete_resp.status_code == 200, f"Expected 200, got {delete_resp.status_code}"
@@ -26,17 +31,20 @@ def test_delete_contact_already_deleted():
     logger.success('The expected status code 404 has been received')
 
 
+@pytest.mark.regression
+@pytest.mark.api
 def test_delete_contact_with_invalid_id():
     contact_api = ContActsApi()
-    auth_header = contact_api.auth_and_get_token(usr)
+    auth_header = contact_api.auth_and_get_header(usr)
     delete_resp = contact_api.delete_contact(auth_header, 'invalid_cont_id')
     assert delete_resp.status_code == 400
     logger.success('The expected status code 400 has been received')
 
 
+@pytest.mark.api
 def test_try_update_deleted_contact():
     contact_api = ContActsApi()
-    auth_header = contact_api.auth_and_get_token(usr)
+    auth_header = contact_api.auth_and_get_header(usr)
     response_add = contact_api.req_add_contact(ncvd, auth_header)
     cont_id = response_add.json()["_id"]
     delete_resp = contact_api.delete_contact(auth_header, cont_id)
