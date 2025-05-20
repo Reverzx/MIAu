@@ -1,6 +1,4 @@
 import requests
-from jsonschema import validate, ValidationError
-from loguru import logger
 from test_data.env import Env
 from api_actions.catch_request_exception import catch_request_exception
 
