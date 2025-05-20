@@ -31,7 +31,7 @@ The **Contact List App** is a demo web-based contact management system that allo
 
 ## 📂 Project Structure
 ```
-MIA/
+MIAu/
 ├── .github
 │   ├── workflows
 │   │   ├── flake8.yaml
