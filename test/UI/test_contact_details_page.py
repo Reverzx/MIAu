@@ -1,15 +1,17 @@
-from test_data.env import Env
-from pages.contact_details_page import ContactDetailsPage
+import pytest
 from test_data.user_creds import UserCredentials
 from loguru import logger
 
 
-def test_expected_elements_present(driver):
+@pytest.mark.regression
+@pytest.mark.ui
+def test_expected_elements_present(driver, login_page):
     # Navigate to the Contact Details page
-    contact_details = ContactDetailsPage(driver, Env.URL_ContactDetails)
-    contact_details_page = contact_details.navigate_to_contact_details_page(
+    contact_list_page = login_page.complete_login(
         UserCredentials.it_email,
-        UserCredentials.it_password)
+        UserCredentials.it_password
+    )
+    contact_details_page = contact_list_page.navigate_to_contact_details_page()
     contact_details_page.is_contact_details_page()
 
     # Checking page elements

@@ -14,9 +14,12 @@ from test_data.usr_update_data import (
 )
 
 
+@pytest.mark.regression
+@pytest.mark.smoke
+@pytest.mark.api
 def test_upd_user(revert_updation):
     """
-    Verifies, that the responce status code is 200,
+    Verifies, that the response status code is 200,
     Update User PATCH request is successful
     """
     update = UserActsApi()
@@ -31,6 +34,8 @@ def test_upd_user(revert_updation):
     logger.success('User profile is successfully updated')
 
 
+@pytest.mark.regression
+@pytest.mark.api
 def test_login_after_update(revert_updation):
     """
     Verifies the login after updating user.
@@ -48,6 +53,7 @@ def test_login_after_update(revert_updation):
     logger.success('User with updated data successfully logged in')
 
 
+@pytest.mark.api
 @pytest.mark.parametrize('body, description, field_name', upd_usr_with_empty_fields)
 def test_upd_user_with_empty_fields(body, description, field_name):
     """
@@ -61,6 +67,7 @@ def test_upd_user_with_empty_fields(body, description, field_name):
     logger.success(f'User updation flopped status code 400. {field_name} field is required.')
 
 
+@pytest.mark.api
 @pytest.mark.parametrize('body, description', invalid_data_to_upd)
 def test_upd_user_with_invalid_data(body, description):
     """
@@ -74,6 +81,8 @@ def test_upd_user_with_invalid_data(body, description):
     logger.success('User updation flopped status code 400.')
 
 
+@pytest.mark.regression
+@pytest.mark.api
 @pytest.mark.parametrize('body, description, field_name', upd_usr_with_some_empty_fields)
 def test_get_profile_after_failed_update(body, description, field_name):
     """

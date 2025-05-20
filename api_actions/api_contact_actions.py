@@ -52,7 +52,7 @@ class ContActsApi():
 
     def delete_contact(self, header, cont_id):
         """
-        Sends DELETE request to remove definded contact fron contact list
+        Sends DELETE request to remove defined contact from contact list
         Uses contact's ID
         """
         return requests.delete(url=f'{self.url}/{cont_id}', headers=header)
@@ -60,7 +60,7 @@ class ContActsApi():
     @catch_request_exception
     def add_contact(self, user_body, new_cont):
         """
-        Authorizes an user and adds a new contact with provided data
+        Authorizes a user and adds a new contact with provided data
         """
         header = self.auth_and_get_header(user_body)
         return self.req_add_contact(new_cont, header)

@@ -15,6 +15,8 @@ from test_data.contacts_data import (
 )
 
 
+@pytest.mark.regression
+@pytest.mark.ui
 def test_is_expected_element_present(driver):
     """
     Checks the presense of expected elements on the page
@@ -32,6 +34,8 @@ def test_is_expected_element_present(driver):
     logger.success('All the expected elements are present')
 
 
+@pytest.mark.regression
+@pytest.mark.ui
 def test_cancel_add_new_contact(driver):
     login_page = LoginPage(driver, Env.URL_Login)
     login_page.open()
@@ -52,6 +56,9 @@ def test_cancel_add_new_contact(driver):
     logger.success('Addition of new contact was cancelled')
 
 
+@pytest.mark.regression
+@pytest.mark.smoke
+@pytest.mark.ui
 def test_add_new_contact(driver, clear_contacts):
     login_page = LoginPage(driver, Env.URL_Login)
     login_page.open()
@@ -72,6 +79,8 @@ def test_add_new_contact(driver, clear_contacts):
     logger.success('New contact was successfully added')
 
 
+@pytest.mark.regression
+@pytest.mark.ui
 def test_add_contact_filling_only_mandatory_fields(driver, clear_contacts):
     """
     Verifies Add new contact, filling only mandatory fields.
@@ -95,6 +104,8 @@ def test_add_contact_filling_only_mandatory_fields(driver, clear_contacts):
     logger.success('New contact was successfully added')
 
 
+@pytest.mark.regression
+@pytest.mark.ui
 @pytest.mark.parametrize('new_cont, description, err_message', ui_new_cont_empty_mandatory_fields)
 def test_add_contact_skip_mandatory_fields(driver, new_cont, description, err_message):
     """
@@ -114,6 +125,8 @@ def test_add_contact_skip_mandatory_fields(driver, new_cont, description, err_me
     logger.success("Registration failed as expected with error message")
 
 
+@pytest.mark.regression
+@pytest.mark.ui
 @pytest.mark.parametrize('new_contact, description, err_message',
                          ui_new_contact_invalid_data)
 def test_add_contact_with_invalid_common_data(driver, new_contact, description, err_message):
@@ -134,6 +147,7 @@ def test_add_contact_with_invalid_common_data(driver, new_contact, description, 
     logger.success("Registration failed as expected with error message")
 
 
+@pytest.mark.ui
 @pytest.mark.parametrize('new_contact, description, err_message', ui_invalid_phone)
 def test_add_contact_with_invalid_phone(driver, new_contact, description, err_message):
     """
@@ -153,6 +167,7 @@ def test_add_contact_with_invalid_phone(driver, new_contact, description, err_me
     logger.success("Registration failed as expected with error message")
 
 
+@pytest.mark.ui
 @pytest.mark.xfail(reason='Adress fields accept incorrect data')
 @pytest.mark.parametrize('new_contact, description', invalid_adress_data)
 def test_add_contact_with_invalid_adress(driver, new_contact, description):

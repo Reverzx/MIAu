@@ -13,9 +13,9 @@ def catch_request_exception(func):
             response.raise_for_status()
             return response
         except requests.exceptions.HTTPError as h:
-            logger.warning(f'HTTP error occured: {h}')
+            logger.warning(f'HTTP error occurred: {h}')
             return response
         except requests.exceptions.RequestException as r:
-            logger.warning(f'Request error occured: {r}')
+            logger.warning(f'Request error occurred: {r}')
             return None
     return wrapper

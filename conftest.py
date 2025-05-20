@@ -1,3 +1,4 @@
+# pylint: disable=redefined-outer-name
 import sys
 import json
 import tempfile
@@ -12,6 +13,11 @@ from api_actions.api_contact_actions import ContActsApi
 from test_data.register_data import user_to_add, usr_to_delete
 from test_data.usr_update_data import user_to_be_update, upd_data
 from test_data.contacts_data import user_to_add_contact
+from test_data.user_creds import UserCredentials
+from test_data.env import Env
+from test_data.edit_data import EditData
+from pages.login_page import LoginPage
+from pages.contact_details_page import ContactDetailsPage
 
 
 def pytest_configure(config):  # pylint: disable=unused-argument
@@ -102,3 +108,52 @@ def clear_contacts(request):
         clear = ContActsApi()
         clear.clear_cont_list(user_to_add_contact)
     request.addfinalizer(fin)
+
+
+@pytest.fixture()
+def login_page(driver):
+    login = LoginPage(driver, Env.URL_Login)
+    login.open()
+    return login
+
+
+@pytest.fixture()
+def create_contact_and_locate_edit_page(driver):
+    """
+    The fixture is used for edit contact page testing.
+    Created with specified credentials: it_edit_email, it_edit_password.
+    """
+    # Navigate to Login page
+    login = LoginPage(driver, Env.URL_Login)
+    login.open()
+
+    # Navigate to Contact List page
+    contact_list = login.complete_login(
+        UserCredentials.it_edit_email,
+        UserCredentials.it_edit_password
+    )
+    logger.info("The user is logged in and redirected to the Contact List page")
+
+    # Navigate to Add Contact page
+    add_contact = contact_list.navigate_to_add_contact_page()
+
+    # Add a new contact
+    add_contact.fill_contact_form(EditData.contact_data_only_mandatory)
+    add_contact.submit()
+    logger.info("A new contact is added.")
+
+    # Navigate to Contact Details page
+    contact_details = contact_list.navigate_to_contact_details_page()
+
+    # Navigate to Edit Contact page
+    edit_page = contact_details.navigate_to_edit_contact_page()
+
+    return edit_page
+
+
+@pytest.fixture
+def delete_contact(driver):
+    yield
+    contact_details_page = ContactDetailsPage(driver, Env.URL_ContactDetails)
+    contact_details_page.delete_contact()
+    logger.info("The contact is deleted via fixture after test.")
