@@ -1,9 +1,10 @@
 import pytest
 from loguru import logger
-from test_data.env import Env
-from pages.add_contact_page import AddContactPage
-from test_data.user_creds import UserCredentials as UC
+
+from pages.login_page import LoginPage
 from test_data.contacts_data import new_contact_valid_data
+from test_data.env import Env
+from test_data.user_creds import UserCredentials as UC
 
 
 @pytest.mark.regression
@@ -14,14 +15,17 @@ def test_deleting_a_contact_positive_scenario(driver):
     Verifies successful contact deletion with valid user credentials
     """
     # Open contact list page and add contact
-    addition = AddContactPage(driver, Env.URL_AddContact)
-    contact_list_page = addition.login_and_add_contact(
-        driver,
-        UC.usr_to_add_cont_email,
-        UC.usr_to_add_cont_password,
-        new_contact_valid_data
+    login_page = LoginPage(driver, Env.URL_Login)
+    login_page.open()
+    contact_list_page = login_page.complete_login(
+        UC.user_to_add_contact_email,
+        UC.user_to_add_contact_password,
     )
-    assert contact_list_page.is_url_correct(Env.URL_ContactList)
+    add_contact_page = contact_list_page.navigate_to_add_contact_page()
+    add_contact_page.fill_contact_form(new_contact_valid_data)
+    add_contact_page.submit()
+    assert add_contact_page.is_url_correct(Env.URL_ContactList), \
+        f'Url is incorrect, got {driver.current_url}'
 
     # Navigate to details contact
     contact_details_page = contact_list_page.navigate_to_contact_details_page()
@@ -44,14 +48,17 @@ def test_deleting_a_contact_canceling(driver):
     and user stays on the contact details or contact list page.
     """
     # Open contact list page and add contact
-    addition = AddContactPage(driver, Env.URL_AddContact)
-    contact_list_page = addition.login_and_add_contact(
-        driver,
-        UC.usr_to_add_cont_email,
-        UC.usr_to_add_cont_password,
-        new_contact_valid_data
+    login_page = LoginPage(driver, Env.URL_Login)
+    login_page.open()
+    contact_list_page = login_page.complete_login(
+        UC.user_to_add_contact_email,
+        UC.user_to_add_contact_password,
     )
-    assert contact_list_page.is_url_correct(Env.URL_ContactList)
+    add_contact_page = contact_list_page.navigate_to_add_contact_page()
+    add_contact_page.fill_contact_form(new_contact_valid_data)
+    add_contact_page.submit()
+    assert add_contact_page.is_url_correct(Env.URL_ContactList), \
+        f'Url is incorrect, got {driver.current_url}'
 
     # Navigate to details contact
     contact_details_page = contact_list_page.navigate_to_contact_details_page()
