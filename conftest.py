@@ -73,7 +73,8 @@ def delete_user(request):
     """
     def fin():
         delete = UserActsApi()
-        delete.delete_user(user_to_add)
+        header = delete.get_header(user_to_add)
+        delete.delete_user(header)
     request.addfinalizer(fin)
 
 

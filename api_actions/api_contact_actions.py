@@ -65,14 +65,6 @@ class ContActsApi():
         header = self.auth_and_get_header(user_body)
         return self.req_add_contact(new_cont, header)
 
-    def is_response_schema_correct(self, response, expected_schema):
-        """
-        Checks if response JSON fits to expected schema.
-        Returns True if response fits, otherwise False
-        """
-        check = UserActsApi()
-        return check.is_response_schema_correct(response, expected_schema)
-
     def clear_cont_list(self, user):
         """
         Removes all records from user's profile

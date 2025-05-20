@@ -211,6 +211,3 @@ ui_invalid_phone = [
      f'Contact validation failed: phone: Path `phone` (`{long_phone_numb}`) is longer than '
      'the maximum allowed length (15).')
 ]
-
-user_to_add_cont = ''
-new_cont_valid_data = ''

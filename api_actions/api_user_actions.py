@@ -1,6 +1,4 @@
 import requests
-from jsonschema import validate, ValidationError
-from loguru import logger
 from test_data.env import Env
 from api_actions.catch_request_exception import catch_request_exception
 
@@ -34,27 +32,14 @@ class UserActsApi():
     @catch_request_exception
     def post_sign_up(self, body):
         """
-        Sends a POST request with provided user credentials to register a new user
+        Sends a POST request with provided user data to register a new user
         """
         return requests.post(url=self.signup_url, headers=self.header, json=body)
-
-    def is_response_schema_correct(self, response, expected_schema):
-        """
-        Checks if response JSON fits to expected schema.
-        Returns True if response fits, otherwise False
-        """
-        current_schema = response.json()
-        try:
-            validate(current_schema, expected_schema)
-            return True
-        except ValidationError as v:
-            logger.warning(f"JSON schema validation error: {v}")
-            return False
 
     @catch_request_exception
     def patch_upd_user(self, body, upd_body):
         """
-        Sends a PATCH request with provided user credentials to update user profile
+        Sends a PATCH request with provided user data to update user profile
         """
         head = self.get_header(body)
         return requests.patch(url=self.usr_profile_url, headers=head, json=upd_body)

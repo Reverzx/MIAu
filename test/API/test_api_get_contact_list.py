@@ -11,7 +11,7 @@ def test_get_contacts_when_no_contacts_created():
 
     # User authorization without contacts
     contact_api = ContActsApi()
-    header = contact_api.auth_and_get_token(usr_empty)
+    header = contact_api.auth_and_get_header(usr_empty)
 
     # Getting the contact list (GET)
     response = contact_api.req_get_contact_list(header)
@@ -32,7 +32,7 @@ def test_get_contacts_when_contacts_created():
 
     # User authorization with contacts
     contact_api = ContActsApi()
-    header = contact_api.auth_and_get_token(user)
+    header = contact_api.auth_and_get_header(user)
 
     # Checking contact list. If contact list is empty, create new contact
     response_list = contact_api.req_get_contact_list(header)
@@ -61,7 +61,7 @@ def test_get_and_add_contact():
 
     # User authorization
     contact_api = ContActsApi()
-    header = contact_api.auth_and_get_token(user)
+    header = contact_api.auth_and_get_header(user)
 
     # Create contact
     response_add = contact_api.req_add_contact(ncvd, header)
@@ -85,7 +85,7 @@ def test_get_and_delete_contact():
 
     # User authorization
     contact_api = ContActsApi()
-    header = contact_api.auth_and_get_token(user)
+    header = contact_api.auth_and_get_header(user)
 
     # Create contact
     response_add = contact_api.req_add_contact(ncvd, header)
@@ -109,7 +109,7 @@ def test_get_updated_contact():
 
     # User authorization
     contact_api = ContActsApi()
-    header = contact_api.auth_and_get_token(user)
+    header = contact_api.auth_and_get_header(user)
 
     # Create contact
     response_add = contact_api.req_add_contact(ncvd, header)
