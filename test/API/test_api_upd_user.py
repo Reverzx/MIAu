@@ -1,6 +1,7 @@
 import pytest
 from loguru import logger
 from api_actions.api_user_actions import UserActsApi
+from api_actions.validate_response_schema import validate_response_schema
 from api_actions.post_login import post_login
 from test_data.users_schemas import (
     update_and_get_user_profile_response_schema,
@@ -26,11 +27,10 @@ def test_upd_user(revert_updation):
     response = update.patch_upd_user(user_to_be_update, upd_data)
     assert response.status_code == 200, \
         f'Status code is {response.status_code}, expected 200'
-    assert update.is_response_schema_correct(
-        response,
-        update_and_get_user_profile_response_schema
-    ), \
-        f'Response schema does not match, got {response.json()}'
+    assert validate_response_schema(
+        update_and_get_user_profile_response_schema,
+        response.json()
+    ), f'Response schema does not match, got {response.json()}'
     logger.success('User profile is successfully updated')
 
 
@@ -46,9 +46,9 @@ def test_login_after_update(revert_updation):
     response = post_login(upd_data["email"], upd_data["password"])
     assert response.status_code == 200, \
         f'Status code is {response.status_code}, expected 200'
-    assert update.is_response_schema_correct(
-        response,
-        signin_and_login_user_response_schema
+    assert validate_response_schema(
+        signin_and_login_user_response_schema,
+        response.json()
     ), f'Response schema does not match, got {response.json()}'
     logger.success('User with updated data successfully logged in')
 
@@ -59,7 +59,7 @@ def test_upd_user_with_empty_fields(body, description, field_name):
     """
     Verifies updating user with empty fields
     """
-    logger.info(f'Update user with invalid credentials: {description}')
+    logger.info(f'Update user with invalid data: {description}')
     update = UserActsApi()
     response = update.upd_usr_with_invalid_data(user_to_be_update, body)
     assert response.status_code == 400, \
@@ -73,7 +73,7 @@ def test_upd_user_with_invalid_data(body, description):
     """
     Verifies updating user vith invalid email and password
     """
-    logger.info(f'Update user with invalid credentials: {description}')
+    logger.info(f'Update user with invalid data: {description}')
     update = UserActsApi()
     response = update.upd_usr_with_invalid_data(user_to_be_update, body)
     assert response.status_code == 400, \
@@ -88,7 +88,7 @@ def test_get_profile_after_failed_update(body, description, field_name):
     """
     Verifies, that users data didn't change after flopped updating
     """
-    logger.info(f'Update user with invalid credentials: {description}')
+    logger.info(f'Update user with invalid data: {description}')
     update = UserActsApi()
     fail_upd = update.upd_usr_with_invalid_data(user_to_be_update, body)
     assert fail_upd.status_code == 400, \

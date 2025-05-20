@@ -2,6 +2,7 @@ import pytest
 from loguru import logger
 from api_actions.api_contact_actions import ContActsApi
 from api_actions.assert_json_response_body import assert_json_response
+from api_actions.validate_response_schema import validate_response_schema
 from test_data.contact_schemas import add_contact_response_schema
 from test_data.contacts_data import (
     user_to_add_contact,
@@ -29,9 +30,10 @@ def test_successfully_add_contact(clear_contacts):
     assert response.status_code == 201, \
         f'Status code is {response.status_code}, expected 201'
     assert_json_response(new_contact_valid_data, response.json())
-    assert newcont.is_response_schema_correct(
-        response,
-        add_contact_response_schema), \
+    assert validate_response_schema(
+        add_contact_response_schema,
+        response.json()
+    ), \
         f'Response schema does not match, got {response.json()}'
     logger.success('Contact is successfully added')
 
@@ -64,9 +66,9 @@ def test_add_cont_filling_only_mandatory_fields(clear_contacts):
     assert response.status_code == 201, \
         f'Status code is {response.status_code}, expected 201'
     logger.success('Response status code is 201')
-    assert newcont.is_response_schema_correct(
-        response,
-        add_contact_response_schema
+    assert validate_response_schema(
+        add_contact_response_schema,
+        response.json()
     ), f'Response schema does not match, got {response.json()}'
     logger.success('Got response json matches with expected schema')
 

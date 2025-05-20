@@ -1,6 +1,7 @@
 import pytest
 from loguru import logger
 from api_actions.api_user_actions import UserActsApi
+from api_actions.validate_response_schema import validate_response_schema
 from test_data.register_data import user_to_add, exist_user, invalid_reg_data_api
 from test_data.users_schemas import (
     signin_and_login_user_response_schema,
@@ -19,10 +20,10 @@ def test_post_sign_up(delete_user):
     response = register.post_sign_up(user_to_add)
     assert response.status_code == 201, \
         f'Status code is {response.status_code}, expected 201'
-    assert register.is_response_schema_correct(
-        response,
-        signin_and_login_user_response_schema), \
-        f'Response schema does not match, got {response.json()}'
+    assert validate_response_schema(
+        signin_and_login_user_response_schema,
+        response.json()
+    ), f'Response schema does not match, got {response.json()}'
     logger.success("New user is successfully registered")
 
 
@@ -38,10 +39,10 @@ def test_get_new_profile(delete_user):
     response = register.get_user_profile(user_to_add)
     assert response.status_code == 200, \
         f'Status code is {response.status_code}, expected 200'
-    assert register.is_response_schema_correct(
-        response,
-        update_and_get_user_profile_response_schema), \
-        f'Response schema does not match, got {response.json()}'
+    assert validate_response_schema(
+        update_and_get_user_profile_response_schema,
+        response.json()
+    ), f'Response schema does not match, got {response.json()}'
     assert response.json()['email'] == user_to_add['email'], \
         'Got email does not match with expected'
     logger.success('User was successfully registered')
@@ -66,7 +67,7 @@ def test_add_exist_user():
 @pytest.mark.parametrize('body, description', invalid_reg_data_api)
 def test_register_user_with_invalid_data(body, description):
     """
-    Verifies registration a new user with incorrect credentials.
+    Verifies registration a new user with incorrect data.
     """
     logger.info(f'Registration user with invalid creds {description}')
     register = UserActsApi()
