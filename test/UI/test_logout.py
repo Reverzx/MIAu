@@ -72,9 +72,16 @@ def test_logout_button_on_contact_details_page(driver, login_page):
 
 @pytest.mark.regression
 @pytest.mark.ui
-def test_logout_button_on_edit_contact_page(driver, create_contact_and_locate_edit_page):
-    # Create a contact and open the edit page
-    edit_page = create_contact_and_locate_edit_page
+def test_logout_button_on_edit_contact_page(driver, login_page):
+    # Navigate to the Contact Details page
+    contact_list_page = login_page.complete_login(
+        UserCredentials.it_email,
+        UserCredentials.it_password
+    )
+    contact_details_page = contact_list_page.navigate_to_contact_details_page()
+
+    # Navigate to the Edit Contact page
+    edit_page = contact_details_page.navigate_to_edit_contact_page()
     edit_page.is_edit_page()
 
     # Check the presence of the Logout button and the redirection to the Login page.
