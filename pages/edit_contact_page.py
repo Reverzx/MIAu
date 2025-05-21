@@ -82,8 +82,6 @@ class EditContactPage(BasePage):
         self.click_button(self.elements['cancel'])
 
     def is_error_displayed(self, message):
-        if not self.is_element_present(self.error):
-            return False
         return self.is_text_correct(self.error, message)
 
     def is_edit_successful(self):
