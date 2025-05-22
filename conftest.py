@@ -31,8 +31,6 @@ def driver():
     _options = webdriver.ChromeOptions()
     _options.add_argument("--headless")
 
-    # Added to resolve CI and Jenkins issues
-    # Start
     _options.add_argument("--no-sandbox")
     _options.add_argument("--disable-dev-shm-usage")
     _options.add_argument("--disable-gpu")
@@ -41,7 +39,6 @@ def driver():
 
     user_data_dir = tempfile.mkdtemp()
     _options.add_argument(f"--user-data-dir={user_data_dir}")
-    # End
 
     prefs = {
         "credentials_enable_service": False,
