@@ -11,6 +11,7 @@ pipeline {
 
     environment {
         VENV_DIR = 'venv'
+        GIT_SSH_COMMAND = 'ssh -o UserKnownHostsFile=/root/.ssh/known_hosts'
     }
 
     stages {
@@ -75,3 +76,4 @@ pipeline {
         }
     }
 }
+
